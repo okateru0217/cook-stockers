@@ -38,6 +38,7 @@ export default {
 }
 
 .header__container {
+  position: fixed;
   z-index: 10;
   width: 100vw;
   background-color: #fff;
@@ -87,7 +88,7 @@ export default {
 // sp用
 @media screen and (max-width: 767px) {
   .header__container {
-    height: 10vh;
+    height: 70px;
   }
 
   .header__wrap {
@@ -135,7 +136,7 @@ export default {
 // pc用
 @media screen and (min-width: 1024px) {
   .header__container {
-    height: 14vh;
+    height: 100px;
   }
 
   .header__ttl {

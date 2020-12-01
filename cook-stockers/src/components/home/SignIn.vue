@@ -59,7 +59,7 @@ export default {
 <style lang="scss" scoped>
 // 共通スタイル
 .signin__wrap {
-  height: 90vh;
+  height: 100vh;
   text-align: center;
   background-color: #FAFAFA;
 }
@@ -68,7 +68,7 @@ export default {
 
   h2 {
     margin: 0;
-    padding-top: 60px;
+    padding-top: 150px;
     font-weight: normal;
   }
 }

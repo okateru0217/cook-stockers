@@ -44,6 +44,7 @@ export default {
 
 .home__bgimg {
   width: 100%;
+  height: 100vh;
   background-image: url('../../assets/recipe_home_img.jpg');
   background-repeat: no-repeat;
   background-size: cover;
@@ -52,6 +53,9 @@ export default {
 
 .home__main-wrap {
   position: absolute;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
   text-align: center;
 }
 
@@ -68,49 +72,36 @@ export default {
 
 // sp用
 @media screen and (max-width: 767px) {
-  .home__bgimg {
-    height: 90vh;
-  }
-
   .home__main-wrap {
-    top: 120px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 100%;
+    top: 40%;
 
     h1 {
-      font-size: 8vw;
+      font-size: 55px;
       font-weight: normal;
     }
 
     p {
-      margin-top: 5vw;
-      font-size: 4vw;
-      line-height: 6vw;
+      margin-top: 40px;
+      font-size: 25px;
+      line-height: 40px;
     }
   }
 
   .home__btn {
-    margin-top: 10vw;
+    margin-top: 75px;
     
     a {
-      padding: 2vw 3.5vw;
-      font-size: 2vw;
+      padding: 20px 35px;
+      font-size: 20px;
     }
   }
 }
 
 // tab用
 @media screen and (min-width: 768px) and (max-width: 1023px) {
-  .home__bgimg {
-    height: 90vh;
-  }
 
   .home__main-wrap {
-    top: 65px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 100%;
+    top: 40%;
 
     h1 {
       font-size: 8vw;
@@ -136,15 +127,8 @@ export default {
 
 // pc用
 @media screen and (min-width: 1024px) {
-  .home__bgimg {
-    height: 90vh;
-  }
-
   .home__main-wrap {
-    top: 60px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 100%;
+    top: 50%;
 
     h1 {
       font-size: 80px;

@@ -33,7 +33,7 @@ export default {
 .hamburger__btn {
   position: fixed;
   top: 10.5px;
-  left: 10vw;
+  left: 4vw;
   width: 70px;
   height: 72px;
   cursor: pointer;
@@ -43,7 +43,7 @@ export default {
   position: absolute;
   top: 0;
   left: 20px;
-  width: 4.5vw;
+  width: 35px;
   height: 2px;
   background: #333333;
   text-align: center;
@@ -101,11 +101,11 @@ export default {
 
   ul{
   padding: 0;
-  padding-top: 4vw;
+  padding-top: 40px;
   }
 
   li {
-    padding: 3.5vw 0;
+    padding: 25px 0;
   list-style: none;
   line-height: 1;
   }
@@ -113,7 +113,7 @@ export default {
   a {
   color: rgb(66, 66, 66);
   text-decoration: none;
-  font-size: 3vw;
+  font-size: 20px;
   margin: 0 4vw;
   padding-bottom: 8px;
   }
