@@ -17,6 +17,15 @@ export default {
   actions: {
     // サインイン処理
     signIn() {
+      // ログインフォームに空白が存在した場合、アラートを出す
+      if (this.state.signin.signInData.email === undefined || this.state.signin.signInData.password === undefined) {
+        alert('空欄の項目が存在します');
+        return
+      // ログインフォームに空白が存在した場合、アラートを出す
+      } else if (this.state.signin.signInData.email === '' || this.state.signin.signInData.password === '') {
+        alert('空欄の項目が存在します');
+        return
+      }
       firebase.auth().signInWithEmailAndPassword(this.state.signin.signInData.email, this.state.signin.signInData.password)
       .then(success => {
         console.log(success);

@@ -10,7 +10,7 @@
           <label for="name">ユーザー名</label>
           <input 
           type="text"
-          placeholder="UserName"
+          placeholder="ユーザー名"
           v-model="$store.state.signup.signUpData.name">
         </div><!-- signup__name-input -->
         <div class="signup__mail-input">
@@ -20,13 +20,13 @@
           v-model="$store.state.signup.signUpData.email">
         </div><!-- signup__mail-input -->
         <div class="signup__pw-input">
-          <label for="mail">パスワード</label>
-          <input type="text"
-          placeholder="Password"
+          <label for="password">パスワード</label>
+          <input type="password"
+          placeholder="大文字含む8文字以上(記号不可)"
           v-model="$store.state.signup.signUpData.password">
         </div><!-- signup__pw-input -->
         <div class="signup__btn">
-          <router-link to="/myrecipe" @click.native="signUp">新規登録</router-link>
+          <button to="/myrecipe" @click="signUp">新規登録</button>
         </div><!-- signup__btn -->
       </div><!-- signup__main-wrap -->
     </div><!-- signup__wrap -->
@@ -130,14 +130,20 @@ export default {
 .signup__btn {
   margin-top: 120px;
 
-  a {
+  button {
     text-decoration: none;
     border-radius: 50px;
     font-weight: bold;
     color: #fff;
     background-color: #000;
+    border: 1px solid #000;
     padding: 20px 70px;
     font-size: 20px;
+  }
+
+  button:hover {
+    padding: 21px 71px;
+    font-size: 21px;
   }
 }
 </style>

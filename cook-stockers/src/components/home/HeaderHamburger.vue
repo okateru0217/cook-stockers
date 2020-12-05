@@ -40,28 +40,28 @@ export default {
   z-index: 50;
 
   .line {
-  position: absolute;
-  top: 0;
-  left: 20px;
-  width: 35px;
-  height: 2px;
-  background: #333333;
-  text-align: center;
+    position: absolute;
+    top: 0;
+    left: 20px;
+    width: 35px;
+    height: 2px;
+    background: #333333;
+    text-align: center;
   }
 
   .line_01 {
-  top: 16px;
-  transition: 0.4s ease;
+    top: 16px;
+    transition: 0.4s ease;
   }
 
   .line_02 {
-  top: 26px;
-  transition: 0.4s ease;
+    top: 26px;
+    transition: 0.4s ease;
   }
 
   .line_03 {
-  top: 36px;
-  transition: 0.4s ease;
+    top: 36px;
+    transition: 0.4s ease;
   }
 }
 
@@ -100,25 +100,26 @@ export default {
   left: 0;
 
   ul{
-  padding: 0;
-  padding-top: 40px;
+    padding: 0;
+    padding-top: 40px;
   }
 
   li {
     padding: 25px 0;
-  list-style: none;
-  line-height: 1;
+    list-style: none;
+    line-height: 1;
   }
 
   a {
-  color: rgb(66, 66, 66);
-  text-decoration: none;
-  font-size: 20px;
-  margin: 0 4vw;
-  padding-bottom: 8px;
+    color: rgb(66, 66, 66);
+    text-decoration: none;
+    font-size: 20px;
+    margin: 0 4vw;
+    padding-bottom: 8px;
   }
 
   a:hover {
+    font-size: 21px;
     border-bottom: 1px solid #000;
   }
 }

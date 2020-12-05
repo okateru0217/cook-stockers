@@ -67,6 +67,7 @@ export default {
     font-weight: bold;
     color: #fff;
     background-color: #000;
+    border: 1px solid #000;
   }
 }
 
@@ -93,6 +94,11 @@ export default {
     a {
       padding: 20px 35px;
       font-size: 20px;
+    }
+
+    a:hover {
+      padding: 21px 36px;
+      font-size: 21px;
     }
   }
 }
@@ -122,6 +128,11 @@ export default {
       padding: 2vw 3.5vw;
       font-size: 2vw;
     }
+
+    a:hover {
+      padding: 2.1vw 3.6vw;
+      font-size: 2.1vw;
+    }
   }
 }
 
@@ -148,6 +159,11 @@ export default {
     a {
       padding: 20px 35px;
       font-size: 18px;
+    }
+
+    a:hover {
+      padding: 21px 36px;
+      font-size: 19px;
     }
   }
 }

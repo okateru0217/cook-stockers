@@ -14,9 +14,9 @@
           v-model="$store.state.signin.signInData.email">
         </div><!-- signin__mail-input -->
         <div class="signin__pw-input">
-          <label for="">パスワード</label>
+          <label for="password">パスワード</label>
           <input 
-          type="text"
+          type="password"
           placeholder="Password"
           v-model="$store.state.signin.signInData.password">
         </div><!-- signin__pw-input -->
@@ -115,8 +115,14 @@ export default {
     font-weight: bold;
     color: #fff;
     background-color: #000;
+    border: 1px solid #000;
     padding: 20px 70px;
     font-size: 20px;
+  }
+
+    button:hover {
+    padding: 21px 71px;
+    font-size: 21px;
   }
 }
 </style>

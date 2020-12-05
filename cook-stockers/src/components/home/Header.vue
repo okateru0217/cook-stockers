@@ -58,6 +58,10 @@ export default {
     text-decoration: none;
     color: #000;
   }
+
+  a:hover {
+    opacity: 0.6;
+  }
 }
 
 .header__nav {
@@ -129,6 +133,10 @@ export default {
       width: 9vw;
       font-size: 2vw;
     }
+
+    li:hover {
+      font-size: 2.1vw;
+    }
   }
 
 }
@@ -152,6 +160,10 @@ export default {
     li {
       width: 90px;
       font-size: 20px;
+    }
+
+    li:hover {
+      font-size: 21px;
     }
   }
 
