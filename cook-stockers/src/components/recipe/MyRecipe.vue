@@ -1,6 +1,15 @@
 <template>
-  <div>
-    <p>登録レシピ一覧を表示させる予定</p>
-    <router-link to="/">header</router-link>
-  </div>
+  <div class="my-recipe__container">
+    <SideMenu></SideMenu>
+  </div><!-- my-recipe__container -->
 </template>
+
+<script>
+import SideMenu from '../menu/SideMenu'
+
+export default {
+  components: {
+    SideMenu
+  }
+}
+</script>
