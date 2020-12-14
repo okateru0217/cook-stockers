@@ -39,7 +39,7 @@ export default {
 
 .hamburger__btn {
   position: fixed;
-  top: 10.5px;
+  top: 7px;
   left: 4vw;
   width: 70px;
   height: 72px;

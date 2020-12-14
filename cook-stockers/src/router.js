@@ -14,6 +14,6 @@ export default new Router({
     {path: '/signin', component: SignIn}, 
     {path: '/signup', component: SignUp},
     {path: '/myrecipe', component: MyRecipe},
-    {path: '/newrecipe', component: NewRecipe}
+    {path: '/newrecipe', component: NewRecipe},
   ]
 });
