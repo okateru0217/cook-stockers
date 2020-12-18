@@ -2,7 +2,7 @@
   <div class="new-recipe-header__container">
     <div class="new-recipe-header__wrap">
       <div class="new-recipe-header__back-btn">
-        <p><font-awesome-icon icon="chevron-left" /></p>
+        <a @click="$router.go(-1)"><font-awesome-icon icon="chevron-left" /></a>
       </div><!-- new-recipe-header__back-btn -->
       <div class="new-recipe-header__ttl">
         <h2>新しいレシピ</h2>
@@ -34,9 +34,13 @@
   left: 10%;
   transform: translateY(-50%);
 
-  p {
+  a {
     margin: 0;
     font-size: 30px;
+  }
+
+  a:hover {
+    font-size: 34px;
   }
 }
 

@@ -9,13 +9,14 @@
     <!--サイドバー-->
     <transition name="hamburger__menu">
       <div class="hamburger__menu" v-show="ActiveBtn">
-          <ul>
-            <li><router-link to="/">ログアウト</router-link></li>
-            <li class="hamburger__recommend-site"><p>おすすめレシピサイト</p></li>
-            <li><router-link to="/signin">クックパッド</router-link></li>
-            <li><router-link to="/signup">クラシル</router-link></li>
-            <li><router-link to="/signup">楽天レシピ</router-link></li>
-          </ul>
+        <ul>
+          <li><router-link to="/newrecipe">新しいレシピ</router-link></li>
+          <li><router-link to="/">ログアウト</router-link></li>
+          <li class="hamburger__recommend-site"><p>おすすめレシピサイト</p></li>
+          <li><router-link to="/signin">クックパッド</router-link></li>
+          <li><router-link to="/signup">クラシル</router-link></li>
+          <li><router-link to="/signup">楽天レシピ</router-link></li>
+        </ul>
       </div>
     </transition>
   </div><!-- hamburger__container -->
@@ -134,7 +135,7 @@ export default {
 .hamburger__recommend-site {
   
   p {
-    padding-top: 50px;
+    padding-top: 30px;
     font-size: 20px;
   }
 }

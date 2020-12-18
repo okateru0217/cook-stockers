@@ -62,6 +62,7 @@
     color: #FCBB0A;
     border: 1px solid #FCBB0A;
     background-color: #FFF;
+    transition: 0.3s;
   }
 
   button:hover {

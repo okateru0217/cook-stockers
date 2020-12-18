@@ -50,6 +50,17 @@
   }
 }
 
+.footer__link:hover {
+
+  .footer__icon {
+    font-size: 23px;
+  }
+
+  p {
+    font-size: 1.05rem;
+  }
+}
+
 // sp用
 @media screen and (max-width: 767px) {
   .footer__wrap {

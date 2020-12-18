@@ -37,12 +37,14 @@
   padding-bottom: 30px;
   
   textarea {
+    outline: none;
     border: 1px solid #C1C1C1;
-    border-radius: 30px;
+    border-radius: 5px;
+    padding-top: 10px;
   }
 
   textarea::placeholder {
-    padding: 10px 0 0 10px;
+    padding: 1px 0 0 10px;
   }
 }
 

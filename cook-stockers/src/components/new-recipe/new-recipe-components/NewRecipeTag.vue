@@ -47,6 +47,10 @@
   margin: 0 auto;
   padding-bottom: 5px;
   border-bottom: 1px solid #C1C1C1;
+  white-space: nowrap;
+  overflow-x: scroll;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 
   p {
     margin: 0;
@@ -54,6 +58,10 @@
     border: 1px solid #FCBB0A;
     color: #FCBB0A;
   }
+}
+
+.new-recipe-tag__table::-webkit-scrollbar {
+  display:none;
 }
 
 .new-recipe-tag__add-tag {
@@ -76,6 +84,7 @@
     color: #FCBB0A;
     border: 1px solid #FCBB0A;
     background-color: #FFF;
+    transition: 0.3s;
   }
 
   button:hover {

@@ -7,25 +7,22 @@ export default {
   state: {
     // サインインに必要なデータを格納
     signInData: {},
+    // 入力欄に誤りがあった場合のエラー表示まとめ
+    signInErr: {},
+    typingErr: ''
   },
   // サインイン時のinput入力データをstateへ格納
   mutations: {
     setSignInData(state, inputSignInData) {
       state.signInData = {...state.signInData, ...inputSignInData}
+    },
+    setSignInErr(state, errSignInData) {
+      state.signInErr = {...state.signInErr, ...errSignInData}
     }
   },
   actions: {
     // サインイン処理
     signIn() {
-      // ログインフォームに空白が存在した場合、アラートを出す
-      if (this.state.signin.signInData.email === undefined || this.state.signin.signInData.password === undefined) {
-        alert('空欄の項目が存在します');
-        return
-      // ログインフォームに空白が存在した場合、アラートを出す
-      } else if (this.state.signin.signInData.email === '' || this.state.signin.signInData.password === '') {
-        alert('空欄の項目が存在します');
-        return
-      }
       firebase.auth().signInWithEmailAndPassword(this.state.signin.signInData.email, this.state.signin.signInData.password)
       .then(success => {
         console.log(success);
@@ -34,8 +31,11 @@ export default {
       })
       .catch(error => {
         console.log(error);
-        // サインインに失敗すると、アラートを出力
-        alert('メールアドレスまたはパスワードが間違っています');
+        this.state.signin.signInErr.blankErr = '';
+        this.state.signin.signInErr.activeErrEmail = false;
+        this.state.signin.signInErr.activeErrPassword = false;
+        // メールアドレスまたはパスワードが間違っていた場合、画面にエラーを表示させる
+        this.state.signin.typingErr = 'メールアドレスまたはパスワードが間違っています';
       })
     }
   }

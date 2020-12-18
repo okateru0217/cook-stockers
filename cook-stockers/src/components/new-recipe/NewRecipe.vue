@@ -33,11 +33,15 @@
         <NewRecipeRecordBtn></NewRecipeRecordBtn>
       </div><!-- new-recipe__record-btn -->
     </div><!-- new-recipe__wrap -->
+    <div class="new-recipe__footer">
+      <Footer></Footer>
+    </div><!-- new-recipe__footer -->
   </div><!-- new-recipe__container -->
 </template>
 
 <script>
 import SideMenu from '../menu/SideMenu'
+import Footer from '../menu/FooterMenu'
 import NewRecipeHeader from './new-recipe-components/NewRecipeHeader'
 import NewRecipeName from './new-recipe-components/NewRecipeName'
 import NewRecipeMaterial from './new-recipe-components/NewRecipeMaterial'
@@ -50,6 +54,7 @@ import NewRecipeRecordBtn from './new-recipe-components/NewRecipeRecordBtn'
 export default {
   components: {
     SideMenu,
+    Footer,
     NewRecipeHeader,
     NewRecipeName,
     NewRecipeMaterial,
