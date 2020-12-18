@@ -11,7 +11,7 @@
       <div class="hamburger__menu" v-show="ActiveBtn">
         <ul>
           <li><router-link to="/newrecipe">新しいレシピ</router-link></li>
-          <li><router-link to="/">ログアウト</router-link></li>
+          <li><a @click="signOut">ログアウト</a></li>
           <li class="hamburger__recommend-site"><p>おすすめレシピサイト</p></li>
           <li><router-link to="/signin">クックパッド</router-link></li>
           <li><router-link to="/signup">クラシル</router-link></li>
@@ -27,6 +27,11 @@ export default {
   data() {
     return {
       ActiveBtn: false
+    }
+  },
+  methods: {
+    signOut() {
+      this.$store.dispatch('signOut');
     }
   }
 }
