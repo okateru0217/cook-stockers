@@ -3,20 +3,55 @@
     <div class="my-recipe-list__wrap">
       <div class="my-recipe-list__table">
         <table>
-          <tbody>
-            <tr>
-              <td><p class="my-recipe-list__img">画像</p></td>
-              <td class="my-recipe-list__td"><p class="my-recipe-list__recipe-name">レシピ名</p></td>
-              <td class="my-recipe-list__td"><p class="my-recipe-list__memo">メモ</p></td>
-              <td class="my-recipe-list__td"><p class="my-recipe-list__tag">タグ</p></td>
-              <td class="my-recipe-list__favorite-icon"><p>☆</p></td>
+          <tbody v-if="$store.state.recordRecipe.CengeColorBtn === true">
+            <tr v-for="displayRecipe in $store.state.recordRecipe.recipeArr"
+            :key="displayRecipe.id">
+              <td><img :src="displayRecipe.recipe_img"></td>
+              <td class="my-recipe-list__td"><p class="my-recipe-list__recipe-name">{{ displayRecipe.recipe_name }}</p></td>
+              <td class="my-recipe-list__td"><p class="my-recipe-list__memo">{{ displayRecipe.recipe_memo }}</p></td>
+              <!-- <td class="my-recipe-list__td"><p class="my-recipe-list__tag">タグ</p></td> -->
+              <td class="my-recipe-list__favorite-icon"><p @click="activeFavoriteIcon(displayRecipe)">{{ displayRecipe.recipe_favorite_icon }}</p></td>
             </tr>
           </tbody>
-        </table>        
+          <tbody v-if="$store.state.recordRecipe.CengeColorBtn === false">
+            <tr v-for="displayFavoriteRecipe in $store.state.recordRecipe.favoriteRecipeArr"
+            :key="displayFavoriteRecipe.id">
+              <td><img :src="displayFavoriteRecipe.recipe_img"></td>
+              <td class="my-recipe-list__td"><p class="my-recipe-list__recipe-name">{{ displayFavoriteRecipe.recipe_name }}</p></td>
+              <td class="my-recipe-list__td"><p class="my-recipe-list__memo">{{ displayFavoriteRecipe.recipe_memo }}</p></td>
+              <!-- <td class="my-recipe-list__td"><p class="my-recipe-list__tag">タグ</p></td> -->
+              <td class="my-recipe-list__favorite-icon"><p @click="activeFavoriteIcon(displayRecipe)">{{ displayFavoriteRecipe.recipe_favorite_icon }}</p></td>
+            </tr>
+          </tbody>
+        </table>
       </div><!-- my-recipe-list__table -->
     </div><!-- my-recipe-list__wrap -->
   </div><!-- my-recipe-list__container -->
 </template>
+
+<script>
+// import { filter } from 'vue/types/umd';
+export default {
+  methods: {
+    // お気に入りボタン押下したリストのみ、お気に入りリストに反映される
+    activeFavoriteIcon(displayRecipe) {
+      if (displayRecipe.recipe_favorite_icon === '☆') {
+        displayRecipe.recipe_favorite_icon = '★';
+        this.$store.dispatch('renewFavoriteIcon', displayRecipe);
+      } else {
+        displayRecipe.recipe_favorite_icon = '☆';
+        this.$store.dispatch('renewFavoriteIcon', displayRecipe);
+      }
+      // お気に入り登録したリストを、配列に格納
+      const filterFavoriteRecipe = this.$store.state.recordRecipe.recipeArr.filter(item => item.recipe_favorite_icon === '★');
+      this.$store.state.recordRecipe.favoriteRecipeArr = filterFavoriteRecipe;
+    }
+  },
+  created() {
+    this.$store.dispatch('createdRecipeList')
+  },
+}
+</script>
 
 <style lang="scss" scoped>
 // 共通スタイル
@@ -37,9 +72,9 @@
     border-bottom: 1px solid #C1C1C1;
   }
 
-  .my-recipe-list__img {
-    padding: 30px;
-    border: 1px solid #000;
+  img {
+    width: 70px;
+    height: 70px;
   }
 
   .my-recipe-list__td {
@@ -58,7 +93,7 @@
   }
 
   .my-recipe-list__memo {
-    padding-top: 30px;
+    padding-top: 50px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;

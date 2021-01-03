@@ -7,18 +7,95 @@
         </div><!-- new-recipe-procedure__ttl -->
         <div class="new-recipe-procedure__table">
           <table>
-            <tr>
-              <td><input type="text" placeholder="手順"></td>
+            <tr v-for="procedures in this.$store.state.recordRecipe.procedureArr"
+            :key="procedures.id">
+              <td class="new-recipe-procedure__index"><i>{{ procedures.id + 1 }}</i></td>
+              <td class="new-recipe-procedure__procedure"><p>{{ procedures.procedure }}</p></td>
+              <td class="new-recipe-procedure__button"><button 
+              @click="editProcedure(procedures)"
+              class="new-recipe-procedure__edit-btn"><font-awesome-icon icon='edit' /></button></td>
+              <td class="new-recipe-procedure__button"><button 
+              @click="deleteProcedure(procedures)"
+              class="new-recipe-procedure__delete-btn"><font-awesome-icon icon='trash-alt' /></button></td>
             </tr>
           </table>
         </div><!-- new-recipe-procedure__table -->
+        <div class="new-recipe-procedure__input">
+          <input 
+          type="text"
+          placeholder="手順"
+          v-model="procedureValue"
+          ref="editor"
+          >
+        </div><!-- new-recipe-procedure__input -->
         <div class="new-recipe-procedure__add-btn">
-          <button>＋ 手順を追加</button>
+          <button
+          @click="setProcedure"
+          :class="{add: onAddBtn, edit: !onAddBtn}">{{ chengeOverBtn }}</button>
         </div><!-- new-recipe-procedure__add-btn -->
       </div><!-- new-recipe-procedure__item -->
     </div><!-- new-recipe-procedure__wrap -->
   </div><!-- new-recipe-procedure__container -->
 </template>
+
+<script>
+export default {
+  data() {
+    return {
+      // 手順を入力
+      procedureValue: '',
+      // 編集時のインデックスを取得する
+      editIndex: '',
+      // ボタンの初期表示
+      chengeOverBtn: '＋ 追加',
+      // ボタンの切り替え
+      onAddBtn: true
+    }
+  },
+  methods: {
+    // 手順を追加、編集する
+    setProcedure() {
+      // 手順を追加する
+      if (this.chengeOverBtn === '＋ 追加') {
+        this.$store.state.recordRecipe.procedureArr.push({
+          id: this.$store.state.recordRecipe.procedureArr.length,
+          procedure: this.procedureValue
+        })
+      // 手順を編集する
+      } else {
+        this.$store.state.recordRecipe.procedureArr[this.editIndex].procedure = this.procedureValue;
+        this.chengeOverBtn = '＋ 追加';
+        this.onAddBtn = true;
+      }
+      // 入力欄を空にする
+      this.procedureValue = '';
+    },
+    // 手順を削除する
+    deleteProcedure(procedures) {
+      this.$store.state.recordRecipe.procedureArr.splice(procedures.id, 1);
+      for(let i = procedures.id; i < this.$store.state.recordRecipe.procedureArr.length; i++) {
+        this.$store.state.recordRecipe.procedureArr[i].id = i;
+      }
+      this.procedureValue = '';
+      this.chengeOverBtn = '＋ 追加';
+      this.onAddBtn = true;
+    },
+    // 手順を編集するために、ボタンの見た目を変える
+    editProcedure(procedures) {
+      this.procedureValue = procedures.procedure;
+      this.editIndex = procedures.id;
+      this.$refs.editor.focus();
+      if (this.chengeOverBtn === '＋ 追加') {
+        this.chengeOverBtn = '編集';
+        this.onAddBtn = false;
+      } else {
+        this.chengeOverBtn = '＋ 追加';
+        this.onAddBtn = true;
+      }
+    }
+  }
+}
+</script>
 
 <style lang="scss" scoped>
 // 共通スタイル
@@ -39,9 +116,57 @@
 }
 
 .new-recipe-procedure__table {
+  width: 90%;
+  margin: 0 auto;
+
+  table {
+    width: 100%;
+  }
+
+  button {
+    margin: 0;
+  }
+
+  button:hover {
+    opacity: 0.7;
+  }
+
+  .new-recipe-procedure__index {
+    width: 1em;
+    padding-bottom: 12px;
+  }
+
+  .new-recipe-procedure__delete-btn {
+    color: #FFF;
+    background-color: #FF7F50;
+    border: 1px solid #FF7F50;
+  }
+
+  .new-recipe-procedure__edit-btn {
+    color: #FFF;
+    background-color: #00cc33;
+    border: 1px solid #00cc33;
+  }
+
+  p {
+    margin: 0 0 10px 0;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #C1C1C1;
+  }
+}
+
+.new-recipe-procedure__button {
+  width: 26px;
+}
+
+.new-recipe-procedure__input {
+  width: 90%;
+  margin: 0 auto;
+  margin-top: 30px;
 
   input {
     outline: none;
+    width: 100%;
     margin-bottom: 10px;
     padding-bottom: 5px;
     border: none;
@@ -51,25 +176,39 @@
 
 .new-recipe-procedure__add-btn {
   text-align: center;
-  padding: 30px 0;
+  padding: 10px 0 40px 0;
 
   button {
     cursor: pointer;
     outline: none;
-    padding: 5px 10px;
-    border: none;
+    padding: 5px 15px;
     border-radius: 50px;
-    color: #FCBB0A;
-    border: 1px solid #FCBB0A;
-    background-color: #FFF;
     transition: 0.3s;
   }
+}
 
-  button:hover {
-    color: #FFF;
-    border: 1px solid #FCBB0A;
-    background-color:#FCBB0A;
-  }
+.add {
+  color: #FCBB0A;
+  border: 1px solid #FCBB0A;
+  background-color: #FFF;
+}
+
+.add:hover {
+  color: #FFF;
+  border: 1px solid #FCBB0A;
+  background-color:#FCBB0A;
+}
+
+.edit {
+  color: #FFF;
+  border: 1px solid #00cc33;
+  background-color: #00cc33;
+}
+
+.edit:hover {
+  color: #00cc33;
+  border: 1px solid#00cc33;
+  background-color: #FFF;
 }
 
 // sp用
@@ -78,14 +217,6 @@
 
     h3 {
       padding-left: 20px;
-    }
-  }
-
-  .new-recipe-procedure__table {
-
-    input {
-      width: 75vw;
-      margin-left: 8vw;
     }
   }
 }
@@ -98,14 +229,6 @@
       padding-left: 20px;
     }
   }
-
-  .new-recipe-procedure__table {
-
-    input {
-      width: 75vw;
-      margin-left: 8vw;
-    }
-  }
 }
 
 // pc用
@@ -116,14 +239,6 @@
       margin-top: 0;
       padding-top: 30px;
       padding-left: 30px;
-    }
-  }
-
-  .new-recipe-procedure__table {
-
-    input {
-      width: 39vw;
-      margin-left: 3.6vw;
     }
   }
 }

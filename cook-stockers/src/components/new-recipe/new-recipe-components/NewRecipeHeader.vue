@@ -17,6 +17,11 @@
   font-family: 'Raleway', sans-serif;
 }
 
+.new-recipe-header__container {
+  position: fixed;
+  background-color: #EDEDED;
+}
+
 .new-recipe-header__wrap {
   position: relative;
   display: flex;
@@ -44,8 +49,26 @@
   }
 }
 
+// sp用
+@media screen and (max-width: 767px) {
+  .new-recipe-header__container {
+    width: 100%;
+  }
+}
+
+// tab用
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+  .new-recipe-header__container {
+    width: 100%;
+  }
+}
+
 // pc用
 @media screen and (min-width: 1024px) {
+  .new-recipe-header__container {
+    width: 50%;
+  }
+
   .new-recipe-header__back-btn {
     display: none;
   }

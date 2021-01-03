@@ -55,7 +55,8 @@ export default {
       signUpData: {
         name: '',
         email: '',
-        password: ''
+        password: '',
+        uid: ''
       },
       // 入力欄に誤りがあった場合のエラー表示まとめ
       signUpErr: {
@@ -74,7 +75,7 @@ export default {
         // パスワードが要件を満たしていない場合、画面にエラー分を表示させる
         // パスワードが要件を満たしていない場合、inputを赤枠に変更する
         passwordErr: '',
-        activePasswordErr: false
+    activePasswordErr: false
       }
     }
   },
@@ -82,6 +83,9 @@ export default {
     // signup.jsのstateに格納
     setSignUpData() {
       this.$store.commit('setSignUpData', this.signUpData);
+    },
+    setSignUpErr() {
+      this.$store.commit('setSignUpErr', this.signUpErr);
     },
     cehckValidation() {
       // 処理を完結にするために、undefinedを空白に変換

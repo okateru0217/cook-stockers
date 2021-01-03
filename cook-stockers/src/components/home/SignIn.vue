@@ -45,7 +45,8 @@ export default {
     return {
       signInData: {
         email: '',
-        password: ''
+        password: '',
+        uid: ''
       },
       // 入力欄に誤りがあった場合のエラー表示まとめ
       signInErr: {

@@ -1,10 +1,20 @@
 <template>
   <div class="new-recipe-record-btn__container">
     <div class="new-recipe-record-btn__wrap">
-      <button>登録する</button>
+      <button @click="recipeRecord">登録する</button>
     </div><!-- new-recipe-record-btn__wrap -->
   </div><!-- new-recipe-record-btn__container -->
 </template>
+
+<script>
+export default {
+  methods: {
+    recipeRecord() {
+      this.$store.dispatch('recipeRecord');
+    }
+  }
+}
+</script>
 
 <style lang="scss" scoped>
 // 共通スタイル
@@ -14,6 +24,7 @@
 
 .new-recipe-record-btn__wrap {
   text-align: center;
+  background-color: #EDEDED;
 
   button {
     cursor: pointer;
@@ -50,7 +61,7 @@
 // pc用
 @media screen and (min-width: 1024px) {
   .new-recipe-record-btn__wrap {
-    padding-top: 70px;
+    padding: 70px 0;
   }
 }
 </style>

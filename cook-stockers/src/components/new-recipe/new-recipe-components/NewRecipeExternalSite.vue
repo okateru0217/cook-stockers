@@ -6,7 +6,11 @@
           <h3>外部レシピサイトURL</h3>
         </div><!-- new-recipe-external-site__ttl -->
         <div class="new-recipe-external-site__input-url">
-          <input type="text" placeholder="URLを追加">
+          <input 
+          type="text" 
+          placeholder="URLを追加"
+          v-model="$store.state.recordRecipe.recipeData.recipeUrl"
+          >
         </div><!-- new-recipe-external-site__input-url -->
       </div><!-- new-recipe-external-site__item -->
     </div><!-- new-recipe-external-site__wrap -->

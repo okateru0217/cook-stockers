@@ -2,16 +2,59 @@
   <div class="new-recipe-name__container">
     <div class="new-recipe-name__wrap">
       <div class="new-recipe-name__item">
-        <div class="new-recipe-name__img">
-          <p>画像</p>
+        <div class="new-recipe-name__img"
+        v-if="$store.state.recordRecipe.recipeData.recipeImg !== '' ">
+          <img  
+          :src="$store.state.recordRecipe.recipeData.recipeImg"
+          alt="">
+          <label>
+            画像を選択
+            <input
+            @change="imgUpLoad"
+            type="file" 
+            data-label="画像の添付"
+            class="new-recipe-name__attach-img">
+          </label>
         </div><!-- new-recipe-name__img -->
+        <div class="new-recipe-name__img-none" 
+        v-else>
+          <img 
+          src="../../../assets/img-none.png" 
+          alt="">
+          <label>
+            画像を選択
+            <input
+            @change="imgUpLoad"
+            type="file" 
+            data-label="画像の添付"
+            class="new-recipe-name__attach-img">
+          </label>
+        </div><!-- new-recipe-name__img-none -->
         <div class="new-recipe-name__recipe-name">
-          <input type="text" placeholder="レシピ名">
+          <input 
+          type="text" 
+          placeholder="レシピ名"
+          v-model="$store.state.recordRecipe.recipeData.recipeName">
         </div><!-- new-recipe-name__recipe-name -->
       </div><!-- new-recipe-name__item -->
     </div><!-- new-recipe-name__wrap -->
   </div><!-- new-recipe-name__container -->
 </template>
+
+<script>
+export default {
+  data() {
+    return {
+      images: '$store.state.recordRecipe.recipeData.recipeImg',
+    }
+  },
+  methods: {
+    imgUpLoad(e) {
+      this.$store.dispatch('imgUpLoad', e);
+    }
+  }
+}
+</script>
 
 <style lang="scss" scoped>
 // 共通スタイル
@@ -29,15 +72,61 @@
 }
 
 .new-recipe-name__img {
-  margin-left: 4vw;
+  input {
+    display: none;
+  }
 
-  p {
-    border: 1px solid #000;
+  label {
+    display: block;
+    text-align: center;
+    font-size: 0.9em;
+    padding: 5px;
+    border-radius: 10px;
+    color: #FF7F50;
+    border: 1px solid #FF7F50;
+    background-color: #FFF;
+    transition: 0.3s;
+  }
+
+  label:hover {
+    color: #FFF;
+    background-color: #FF7F50;
   }
 }
 
+.new-recipe-name__img-none {
+
+  img {
+    border: 1px solid #dcdcdc;
+  }
+
+  input {
+    display: none;
+  }
+
+  label {
+    display: block;
+    text-align: center;
+    font-size: 0.9em;
+    padding: 5px;
+    border-radius: 10px;
+    color: #FF7F50;
+    border: 1px solid #FF7F50;
+    background-color: #FFF;
+    transition: 0.3s;
+  }
+
+  label:hover {
+    color: #FFF;
+    background-color: #FF7F50;
+  }
+}
+
+.new-recipe-name__label {
+  display: flex;
+}
+
 .new-recipe-name__recipe-name {
-  margin-left: 5vw;
 
   input {
     outline: none;
@@ -53,14 +142,34 @@
 
 // sp用
 @media screen and (max-width: 767px) {
-  .new-recipe-name__img {
+  .new-recipe-name__container {
+    padding-top: 66px;
+  }
 
-    p {
-      padding: 30px;
+  .new-recipe-name__wrap {
+    padding: 20px 0;
+  }
+
+  .new-recipe-name__img {
+    margin-left: 4vw;
+
+    img {
+      width: 90px;
+      height: 80px;
+    }
+  }
+
+  .new-recipe-name__img-none {
+    margin-left: 4vw;
+    
+    img {
+      width: 90px;
+      height: 80px;
     }
   }
 
   .new-recipe-name__recipe-name {
+    margin-left: 5vw;
 
     input {
       width: 60vw;
@@ -70,14 +179,34 @@
 
 // tab用
 @media screen and (min-width: 768px) and (max-width: 1023px) {
-  .new-recipe-name__img {
+  .new-recipe-name__container {
+    padding-top: 66px;
+  }
 
-    p {
-      padding: 30px;
+  .new-recipe-name__wrap {
+    padding: 20px 0;
+  }
+
+  .new-recipe-name__img {
+    margin-left: 4vw;
+
+    img {
+      width: 110px;
+      height: 100px;
+    }
+  }
+
+  .new-recipe-name__img-none {
+    margin-left: 4vw;
+
+    img {
+      width: 110px;
+      height: 100px;
     }
   }
 
   .new-recipe-name__recipe-name {
+    margin-left: 5vw;
 
     input {
       width: 70vw;
@@ -87,22 +216,38 @@
 
 // pc用
 @media screen and (min-width: 1024px) {
+  .new-recipe-name__container {
+    padding-top: 44px;
+  }
+
   .new-recipe-name__wrap {
-    padding-bottom: 30px;
+    padding: 30px 0;
   }
 
   .new-recipe-name__img {
+    margin-left: 2vw;
 
-    p {
-      padding: 25px;
+    img {
+      width: 110px;
+      height: 100px;
+    }
+  }
+
+  .new-recipe-name__img-none {
+    margin-left: 2vw;
+
+    img {
+      width: 110px;
+      height: 100px;
     }
   }
 
   .new-recipe-name__recipe-name {
+    margin-left: 3vw;
 
     input {
       width: 25vw;
-    }
   }
+    }
 }
 </style>

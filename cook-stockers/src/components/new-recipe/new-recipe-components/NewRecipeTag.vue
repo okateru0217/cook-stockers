@@ -8,21 +8,92 @@
         <div class="new-recipe-tag__table">
           <table>
             <tbody>
-              <tr>
-                <td><p>豚肉</p></td>
-                <td><p>ピーマン</p></td>
+              <tr
+              v-for="tags in this.$store.state.recordRecipe.tagArr"
+              :key="tags.id">
+                <td><p @click="chengeStatusTag(tags)">{{ tags.tag }}</p></td>
               </tr>
             </tbody>
           </table>
         </div><!-- new-recipe-tag__table -->
         <div class="new-recipe-tag__add-tag">
-          <input type="text" placeholder="タグを追加">
-          <button>＋ 追加</button>
+          <input 
+          type="text" 
+          placeholder="タグを追加"
+          v-model="tagValue"
+          ref="editor">
+          <button @click="addTag"
+          :class="{add: onAddBtn, edit: !onAddBtn}">{{ chengeOverAddTask }}</button>
+          <button
+          class="new-recipe-tag__delete-btn"
+          @click="deleteTag"
+          v-show="!onAddBtn">削除</button>
         </div><!-- new-recipe-tag__add-tag -->
       </div><!-- new-recipe-tag__item -->
     </div><!-- new-recipe-tag__wrap -->
   </div><!-- new-recipe-tag__container -->
 </template>
+
+<script>
+export default {
+  data() {
+    return {
+      // タグを入力
+      tagValue: '',
+      // 編集時のインデックスを取得する
+      editIndex: '',
+      // ボタンの初期表示
+      chengeOverAddTask: '＋ 追加',
+      // ボタンの切り替え
+      onAddBtn: true
+    }
+  },
+  methods: {
+    // タグを追加、編集を行う
+    addTag() {
+      // タグの追加
+      if (this.chengeOverAddTask === '＋ 追加') {
+        this.$store.state.recordRecipe.tagArr.push({
+          id: this.$store.state.recordRecipe.tagArr.length,
+          tag: this.tagValue
+        })
+      // タグの編集
+      } else {
+        this.$store.state.recordRecipe.tagArr[this.editIndex].tag = this.tagValue;
+        this.chengeOverAddTask = '＋ 追加';
+        this.onAddBtn = true;
+      }
+      this.tagValue = '';
+    },
+    // タグを削除する
+    deleteTag() {
+      this.$store.state.recordRecipe.tagArr.splice(this.editIndex, 1);
+      for (let i = this.editIndex; i < this.$store.state.recordRecipe.tagArr.length; i++) {
+        this.$store.state.recordRecipe.tagArr[i].id = i;
+      }
+      this.tagValue = '';
+      this.chengeOverAddTask = '＋ 追加';
+      this.onAddBtn = true;
+    },
+    // タグのステータスを変更するためのボタンを出現させる
+    chengeStatusTag(tags) {
+      // 入力欄にタグを入れる
+      this.tagValue = tags.tag;
+      // テーブルのIDを取得
+      this.editIndex = tags.id;
+      // フォーカスを指定
+      this.$refs.editor.focus();
+      if (this.chengeOverAddTask === '＋ 追加') {
+        this.chengeOverAddTask = '編集';
+        this.onAddBtn = false;
+      } else {
+        this.chengeOverAddTask = '＋ 追加';
+        this.onAddBtn = true;
+      }
+    }
+  }
+}
+</script>
 
 <style lang="scss" scoped>
 // 共通スタイル
@@ -52,7 +123,12 @@
   scrollbar-width: none;
   -ms-overflow-style: none;
 
+  tbody {
+    display: flex;
+  }
+
   p {
+    text-align: center;
     margin: 0;
     padding: 5px 10px;
     border: 1px solid #FCBB0A;
@@ -79,19 +155,45 @@
     cursor: pointer;
     outline: none;
     padding: 5px 15px;
-    border: none;
     border-radius: 50px;
-    color: #FCBB0A;
-    border: 1px solid #FCBB0A;
-    background-color: #FFF;
     transition: 0.3s;
   }
+}
 
-  button:hover {
-    color: #FFF;
-    border: 1px solid #FCBB0A;
-    background-color:#FCBB0A;
-  }
+.add {
+  color: #FCBB0A;
+  border: 1px solid #FCBB0A;
+  background-color: #FFF;
+}
+
+.add:hover {
+  color: #FFF;
+  border: 1px solid #FCBB0A;
+  background-color:#FCBB0A;
+}
+
+.edit {
+  color: #FFF;
+  border: 1px solid #00cc33;
+  background-color: #00cc33;
+}
+
+.edit:hover {
+  color: #00cc33;
+  border: 1px solid#00cc33;
+  background-color: #FFF;
+}
+
+.new-recipe-tag__delete-btn {
+  color: #FFF;
+  border: 1px solid #FF7F50;
+  background-color: #FF7F50;
+}
+
+.new-recipe-tag__delete-btn:hover {
+  color: #FF7F50;
+  border: 1px solid#FF7F50;
+  background-color: #FFF;
 }
 
 // sp用
@@ -101,7 +203,11 @@
 
     input {
       width: 45vw;
-      margin-right: 15vw;
+      margin-right: 5vw;
+    }
+
+    button {
+      margin: 0 5px;
     }
   }
 }
@@ -113,7 +219,11 @@
 
     input {
       width: 45vw;
-      margin-right: 15vw;
+      margin-right: 5vw;
+    }
+
+    button {
+      margin: 0 5px;
     }
   }
 }
@@ -135,7 +245,10 @@
 
     input {
       width: 12.5vw;
-      margin-right: 1vw;
+    }
+
+    button {
+      margin: 0;
     }
   }
 }

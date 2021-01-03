@@ -2,6 +2,7 @@ import router from '../router'
 import firebase from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/firebase-firestore'
+// import { config } from 'vue/types/umd';
 
 export default {
   state: {
@@ -26,6 +27,7 @@ export default {
       firebase.auth().signInWithEmailAndPassword(this.state.signin.signInData.email, this.state.signin.signInData.password)
       .then(success => {
         console.log(success);
+        this.state.signin.signInData.uid = success.user.uid;
         // サインインに成功すると、レシピ一覧へ画面遷移
         router.push('/myrecipe');
       })

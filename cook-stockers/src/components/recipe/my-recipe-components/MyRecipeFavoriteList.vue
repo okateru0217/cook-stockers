@@ -9,10 +9,11 @@
       <div class="my-recipe-favorite-list__table">
         <table>
           <tbody>
-            <tr>
-              <td><p class="my-recipe-favorite-list__img">画像</p></td>
-              <td class="my-recipe-favorite-list__td"><p class="my-recipe-favorite-list__recipe-name">レシピ名</p></td>
-              <td class="my-recipe-favorite-list__td"><p class="my-recipe-favorite-list__tag">タグ</p></td>
+            <tr v-for="displayFavoriteRecipe in $store.state.recordRecipe.favoriteRecipeArr"
+            :key="displayFavoriteRecipe.id">
+              <td><img :src="displayFavoriteRecipe.recipe_img"></td>
+              <td class="my-recipe-favorite-list__td"><p class="my-recipe-favorite-list__recipe-name">{{ displayFavoriteRecipe.recipe_name }}</p></td>
+              <td class="my-recipe-favorite-list__td"><p class="my-recipe-favorite-list__memo">{{ displayFavoriteRecipe.recipe_memo }}</p></td>
             </tr>
           </tbody>
         </table>        
@@ -56,13 +57,13 @@
     border-bottom: 1px solid #C1C1C1;
   }
 
-  p {
-    margin: 0;
+  img {
+    width: 55px;
+    height: 55px;
   }
 
-  .my-recipe-favorite-list__img {
-    padding: 20px;
-    border: 1px solid #000;
+  p {
+    margin: 0;
   }
 
   .my-recipe-favorite-list__td {
@@ -80,7 +81,7 @@
     white-space: nowrap;
   }
 
-  .my-recipe-favorite-list__tag {
+  .my-recipe-favorite-list__memo {
     width: 18vw;
     padding-top: 35px;
     overflow: hidden;

@@ -3,27 +3,24 @@
     <div class="my-recipe-favorite__wrap">
       <button class="normal" 
       @click="normalBtn" 
-      :class="{forcus: CengeColorBtn, 'not-forcus': !CengeColorBtn}">通常</button>
+      :class="{forcus: $store.state.recordRecipe.CengeColorBtn, 'not-forcus': !$store.state.recordRecipe.CengeColorBtn}">通常</button>
       <button class="favorite"
       @click="favoriteBtn"
-      :class="{forcus: !CengeColorBtn, 'not-forcus': CengeColorBtn}">お気に入り</button>
+      :class="{forcus: !$store.state.recordRecipe.CengeColorBtn, 'not-forcus': $store.state.recordRecipe.CengeColorBtn}">お気に入り</button>
     </div><!-- my-recipe-favorite__wrap -->
   </div><!-- my-recipe-favorite__container -->
 </template>
 
 <script>
 export default {
-  data() {
-    return {
-      CengeColorBtn: true
-    }
-  },
   methods: {
+    // 「通常」ボタンの見た目
     normalBtn() {
-      this.CengeColorBtn = true;
+      this.$store.state.recordRecipe.CengeColorBtn = true;
     },
+    // 「お気に入り」ボタンの見た目
     favoriteBtn() {
-      this.CengeColorBtn = false;
+      this.$store.state.recordRecipe.CengeColorBtn = false;
     }
   }
 }

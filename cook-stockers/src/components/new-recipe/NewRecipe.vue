@@ -63,6 +63,10 @@ export default {
     NewRecipeMemo,
     NewRecipeExternalSite,
     NewRecipeRecordBtn
+  },
+  // リロード時、状態を保持させる
+  created() {
+    this.$store.dispatch('created');
   }
 }
 </script>

@@ -6,7 +6,12 @@
           <h3>メモ追加</h3>
         </div><!-- new-recipe-memo__ttl -->
         <div class="new-recipe-memo__text-area">
-          <textarea name="memo" cols="30" rows="10" placeholder="メモを追加"></textarea>
+          <textarea 
+          name="memo" 
+          cols="30" 
+          rows="10" 
+          placeholder="メモを追加"
+          v-model="$store.state.recordRecipe.recipeData.recipeMemo"></textarea>
         </div><!-- new-recipe-memo__text-area -->
       </div><!-- new-recipe-memo__item -->
     </div><!-- new-recipe-memo__wrap -->
