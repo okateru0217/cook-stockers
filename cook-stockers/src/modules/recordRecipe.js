@@ -117,27 +117,48 @@ export default {
     },
     // マイレシピ画面がリロードされた時、レシピ表示を保持する
     createdRecipeList() {
-      firebase.auth().onAuthStateChanged((user)=> {
-        // ログアウト時のリロードは実行しない
-        if (user !== null) {
-          this.state.signin.signInData.uid = user.uid;
-          const recipeDataArr = firebase.firestore().
-          collection('users-information').doc(this.state.signin.signInData.uid)
-          .collection('recipe');
-          recipeDataArr.get().then(snapshot => {
-            // 一度配列を空にする
-            this.state.recordRecipe.recipeArr.length = 0;
-            snapshot.forEach(docs => {
-              this.state.recordRecipe.recipeArr.push(docs.data());
+      // ゲストログイン時の処理
+      if (this.state.signin.signInData.uid === 'guest' || this.state.signin.signInData.uid === undefined) {
+        this.state.signin.signInData.uid = 'guest';
+        const recipeDataGuestArr = firebase.firestore()
+        .collection('users-information').doc(this.state.signin.signInData.uid)
+        .collection('recipe');
+        recipeDataGuestArr.get().then(snapshot => {
+          // 一度配列を空にする
+          this.state.recordRecipe.recipeArr.length = 0;
+          snapshot.forEach(docs => {
+            this.state.recordRecipe.recipeArr.push(docs.data());
+          })
+        })
+         // お気に入り欄にレシピを表示させる
+        .then(() => {
+          const filterFavoriteGuestRecipe = this.state.recordRecipe.recipeArr.filter(item => item.recipe_favorite_icon === '★');
+          this.state.recordRecipe.favoriteRecipeArr = filterFavoriteGuestRecipe;
+        })
+      // メールアドレスログイン時の処理
+      } else {
+        firebase.auth().onAuthStateChanged((user)=> {
+          // ログアウト時のリロードは実行しない
+          if (user !== null) {
+            this.state.signin.signInData.uid = user.uid;
+            const recipeDataArr = firebase.firestore().
+            collection('users-information').doc(this.state.signin.signInData.uid)
+            .collection('recipe');
+            recipeDataArr.get().then(snapshot => {
+              // 一度配列を空にする
+              this.state.recordRecipe.recipeArr.length = 0;
+              snapshot.forEach(docs => {
+                this.state.recordRecipe.recipeArr.push(docs.data());
+              })
             })
-          })
-          // お気に入り欄にレシピを表示させる
-          .then(() => {
-            const filterFavoriteRecipe = this.state.recordRecipe.recipeArr.filter(item => item.recipe_favorite_icon === '★');
-            this.state.recordRecipe.favoriteRecipeArr = filterFavoriteRecipe;
-          })
-        }
-      })
+            // お気に入り欄にレシピを表示させる
+            .then(() => {
+              const filterFavoriteRecipe = this.state.recordRecipe.recipeArr.filter(item => item.recipe_favorite_icon === '★');
+              this.state.recordRecipe.favoriteRecipeArr = filterFavoriteRecipe;
+            })
+          }
+        })
+      }
     },
     renewFavoriteIcon(_state, payload) {
       const recordFavoriteIcon = firebase.firestore()
@@ -155,11 +176,17 @@ export default {
     },
     // リロード時、uidを再代入
     created() {
-      firebase.auth().onAuthStateChanged((user)=> {
-        if (user !== null) {
-          this.state.signin.signInData.uid = user.uid;
-        }
-      })
+      // ゲストログイン時の場合
+      if (this.state.signin.signInData.uid === 'guest' || this.state.signin.signInData.uid === undefined) {
+        this.state.signin.signInData.uid = 'guest';
+      // メールアドレスログイン時の場合
+      } else {
+        firebase.auth().onAuthStateChanged((user)=> {
+          if (user !== null) {
+            this.state.signin.signInData.uid = user.uid;
+          }
+        })
+      }
     }
   }
 }

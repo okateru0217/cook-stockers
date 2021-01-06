@@ -10,7 +10,7 @@
     <transition name="hamburger__menu">
       <div class="hamburger__menu" v-show="ActiveBtn">
           <ul>
-            <li><router-link to="/myrecipe">ゲスト様</router-link></li>
+            <li><a @click="signInGuest">ゲスト様</a></li>
             <li><router-link to="/signin">ログイン</router-link></li>
             <li><router-link to="/signup">新規登録</router-link></li>
           </ul>
@@ -24,6 +24,11 @@ export default {
   data() {
     return {
       ActiveBtn: false
+    }
+  },
+  methods: {
+    signInGuest() {
+      this.$store.dispatch('signInGuest');
     }
   }
 }

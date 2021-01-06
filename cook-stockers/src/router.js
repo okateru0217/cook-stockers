@@ -5,6 +5,7 @@ import SignIn from './components/home/SignIn'
 import SignUp from './components/home/SignUp'
 import MyRecipe from './components/recipe/MyRecipe'
 import NewRecipe from './components/new-recipe/NewRecipe'
+import DetailsRecipe from './components/details-recipe/DetailsRecipe'
 
 Vue.use(Router)
 export default new Router({
@@ -15,5 +16,6 @@ export default new Router({
     {path: '/signup', component: SignUp},
     {path: '/myrecipe', component: MyRecipe},
     {path: '/newrecipe', component: NewRecipe},
+    {path: '/detailsrecipe', component: DetailsRecipe}
   ]
 });

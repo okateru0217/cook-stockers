@@ -5,7 +5,9 @@
         <table>
           <tbody v-if="$store.state.recordRecipe.CengeColorBtn === true">
             <tr v-for="displayRecipe in $store.state.recordRecipe.recipeArr"
-            :key="displayRecipe.id">
+            :key="displayRecipe.id"
+            
+            >
               <td><img :src="displayRecipe.recipe_img"></td>
               <td class="my-recipe-list__td"><p class="my-recipe-list__recipe-name">{{ displayRecipe.recipe_name }}</p></td>
               <td class="my-recipe-list__td"><p class="my-recipe-list__memo">{{ displayRecipe.recipe_memo }}</p></td>
@@ -31,6 +33,7 @@
 
 <script>
 // import { filter } from 'vue/types/umd';
+// import router from '../../../router'
 export default {
   methods: {
     // お気に入りボタン押下したリストのみ、お気に入りリストに反映される
@@ -45,7 +48,10 @@ export default {
       // お気に入り登録したリストを、配列に格納
       const filterFavoriteRecipe = this.$store.state.recordRecipe.recipeArr.filter(item => item.recipe_favorite_icon === '★');
       this.$store.state.recordRecipe.favoriteRecipeArr = filterFavoriteRecipe;
-    }
+    },
+    // RouterDetailsRecipe() {
+    //   router.push('/detailsrecipe');
+    // }
   },
   created() {
     this.$store.dispatch('createdRecipeList')

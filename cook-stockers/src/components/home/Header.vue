@@ -10,7 +10,7 @@
       <div class="header__nav">
         <nav>
           <ul>
-            <li><router-link to="/myrecipe">ゲスト様</router-link></li>
+            <li><a @click="signInGuest">ゲスト様</a></li>
             <li><router-link to="/signin">ログイン</router-link></li>
             <li><router-link to="/signup">新規登録</router-link></li>
           </ul>
@@ -26,6 +26,11 @@ import HeaderHamburger from './HeaderHamburger'
 export default {
   components: {
     HeaderHamburger
+  },
+  methods: {
+    signInGuest() {
+      this.$store.dispatch('signInGuest');
+    }
   }
 }
 </script>

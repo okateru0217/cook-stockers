@@ -39,6 +39,12 @@ export default {
         // メールアドレスまたはパスワードが間違っていた場合、画面にエラーを表示させる
         this.state.signin.typingErr = 'メールアドレスまたはパスワードが間違っています';
       })
+    },
+    // ゲストサインイン処理
+    signInGuest() {
+      // レシピ一覧へ画面遷移
+      router.push('/myrecipe');
+      this.state.signin.signInData.uid = 'guest';
     }
   }
 }

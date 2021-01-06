@@ -14,7 +14,7 @@
           </p>
         </div><!-- home__ttl -->
         <div class="home__btn">
-          <router-link to="/myrecipe">レシピをストックする</router-link>
+          <a @click="signInGuest">レシピをストックする</a>
         </div><!-- home__btn -->
       </div><!-- home__main-wrap -->
     </div><!-- home__wrap -->
@@ -27,6 +27,11 @@ import Header from './Header'
 export default {
   components: {
     Header
+  },
+    methods: {
+    signInGuest() {
+      this.$store.dispatch('signInGuest');
+    }
   }
 }
 </script>
