@@ -8,24 +8,56 @@
       <div class="details-recipe__item">
         <div class="details-recipe__main-item">
           <div class="details-recipe__name">
-            <!-- <DetailsRecipeName></DetailsRecipeName> -->
+            <DetailsRecipeName></DetailsRecipeName>
           </div><!-- details-recipe__name -->
+          <div class="details-recipe__material">
+            <DetailsRecipeMaterial></DetailsRecipeMaterial>
+          </div><!-- details-recipe__material -->
+          <div class="details-recipe__procedure">
+            <DetailsRecipeProcedure></DetailsRecipeProcedure>
+          </div><!-- details-recipe__procedure -->
         </div><!-- details-recipe__main-item -->
+        <div class="details-recipe__sub-item">
+          <div class="details-recipe__tag">
+            <DetailsRecipeTag></DetailsRecipeTag>
+          </div><!-- details-recipe__tag -->
+          <div class="details-recipe__memo">
+            <DetailsRecipeMemo></DetailsRecipeMemo>
+          </div><!-- details-recipe__memo -->
+          <div class="details-recipe__external-site">
+            <DetailsRecipeExternalSite></DetailsRecipeExternalSite>
+          </div><!-- details-recipe__external-site -->
+        </div><!-- details-recipe__sub-item -->
       </div><!-- details-recipe__item -->
     </div><!-- details-recipe__wrap -->
+    <div class="details-recipe__footer">
+      <Footer></Footer>
+    </div><!-- details-recipe__footer -->
   </div><!-- details-recipe-container -->
 </template>
 
 <script>
 import SideMenu from '../menu/SideMenu'
+import Footer from '../menu/FooterMenu'
 import DetailsRecipeHeader from './details-recipe-components/DetailsRecipeHeader'
-// import DetailsRecipeName from './details-recipe-components/DetailsRecipeName'
+import DetailsRecipeName from './details-recipe-components/DetailsRecipeName'
+import DetailsRecipeMaterial from './details-recipe-components/DetailsRecipeMaterial'
+import DetailsRecipeProcedure from './details-recipe-components/DetailsRecipeProcedure'
+import DetailsRecipeTag from './details-recipe-components/DetailsRecipeTag'
+import DetailsRecipeMemo from './details-recipe-components/DetailsRecipeMemo'
+import DetailsRecipeExternalSite from './details-recipe-components/DetailsRecipeExternalSite'
 
 export default {
   components: {
     SideMenu,
+    Footer,
     DetailsRecipeHeader,
-    // DetailsRecipeName,
+    DetailsRecipeName,
+    DetailsRecipeMaterial,
+    DetailsRecipeProcedure,
+    DetailsRecipeTag,
+    DetailsRecipeMemo,
+    DetailsRecipeExternalSite
   }
 }
 </script>

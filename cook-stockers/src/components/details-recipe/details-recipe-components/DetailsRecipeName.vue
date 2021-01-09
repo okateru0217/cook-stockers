@@ -2,10 +2,8 @@
   <div class="details-recipe-name__container">
     <div class="details-recipe-name__wrap">
       <div class="details-recipe-name__item">
-        <div class="details-recipe-name__img"
-        v-if="$store.state.recordRecipe.recipeData.recipeImg !== '' ">
+        <div class="details-recipe-name__img">
           <img  
-          :src="$store.state.recordRecipe.recipeData.recipeImg"
           alt="">
           <label>
             画像を選択
@@ -16,7 +14,7 @@
             class="details-recipe-name__attach-img">
           </label>
         </div><!-- details-recipe-name__img -->
-        <div class="details-recipe-name__img-none" 
+        <!-- <div class="details-recipe-name__img-none" 
         v-else>
           <img 
           src="../../../assets/img-none.png" 
@@ -29,7 +27,7 @@
             data-label="画像の添付"
             class="details-recipe-name__attach-img">
           </label>
-        </div><!-- details-recipe-name__img-none -->
+        </div>details-recipe-name__img-none -->
         <div class="details-recipe-name__recipe-name">
           <input 
           type="text" 

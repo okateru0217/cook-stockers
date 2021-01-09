@@ -5,6 +5,7 @@ import signin from './modules/signin'
 import signup from './modules/signup'
 import signout from './modules/signout'
 import recordRecipe from './modules/recordRecipe'
+import detailsRecipe from './modules/detailsRecipe'
 
 Vue.use(Vuex);
 
@@ -14,6 +15,7 @@ export default new Vuex.Store({
     signin,
     signup,
     signout,
-    recordRecipe
+    recordRecipe,
+    detailsRecipe
   }
 })
