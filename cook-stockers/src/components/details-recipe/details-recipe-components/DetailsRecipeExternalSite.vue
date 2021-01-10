@@ -1,20 +1,19 @@
 <template>
-  <div class="new-recipe-external-site__container">
-    <div class="new-recipe-external-site__wrap">
-      <div class="new-recipe-external-site__item">
-        <div class="new-recipe-external-site__ttl">
+  <div class="details-recipe-external-site__container">
+    <div class="details-recipe-external-site__wrap">
+      <div class="details-recipe-external-site__item">
+        <div class="details-recipe-external-site__ttl">
           <h3>外部レシピサイトURL</h3>
-        </div><!-- new-recipe-external-site__ttl -->
-        <div class="new-recipe-external-site__input-url">
-          <input 
-          type="text" 
-          placeholder="URLを追加"
-          v-model="$store.state.recordRecipe.recipeData.recipeUrl"
-          >
-        </div><!-- new-recipe-external-site__input-url -->
-      </div><!-- new-recipe-external-site__item -->
-    </div><!-- new-recipe-external-site__wrap -->
-  </div><!-- new-recipe-external-site__container -->
+        </div><!-- details-recipe-external-site__ttl -->
+        <div class="details-recipe-external-site__input-url">
+          <p>{{ $store.state.detailsRecipe.recipeUrl }}</p>
+        </div><!-- details-recipe-external-site__input-url -->
+        <div class="details-recipe-external-site__move-site">
+          <button>レシピサイトへ</button>
+        </div><!-- details-recipe-external-site__move-site -->
+      </div><!-- details-recipe-external-site__item -->
+    </div><!-- details-recipe-external-site__wrap -->
+  </div><!-- details-recipe-external-site__container -->
 </template>
 
 <style lang="scss" scoped>
@@ -23,11 +22,11 @@
   font-family: 'Raleway', sans-serif;
 }
 
-.new-recipe-external-site__wrap {
+.details-recipe-external-site__wrap {
   background-color: #FFF;
 }
 
-.new-recipe-external-site__ttl {
+.details-recipe-external-site__ttl {
 
   h3 {
     padding: 30px 0 0 20px;
@@ -35,23 +34,44 @@
   }
 }
 
-.new-recipe-external-site__input-url {
+.details-recipe-external-site__input-url {
   width: 90%;
   margin: 0 auto;
-  padding: 30px 0;
+  padding: 20px 0;
 
-  input {
-    outline: none;
+  p {
     border: none;
     border-bottom: 1.5px solid #C1C1C1;
   }
 }
 
+.details-recipe-external-site__move-site {
+  text-align: center;
+  padding-bottom: 30px;
+
+  button {
+    cursor: pointer;
+    outline: none;
+    text-decoration: none;
+    border-radius: 50px;
+    font-weight: bold;
+    color: #fff;
+    background-color: #FCBB0A;
+    border: 1px solid #FCBB0A;
+    padding: 15px 30px;
+    font-size: 15px;
+  }
+
+  button:hover {
+    padding: 23px 73px;
+  }
+}
+
 // sp用
 @media screen and (max-width: 767px) {
-  .new-recipe-external-site__input-url {
+  .details-recipe-external-site__input-url {
 
-    input {
+    p {
       width: 50vw;
     }
   }
@@ -59,9 +79,9 @@
 
 // tab用
 @media screen and (min-width: 768px) and (max-width: 1023px) {
-  .new-recipe-external-site__input-url {
+  .details-recipe-external-site__input-url {
 
-    input {
+    p {
       width: 50vw;
     }
   }
@@ -69,16 +89,16 @@
 
 // pc用
 @media screen and (min-width: 1024px) {
-  .new-recipe-external-site__ttl {
+  .details-recipe-external-site__ttl {
 
     h3 {
       margin: 0 0 20px 0;
     }
   }
 
-  .new-recipe-external-site__input-url {
+  .details-recipe-external-site__input-url {
 
-    input {
+    p {
       width: 12.5vw;
     }
   }

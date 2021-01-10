@@ -7,7 +7,7 @@
       <div class="side-menu__nav">
         <nav>
           <ul>
-            <li><router-link to="/newrecipe">新しいレシピ</router-link></li>
+            <li><a @click="routerNewRecipe">新しいレシピ</a></li>
             <li><router-link to="/myrecipe">マイレシピ</router-link></li>
             <li><router-link to="/shoppingmemo">買い物メモ</router-link></li>
             <li><a @click="signOut">ログアウト</a></li>
@@ -24,6 +24,7 @@
 
 <script>
 import Search from './SideMenuSearch'
+import router from '../../router'
 
 export default {
   components: {
@@ -37,6 +38,10 @@ export default {
     }
   },
   methods: {
+    routerNewRecipe() {
+      this.$store.state.recordRecipe.switcherAddEditBtn = true;
+      router.push('/newrecipe');
+    },
     signOut() {
       this.$store.dispatch('signOut');
     }

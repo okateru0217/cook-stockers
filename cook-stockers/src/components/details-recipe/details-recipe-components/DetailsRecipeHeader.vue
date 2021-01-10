@@ -5,7 +5,7 @@
         <a @click="$router.go(-1)"><font-awesome-icon icon="chevron-left" /></a>
       </div><!-- details-recipe-header__back-btn -->
       <div class="details-recipe-header__ttl">
-        <h2>{{ recipe_name }}</h2>
+        <h2>{{ $store.state.detailsRecipe.recipeName }}</h2>
       </div><!-- details-recipe-header__ttl -->
     </div><!-- details-recipe-header__wrap -->
   </div><!-- details-recipe-header__container -->
@@ -13,14 +13,8 @@
 
 <script>
 export default {
-  computed: {
-    recipe_name() {
-      return this.$store.state.detailsRecipe.detailsRecipeArr[0].detailsRecipe_name
-    }
-  },
   created() {
     this.$store.dispatch('createDetailsRecipe');
-    console.log(this.$store.state.recordRecipe.recipeArr)
   }
 }
 </script>

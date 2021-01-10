@@ -5,7 +5,8 @@
         <a @click="$router.go(-1)"><font-awesome-icon icon="chevron-left" /></a>
       </div><!-- new-recipe-header__back-btn -->
       <div class="new-recipe-header__ttl">
-        <h2>新しいレシピ</h2>
+        <h2 v-if="$store.state.recordRecipe.switcherAddEditBtn === true">新しいレシピ</h2>
+        <h2 v-else>{{ $store.state.detailsRecipe.recipeName }}</h2>
       </div><!-- new-recipe-header__ttl -->
     </div><!-- new-recipe-header__wrap -->
   </div><!-- new-recipe-header__container -->

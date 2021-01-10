@@ -32,9 +32,17 @@
         </div><!-- new-recipe-name__img-none -->
         <div class="new-recipe-name__recipe-name">
           <input 
+          v-if="$store.state.recordRecipe.switcherAddEditBtn === true"
           type="text" 
           placeholder="レシピ名"
-          v-model="$store.state.recordRecipe.recipeData.recipeName">
+          v-model="$store.state.recordRecipe.recipeData.recipeName"
+          >
+          <input 
+          v-else
+          type="text" 
+          placeholder="レシピ名"
+          v-model="$store.state.editingRecipe.editingRecipeName"
+          >
         </div><!-- new-recipe-name__recipe-name -->
       </div><!-- new-recipe-name__item -->
     </div><!-- new-recipe-name__wrap -->
@@ -45,7 +53,7 @@
 export default {
   data() {
     return {
-      images: '$store.state.recordRecipe.recipeData.recipeImg',
+      images: '$store.state.recordRecipe.recipeData.recipeImg'
     }
   },
   methods: {

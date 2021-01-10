@@ -7,9 +7,16 @@
         </div><!-- new-recipe-external-site__ttl -->
         <div class="new-recipe-external-site__input-url">
           <input 
+          v-if="$store.state.recordRecipe.switcherAddEditBtn === true"
           type="text" 
           placeholder="URLを追加"
           v-model="$store.state.recordRecipe.recipeData.recipeUrl"
+          >
+          <input 
+          v-else
+          type="text" 
+          placeholder="URLを追加"
+          v-model="$store.state.editingRecipe.editingRecipeUrl"
           >
         </div><!-- new-recipe-external-site__input-url -->
       </div><!-- new-recipe-external-site__item -->

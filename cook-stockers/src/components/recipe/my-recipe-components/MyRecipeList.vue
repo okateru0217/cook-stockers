@@ -51,12 +51,8 @@ export default {
     },
     // レシピの詳細へ画面遷移
     RouterDetailsRecipe(displayRecipe) {
-      this.$store.state.detailsRecipe.detailsRecipeArr.length = 0;
-      this.$store.state.detailsRecipe.detailsRecipeArr.push({
-        detailsRecipe_name: displayRecipe.recipe_name
-      })
-      console.log(this.$store.state.detailsRecipe.detailsRecipeArr);
       router.push('/detailsrecipe');
+      this.$store.dispatch('displayDetailsRecipe', displayRecipe);
     }
   },
   created() {

@@ -27,82 +27,84 @@ export default {
     favoriteIcon: '☆',
     // tablet表示以下のお気に入り表示判定用
     CengeColorBtn: true,
-    // タグテスト用
-    tagTestArr: []
+    // レシピを追加するか編集するかを切り替えるスイッチ
+    switcherAddEditBtn: true
   },
   actions: {
     // 「登録する」ボタン押下時、cloud firestoreへ登録  
     recipeRecord() {
-      // マイレシピへ画面遷移する
-      router.push('/myrecipe');
-      // 「ID」「料理名」を格納するためのコレクションパス
-      const recordRecipeId = firebase.firestore()
-      .collection('users-information').doc(this.state.signin.signInData.uid)
-      .collection('recipe').doc();
-      // 「ID」「料理名」入力値をcloud firestoreへ登録
-      recordRecipeId.set({
-        recipe_id: recordRecipeId.id,
-        recipe_name: this.state.recordRecipe.recipeData.recipeName,
-        recipe_img: this.state.recordRecipe.recipeData.recipeImg,
-        recipe_memo: this.state.recordRecipe.recipeData.recipeMemo,
-        recipe_Url: this.state.recordRecipe.recipeData.recipeUrl,
-        recipe_favorite_icon: '☆'
-      })
-      // 「材料」「量」が格納された配列を取り出す
-      this.state.recordRecipe.materialArr.forEach(items => {
-        // 「材料」「量」を格納するためのコレクションパス
-        const recordMaterialQuantity = firebase.firestore()
+      if (this.state.recordRecipe.switcherAddEditBtn === true) {
+        // マイレシピへ画面遷移する
+        router.push('/myrecipe');
+        // 「ID」「料理名」を格納するためのコレクションパス
+        const recordRecipeId = firebase.firestore()
         .collection('users-information').doc(this.state.signin.signInData.uid)
-        .collection('recipe').doc(recordRecipeId.id)
-        .collection('material').doc();
-        // 「材料」「量」入力値をcloud firestoreへ登録
-        recordMaterialQuantity.set({
-          recipe_material_id: recordRecipeId.id,
-          recipe_material_index: items.id,
-          recipe_material: items.material,
-          recipe_quantity: items.quantity,
+        .collection('recipe').doc();
+        // 「ID」「料理名」入力値をcloud firestoreへ登録
+        recordRecipeId.set({
+          recipe_id: recordRecipeId.id,
+          recipe_name: this.state.recordRecipe.recipeData.recipeName,
+          recipe_img: this.state.recordRecipe.recipeData.recipeImg,
+          recipe_memo: this.state.recordRecipe.recipeData.recipeMemo,
+          recipe_Url: this.state.recordRecipe.recipeData.recipeUrl,
+          recipe_favorite_icon: '☆'
         })
-      })
-      // 「手順」が格納された配列を取り出す
-      this.state.recordRecipe.procedureArr.forEach(items => {
-        // 「手順」を格納するためのコレクションパス
-        const recordProcedure = firebase.firestore()
-        .collection('users-information').doc(this.state.signin.signInData.uid)
-        .collection('recipe').doc(recordRecipeId.id)
-        .collection('procedure').doc();
-        // 「手順」入力値をcloud firestoreへ登録
-        recordProcedure.set({
-          recipe_procedure_id: recordRecipeId.id,
-          recipe_procedure_index: items.id, 
-          recipe_procedure: items.procedure
+        // 「材料」「量」が格納された配列を取り出す
+        this.state.recordRecipe.materialArr.forEach(items => {
+          // 「材料」「量」を格納するためのコレクションパス
+          const recordMaterialQuantity = firebase.firestore()
+          .collection('users-information').doc(this.state.signin.signInData.uid)
+          .collection('recipe').doc(recordRecipeId.id)
+          .collection('material').doc();
+          // 「材料」「量」入力値をcloud firestoreへ登録
+          recordMaterialQuantity.set({
+            recipe_material_id: recordRecipeId.id,
+            recipe_material_index: items.id,
+            recipe_material: items.material,
+            recipe_quantity: items.quantity,
+          })
         })
-      })
-      // 「タグ」が格納された配列を取り出す
-      this.state.recordRecipe.tagArr.forEach(items => {
-        // 「タグ」を格納するためのコレクションパス
-        const recordTag = firebase.firestore()
-        .collection('users-information').doc(this.state.signin.signInData.uid)
-        .collection('recipe').doc(recordRecipeId.id)
-        .collection('tag').doc();
-        // 「タグ」入力値をcloud firestoreへ登録
-        recordTag.set({
-          recipe_tag_id: recordRecipeId.id,
-          recipe_tag_index: items.id,
-          recipe_tag: items.tag
+        // 「手順」が格納された配列を取り出す
+        this.state.recordRecipe.procedureArr.forEach(items => {
+          // 「手順」を格納するためのコレクションパス
+          const recordProcedure = firebase.firestore()
+          .collection('users-information').doc(this.state.signin.signInData.uid)
+          .collection('recipe').doc(recordRecipeId.id)
+          .collection('procedure').doc();
+          // 「手順」入力値をcloud firestoreへ登録
+          recordProcedure.set({
+            recipe_procedure_id: recordRecipeId.id,
+            recipe_procedure_index: items.id, 
+            recipe_procedure: items.procedure
+          })
         })
-        // myrecipeに表示させるためにcloud firestoreの情報を格納
-        .then(() => {
-          const recipeDataArr = firebase.firestore().
-          collection('users-information').doc(this.state.signin.signInData.uid)
-          .collection('recipe');
-          recipeDataArr.get().then(snapshot => {
-            this.state.recordRecipe.recipeArr.length = 0;
-            snapshot.forEach(docs => {
-              this.state.recordRecipe.recipeArr.push(docs.data());
+        // 「タグ」が格納された配列を取り出す
+        this.state.recordRecipe.tagArr.forEach(items => {
+          // 「タグ」を格納するためのコレクションパス
+          const recordTag = firebase.firestore()
+          .collection('users-information').doc(this.state.signin.signInData.uid)
+          .collection('recipe').doc(recordRecipeId.id)
+          .collection('tag').doc();
+          // 「タグ」入力値をcloud firestoreへ登録
+          recordTag.set({
+            recipe_tag_id: recordRecipeId.id,
+            recipe_tag_index: items.id,
+            recipe_tag: items.tag
+          })
+          // myrecipeに表示させるためにcloud firestoreの情報を格納
+          .then(() => {
+            const recipeDataArr = firebase.firestore().
+            collection('users-information').doc(this.state.signin.signInData.uid)
+            .collection('recipe');
+            recipeDataArr.get().then(snapshot => {
+              this.state.recordRecipe.recipeArr.length = 0;
+              snapshot.forEach(docs => {
+                this.state.recordRecipe.recipeArr.push(docs.data());
+              })
             })
           })
         })
-      })
+      }
     },
     // レシピ画像をfirebaseのstrageにupload
     imgUpLoad(_state, payload) {

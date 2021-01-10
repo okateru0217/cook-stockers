@@ -7,11 +7,19 @@
         </div><!-- new-recipe-memo__ttl -->
         <div class="new-recipe-memo__text-area">
           <textarea 
+          v-if="$store.state.recordRecipe.switcherAddEditBtn === true"
           name="memo" 
           cols="30" 
           rows="10" 
           placeholder="メモを追加"
           v-model="$store.state.recordRecipe.recipeData.recipeMemo"></textarea>
+          <textarea 
+          v-else
+          name="memo" 
+          cols="30" 
+          rows="10" 
+          placeholder="メモを追加"
+          v-model="$store.state.editingRecipe.editingRecipeMemo"></textarea>
         </div><!-- new-recipe-memo__text-area -->
       </div><!-- new-recipe-memo__item -->
     </div><!-- new-recipe-memo__wrap -->

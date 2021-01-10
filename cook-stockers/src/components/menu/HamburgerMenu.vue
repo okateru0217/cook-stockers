@@ -10,7 +10,7 @@
     <transition name="hamburger__menu">
       <div class="hamburger__menu" v-show="ActiveBtn">
         <ul>
-          <li><router-link to="/newrecipe">新しいレシピ</router-link></li>
+          <li><a @click="routerNewRecipe">新しいレシピ</a></li>
           <li><a @click="signOut">ログアウト</a></li>
           <li class="hamburger__recommend-site"><p>おすすめレシピサイト</p></li>
           <li><router-link to="/signin">クックパッド</router-link></li>
@@ -23,6 +23,8 @@
 </template>
 
 <script>
+import router from '../../router'
+
 export default {
   data() {
     return {
@@ -30,6 +32,10 @@ export default {
     }
   },
   methods: {
+    routerNewRecipe() {
+      this.$store.state.recordRecipe.switcherAddEditBtn = true;
+      router.push('/newrecipe');
+    },
     signOut() {
       this.$store.dispatch('signOut');
     }

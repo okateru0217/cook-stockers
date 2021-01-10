@@ -6,16 +6,17 @@ import signup from './modules/signup'
 import signout from './modules/signout'
 import recordRecipe from './modules/recordRecipe'
 import detailsRecipe from './modules/detailsRecipe'
+import editingRecipe from './modules/editingRecipe'
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
-
   modules: {
     signin,
     signup,
     signout,
     recordRecipe,
-    detailsRecipe
+    detailsRecipe,
+    editingRecipe
   }
 })

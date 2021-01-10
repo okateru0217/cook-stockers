@@ -3,36 +3,12 @@
     <div class="details-recipe-name__wrap">
       <div class="details-recipe-name__item">
         <div class="details-recipe-name__img">
-          <img  
+          <img
+          :src="$store.state.detailsRecipe.recipeImg"
           alt="">
-          <label>
-            画像を選択
-            <input
-            @change="imgUpLoad"
-            type="file" 
-            data-label="画像の添付"
-            class="details-recipe-name__attach-img">
-          </label>
         </div><!-- details-recipe-name__img -->
-        <!-- <div class="details-recipe-name__img-none" 
-        v-else>
-          <img 
-          src="../../../assets/img-none.png" 
-          alt="">
-          <label>
-            画像を選択
-            <input
-            @change="imgUpLoad"
-            type="file" 
-            data-label="画像の添付"
-            class="details-recipe-name__attach-img">
-          </label>
-        </div>details-recipe-name__img-none -->
         <div class="details-recipe-name__recipe-name">
-          <input 
-          type="text" 
-          placeholder="レシピ名"
-          v-model="$store.state.recordRecipe.recipeData.recipeName">
+          <p>{{ $store.state.detailsRecipe.recipeName }}</p>
         </div><!-- details-recipe-name__recipe-name -->
       </div><!-- details-recipe-name__item -->
     </div><!-- details-recipe-name__wrap -->
@@ -73,23 +49,6 @@ export default {
   input {
     display: none;
   }
-
-  label {
-    display: block;
-    text-align: center;
-    font-size: 0.9em;
-    padding: 5px;
-    border-radius: 10px;
-    color: #FF7F50;
-    border: 1px solid #FF7F50;
-    background-color: #FFF;
-    transition: 0.3s;
-  }
-
-  label:hover {
-    color: #FFF;
-    background-color: #FF7F50;
-  }
 }
 
 .details-recipe-name__img-none {
@@ -101,40 +60,15 @@ export default {
   input {
     display: none;
   }
-
-  label {
-    display: block;
-    text-align: center;
-    font-size: 0.9em;
-    padding: 5px;
-    border-radius: 10px;
-    color: #FF7F50;
-    border: 1px solid #FF7F50;
-    background-color: #FFF;
-    transition: 0.3s;
-  }
-
-  label:hover {
-    color: #FFF;
-    background-color: #FF7F50;
-  }
-}
-
-.details-recipe-name__label {
-  display: flex;
 }
 
 .details-recipe-name__recipe-name {
 
-  input {
+  p {
     outline: none;
     border: none;
     padding-bottom: 8px;
     border-bottom: 1px solid #C1C1C1;
-  }
-
-  input::placeholder {
-    padding-left: 10px;
   }
 }
 
@@ -169,7 +103,7 @@ export default {
   .details-recipe-name__recipe-name {
     margin-left: 5vw;
 
-    input {
+    p {
       width: 60vw;
     }
   }
@@ -206,7 +140,7 @@ export default {
   .details-recipe-name__recipe-name {
     margin-left: 5vw;
 
-    input {
+    p {
       width: 70vw;
     }
   }
@@ -243,9 +177,9 @@ export default {
   .details-recipe-name__recipe-name {
     margin-left: 3vw;
 
-    input {
+    p {
       width: 25vw;
   }
-    }
+}
 }
 </style>

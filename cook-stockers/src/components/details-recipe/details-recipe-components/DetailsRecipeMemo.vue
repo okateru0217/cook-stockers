@@ -1,21 +1,16 @@
 <template>
-  <div class="new-recipe-memo__container">
-    <div class="new-recipe-memo__wrap">
-      <div class="new-recipe-memo__item">
-        <div class="new-recipe-memo__ttl">
-          <h3>メモ追加</h3>
-        </div><!-- new-recipe-memo__ttl -->
-        <div class="new-recipe-memo__text-area">
-          <textarea 
-          name="memo" 
-          cols="30" 
-          rows="10" 
-          placeholder="メモを追加"
-          v-model="$store.state.recordRecipe.recipeData.recipeMemo"></textarea>
-        </div><!-- new-recipe-memo__text-area -->
-      </div><!-- new-recipe-memo__item -->
-    </div><!-- new-recipe-memo__wrap -->
-  </div><!-- new-recipe-memo__container -->
+  <div class="details-recipe-memo__container">
+    <div class="details-recipe-memo__wrap">
+      <div class="details-recipe-memo__item">
+        <div class="details-recipe-memo__ttl">
+          <h3>メモ</h3>
+        </div><!-- details-recipe-memo__ttl -->
+        <div class="details-recipe-memo__text-area">
+          <p>{{ $store.state.detailsRecipe.recipeMemo }}</p>
+        </div><!-- details-recipe-memo__text-area -->
+      </div><!-- details-recipe-memo__item -->
+    </div><!-- details-recipe-memo__wrap -->
+  </div><!-- details-recipe-memo__container -->
 </template>
 
 <style lang="scss" scoped>
@@ -24,11 +19,11 @@
   font-family: 'Raleway', sans-serif;
 }
 
-.new-recipe-memo__wrap {
+.details-recipe-memo__wrap {
   background-color: #FFF;
 }
 
-.new-recipe-memo__ttl {
+.details-recipe-memo__ttl {
 
   h3 {
     outline: none;
@@ -37,44 +32,50 @@
   }
 }
 
-.new-recipe-memo__text-area {
+.details-recipe-memo__text-area {
   text-align: center;
   padding-bottom: 30px;
-  
-  textarea {
-    outline: none;
+
+  p {
+    word-wrap: break-word;
+    margin: 0 auto;
+    padding-top: 10px;
+    text-align: left;
     border: 1px solid #C1C1C1;
     border-radius: 5px;
-    padding-top: 10px;
-  }
-
-  textarea::placeholder {
-    padding: 1px 0 0 10px;
   }
 }
 
 // sp用
 @media screen and (max-width: 767px) {
-  .new-recipe-memo__ttl {
+  .details-recipe-memo__ttl {
 
     h3 {
       padding-left: 20px;
+    }
+  }
+
+  .details-recipe-memo__text-area {
+
+    p {
+      width: 250px;
+      height: 180px;
     }
   }
 }
 
 // tab用
 @media screen and (min-width: 768px) and (max-width: 1023px) {
-  .new-recipe-memo__ttl {
+  .details-recipe-memo__ttl {
 
     h3 {
       padding-left: 20px;
     }
   }
 
-  .new-recipe-memo__text-area {
+  .details-recipe-memo__text-area {
   
-    textarea {
+    p {
       width: 36vw;
       height: 23.5vw;
     }
@@ -83,15 +84,23 @@
 
 // pc用
 @media screen and (min-width: 1024px) {
-  .new-recipe-memo__wrap {
+  .details-recipe-memo__wrap {
     padding-bottom: 10px;
   }
 
-  .new-recipe-memo__ttl {
+  .details-recipe-memo__ttl {
 
     h3 {
       margin: 0 0 50px 0;
       padding-left: 20px;
+    }
+  }
+
+  .details-recipe-memo__text-area {
+
+    p {
+      width: 250px;
+      height: 180px;
     }
   }
 }

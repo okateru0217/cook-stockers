@@ -1,10 +1,23 @@
 <template>
   <div class="router-new-recipe-btn__container">
     <div class="router-new-recipe-btn__wrap">
-      <router-link to="/newrecipe">新しいレシピ</router-link>
+      <a @click="routerNewRecipe">新しいレシピ</a>
     </div><!-- router-new-recipe-btn__wrap -->
   </div><!-- router-new-recipe-btn__container -->
 </template>
+
+<script>
+import router from '../../../router'
+
+export default {
+  methods: {
+    routerNewRecipe() {
+      this.$store.state.recordRecipe.switcherAddEditBtn = true;
+      router.push('/newrecipe');
+    }
+  }
+}
+</script>
 
 <style lang="scss" scoped>
 // 共通スタイル

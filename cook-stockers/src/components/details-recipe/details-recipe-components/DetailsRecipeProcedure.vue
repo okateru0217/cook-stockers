@@ -1,101 +1,23 @@
 <template>
-  <div class="new-recipe-procedure__container">
-    <div class="new-recipe-procedure__wrap">
-      <div class="new-recipe-procedure__item">
-        <div class="new-recipe-procedure__ttl">
+  <div class="details-recipe-procedure__container">
+    <div class="details-recipe-procedure__wrap">
+      <div class="details-recipe-procedure__item">
+        <div class="details-recipe-procedure__ttl">
           <h3>手順</h3>
-        </div><!-- new-recipe-procedure__ttl -->
-        <div class="new-recipe-procedure__table">
+        </div><!-- details-recipe-procedure__ttl -->
+        <div class="details-recipe-procedure__table">
           <table>
-            <tr v-for="procedures in this.$store.state.recordRecipe.procedureArr"
+            <tr v-for="procedures in this.$store.state.detailsRecipe.recipeProcedureArr"
             :key="procedures.id">
-              <td class="new-recipe-procedure__index"><i>{{ procedures.id + 1 }}</i></td>
-              <td class="new-recipe-procedure__procedure"><p>{{ procedures.procedure }}</p></td>
-              <td class="new-recipe-procedure__button"><button 
-              @click="editProcedure(procedures)"
-              class="new-recipe-procedure__edit-btn"><font-awesome-icon icon='edit' /></button></td>
-              <td class="new-recipe-procedure__button"><button 
-              @click="deleteProcedure(procedures)"
-              class="new-recipe-procedure__delete-btn"><font-awesome-icon icon='trash-alt' /></button></td>
+              <td class="details-recipe-procedure__index"><i>{{ procedures.recipe_procedure_index + 1 }}</i></td>
+              <td class="details-recipe-procedure__procedure"><p>{{ procedures.recipe_procedure }}</p></td>
             </tr>
           </table>
-        </div><!-- new-recipe-procedure__table -->
-        <div class="new-recipe-procedure__input">
-          <input 
-          type="text"
-          placeholder="手順"
-          v-model="procedureValue"
-          ref="editor"
-          >
-        </div><!-- new-recipe-procedure__input -->
-        <div class="new-recipe-procedure__add-btn">
-          <button
-          @click="setProcedure"
-          :class="{add: onAddBtn, edit: !onAddBtn}">{{ chengeOverBtn }}</button>
-        </div><!-- new-recipe-procedure__add-btn -->
-      </div><!-- new-recipe-procedure__item -->
-    </div><!-- new-recipe-procedure__wrap -->
-  </div><!-- new-recipe-procedure__container -->
+        </div><!-- details-recipe-procedure__table -->
+      </div><!-- details-recipe-procedure__item -->
+    </div><!-- details-recipe-procedure__wrap -->
+  </div><!-- details-recipe-procedure__container -->
 </template>
-
-<script>
-export default {
-  data() {
-    return {
-      // 手順を入力
-      procedureValue: '',
-      // 編集時のインデックスを取得する
-      editIndex: '',
-      // ボタンの初期表示
-      chengeOverBtn: '＋ 追加',
-      // ボタンの切り替え
-      onAddBtn: true
-    }
-  },
-  methods: {
-    // 手順を追加、編集する
-    setProcedure() {
-      // 手順を追加する
-      if (this.chengeOverBtn === '＋ 追加') {
-        this.$store.state.recordRecipe.procedureArr.push({
-          id: this.$store.state.recordRecipe.procedureArr.length,
-          procedure: this.procedureValue
-        })
-      // 手順を編集する
-      } else {
-        this.$store.state.recordRecipe.procedureArr[this.editIndex].procedure = this.procedureValue;
-        this.chengeOverBtn = '＋ 追加';
-        this.onAddBtn = true;
-      }
-      // 入力欄を空にする
-      this.procedureValue = '';
-    },
-    // 手順を削除する
-    deleteProcedure(procedures) {
-      this.$store.state.recordRecipe.procedureArr.splice(procedures.id, 1);
-      for(let i = procedures.id; i < this.$store.state.recordRecipe.procedureArr.length; i++) {
-        this.$store.state.recordRecipe.procedureArr[i].id = i;
-      }
-      this.procedureValue = '';
-      this.chengeOverBtn = '＋ 追加';
-      this.onAddBtn = true;
-    },
-    // 手順を編集するために、ボタンの見た目を変える
-    editProcedure(procedures) {
-      this.procedureValue = procedures.procedure;
-      this.editIndex = procedures.id;
-      this.$refs.editor.focus();
-      if (this.chengeOverBtn === '＋ 追加') {
-        this.chengeOverBtn = '編集';
-        this.onAddBtn = false;
-      } else {
-        this.chengeOverBtn = '＋ 追加';
-        this.onAddBtn = true;
-      }
-    }
-  }
-}
-</script>
 
 <style lang="scss" scoped>
 // 共通スタイル
@@ -103,11 +25,11 @@ export default {
   font-family: 'Raleway', sans-serif;
 }
 
-.new-recipe-procedure__wrap {
+.details-recipe-procedure__wrap {
   background-color: #FFF;
 }
 
-.new-recipe-procedure__ttl {
+.details-recipe-procedure__ttl {
 
   h3 {
     padding-top: 30px;
@@ -115,9 +37,10 @@ export default {
   }
 }
 
-.new-recipe-procedure__table {
+.details-recipe-procedure__table {
   width: 90%;
   margin: 0 auto;
+  padding-bottom: 30px;
 
   table {
     width: 100%;
@@ -131,21 +54,15 @@ export default {
     opacity: 0.7;
   }
 
-  .new-recipe-procedure__index {
+  .details-recipe-procedure__index {
     width: 1em;
     padding-bottom: 12px;
   }
 
-  .new-recipe-procedure__delete-btn {
+  .details-recipe-procedure__delete-btn {
     color: #FFF;
     background-color: #FF7F50;
     border: 1px solid #FF7F50;
-  }
-
-  .new-recipe-procedure__edit-btn {
-    color: #FFF;
-    background-color: #00cc33;
-    border: 1px solid #00cc33;
   }
 
   p {
@@ -155,65 +72,9 @@ export default {
   }
 }
 
-.new-recipe-procedure__button {
-  width: 26px;
-}
-
-.new-recipe-procedure__input {
-  width: 90%;
-  margin: 0 auto;
-  margin-top: 30px;
-
-  input {
-    outline: none;
-    width: 100%;
-    margin-bottom: 10px;
-    padding-bottom: 5px;
-    border: none;
-    border-bottom: 1px solid #C1C1C1;
-  }
-}
-
-.new-recipe-procedure__add-btn {
-  text-align: center;
-  padding: 10px 0 40px 0;
-
-  button {
-    cursor: pointer;
-    outline: none;
-    padding: 5px 15px;
-    border-radius: 50px;
-    transition: 0.3s;
-  }
-}
-
-.add {
-  color: #FCBB0A;
-  border: 1px solid #FCBB0A;
-  background-color: #FFF;
-}
-
-.add:hover {
-  color: #FFF;
-  border: 1px solid #FCBB0A;
-  background-color:#FCBB0A;
-}
-
-.edit {
-  color: #FFF;
-  border: 1px solid #00cc33;
-  background-color: #00cc33;
-}
-
-.edit:hover {
-  color: #00cc33;
-  border: 1px solid#00cc33;
-  background-color: #FFF;
-}
-
 // sp用
 @media screen and (max-width: 767px) {
-  .new-recipe-procedure__ttl {
+  .details-recipe-procedure__ttl {
 
     h3 {
       padding-left: 20px;
@@ -223,7 +84,7 @@ export default {
 
 // tab用
 @media screen and (min-width: 768px) and (max-width: 1023px) {
-  .new-recipe-procedure__ttl {
+  .details-recipe-procedure__ttl {
 
     h3 {
       padding-left: 20px;
@@ -233,7 +94,7 @@ export default {
 
 // pc用
 @media screen and (min-width: 1024px) {
-  .new-recipe-procedure__ttl {
+  .details-recipe-procedure__ttl {
 
     h3 {
       margin-top: 0;
