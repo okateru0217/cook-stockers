@@ -159,6 +159,7 @@ export default {
         }
       })
     },
+    // お気に入りアイコンの状態を変化、それに伴いDB更新
     renewFavoriteIcon(_state, payload) {
       const recordFavoriteIcon = firebase.firestore()
       .collection('users-information').doc(this.state.signin.signInData.uid)

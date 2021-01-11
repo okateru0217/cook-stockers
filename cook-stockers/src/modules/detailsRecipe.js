@@ -34,6 +34,7 @@ export default {
         }
       })
     },
+    // レシピ詳細画面に表示させるための処理
     displayDetailsRecipe(_state, displayRecipe) {
       // レシピ詳細に表示させるためのデータ
       this.state.detailsRecipe.recipeName = displayRecipe.recipe_name;
@@ -45,7 +46,7 @@ export default {
       // 大元のコレクションパス
       const detailsRecipeData = firebase.firestore()
       .collection('users-information').doc(this.state.signin.signInData.uid)
-      .collection('recipe').doc(this.state.detailsRecipe.recipeId)
+      .collection('recipe').doc(this.state.detailsRecipe.recipeId);
       // 「材料」「量」が格納されたコレクションパス
       const detailsRecipeMaterial = detailsRecipeData.collection('material');
       // 「材料」「量」を配列に格納
@@ -54,6 +55,10 @@ export default {
         this.state.detailsRecipe.recipeMaterialArr.length = 0;
         items.forEach(docs => {
           this.state.detailsRecipe.recipeMaterialArr.push(docs.data());
+        })
+        // 配列をindex番号順に入れ替える
+        this.state.detailsRecipe.recipeMaterialArr.sort((a, b) => {
+          return (a.recipe_material_index < b.recipe_material_index ? -1 : 1);
         })
       })
       // 「手順」が格納されたコレクションパス
@@ -65,6 +70,10 @@ export default {
         procedure.forEach(docs => {
           this.state.detailsRecipe.recipeProcedureArr.push(docs.data());
         })
+        // 配列をindex番号順に入れ替える
+        this.state.detailsRecipe.recipeProcedureArr.sort((a, b) => {
+          return (a.recipe_procedure_index < b.recipe_procedure_index ? -1 : 1);
+        })
       })
       // 「タグ」が格納されたコレクションパス
       const detailsRecipeTag = detailsRecipeData.collection('tag');
@@ -74,6 +83,10 @@ export default {
         this.state.detailsRecipe.recipeTagArr.length = 0;
         tags.forEach(docs => {
           this.state.detailsRecipe.recipeTagArr.push(docs.data());
+        })
+        // 配列をindex番号順に入れ替える
+        this.state.detailsRecipe.recipeTagArr.sort((a, b) => {
+          return (a.recipe_tag_index < b.recipe_tag_index ? -1 : 1);
         })
       })
     }

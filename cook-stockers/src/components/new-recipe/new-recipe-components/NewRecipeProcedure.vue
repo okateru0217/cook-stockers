@@ -6,7 +6,8 @@
           <h3>手順</h3>
         </div><!-- new-recipe-procedure__ttl -->
         <div class="new-recipe-procedure__table">
-          <table>
+          <table
+          v-if="$store.state.recordRecipe.switcherAddEditBtn === true">
             <tr v-for="procedures in this.$store.state.recordRecipe.procedureArr"
             :key="procedures.id">
               <td class="new-recipe-procedure__index"><i>{{ procedures.id + 1 }}</i></td>
@@ -17,6 +18,17 @@
               <td class="new-recipe-procedure__button"><button 
               @click="deleteProcedure(procedures)"
               class="new-recipe-procedure__delete-btn"><font-awesome-icon icon='trash-alt' /></button></td>
+            </tr>
+          </table>
+          <table
+          v-else>
+            <tr v-for="procedures in this.$store.state.editingRecipe.editingRecipeProcedure"
+            :key="procedures.id">
+              <td class="new-recipe-procedure__index"><i>{{ procedures.recipe_procedure_index + 1 }}</i></td>
+              <td class="new-recipe-procedure__procedure"><p>{{ procedures.recipe_procedure }}</p></td>
+              <td class="new-recipe-procedure__button"><button 
+              @click="editProcedure(procedures)"
+              class="new-recipe-procedure__edit-btn"><font-awesome-icon icon='edit' /></button></td>
             </tr>
           </table>
         </div><!-- new-recipe-procedure__table -->
@@ -55,17 +67,34 @@ export default {
   methods: {
     // 手順を追加、編集する
     setProcedure() {
-      // 手順を追加する
-      if (this.chengeOverBtn === '＋ 追加') {
-        this.$store.state.recordRecipe.procedureArr.push({
-          id: this.$store.state.recordRecipe.procedureArr.length,
-          procedure: this.procedureValue
-        })
-      // 手順を編集する
+      // 手順登録作業時の編集時の挙動
+      if (this.$store.state.recordRecipe.switcherAddEditBtn === true){
+        // 手順を追加する
+        if (this.chengeOverBtn === '＋ 追加') {
+          this.$store.state.recordRecipe.procedureArr.push({
+            id: this.$store.state.recordRecipe.procedureArr.length,
+            procedure: this.procedureValue
+          })
+        // 手順を編集する
+        } else {
+          this.$store.state.recordRecipe.procedureArr[this.editIndex].procedure = this.procedureValue;
+          this.chengeOverBtn = '＋ 追加';
+          this.onAddBtn = true;
+        }
+      // 手順編集作業時の編集時の挙動
       } else {
-        this.$store.state.recordRecipe.procedureArr[this.editIndex].procedure = this.procedureValue;
-        this.chengeOverBtn = '＋ 追加';
-        this.onAddBtn = true;
+        // 手順の追加
+        if (this.chengeOverBtn === '＋ 追加'){
+          this.$store.state.editingRecipe.editingRecipeProcedure.push({
+            recipe_procedure_id: this.$store.state.editingRecipe.editingRecipeProcedure.length,
+            recipe_procedure: this.procedureValue
+          })
+        // 手順の編集
+        } else {
+          this.$store.state.editingRecipe.editingRecipeProcedure[this.editIndex].recipe_procedure = this.procedureValue;
+          this.chengeOverBtn = '＋ 追加';
+          this.onAddBtn = true;
+        }
       }
       // 入力欄を空にする
       this.procedureValue = '';
@@ -82,8 +111,19 @@ export default {
     },
     // 手順を編集するために、ボタンの見た目を変える
     editProcedure(procedures) {
-      this.procedureValue = procedures.procedure;
-      this.editIndex = procedures.id;
+      // 手順登録作業時の編集時の挙動
+      if (this.$store.state.recordRecipe.switcherAddEditBtn === true){
+        // 入力値に手順を入れる
+        this.procedureValue = procedures.procedure;
+        // テーブルのIDを取得
+        this.editIndex = procedures.id;
+      // 手順編集作業時の編集時の挙動
+      } else {
+        // 入力欄に手順を入れる
+        this.procedureValue = procedures.recipe_procedure;
+        // テーブルのIDを取得
+        this.editIndex = procedures.recipe_procedure_index;
+      }
       this.$refs.editor.focus();
       if (this.chengeOverBtn === '＋ 追加') {
         this.chengeOverBtn = '編集';

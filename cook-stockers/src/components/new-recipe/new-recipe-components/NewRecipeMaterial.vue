@@ -6,7 +6,8 @@
           <h3>材料</h3>
         </div><!-- new-recipe-material__ttl -->
         <div class="new-recipe-material__table">
-          <table>
+          <table
+          v-if="$store.state.recordRecipe.switcherAddEditBtn === true">
             <tbody>
               <tr v-for="items in this.$store.state.recordRecipe.materialArr"
               :key="items.id">
@@ -22,6 +23,23 @@
                 <td><button 
                 @click="deleteItems(items)"
                 class="new-recipe-material__delete-btn"><font-awesome-icon icon='trash-alt' /></button></td>
+              </tr>
+            </tbody>
+          </table>
+          <table
+          v-else>
+            <tbody>
+              <tr v-for="items in this.$store.state.editingRecipe.editingRecipeMaterial"
+              :key="items.id">
+                <td 
+                class="new-recipe-material__material-td">
+                <p>{{ items.recipe_material }}</p></td>
+                <td
+                class="new-recipe-material__quantity-td">
+                <p>{{ items.recipe_quantity }}</p></td>
+                <td><button 
+                @click="editItems(items)"
+                class="new-recipe-material__edit-btn"><font-awesome-icon icon='edit' /></button></td>
               </tr>
             </tbody>
           </table>
@@ -68,19 +86,38 @@ export default {
   methods: {
     // アイテムの追加、編集を行う
     setItems() {
-      // アイテムの追加
-      if (this.chengeOverAddEdit === '＋ 追加'){
-        this.$store.state.recordRecipe.materialArr.push({
-          id: this.$store.state.recordRecipe.materialArr.length,
-          material: this.materialValue,
-          quantity: this.quantityValue
-        })
-      // アイテムの編集
+      // アイテム登録作業時の編集時の挙動
+      if (this.$store.state.recordRecipe.switcherAddEditBtn === true){
+        // アイテムの追加
+        if (this.chengeOverAddEdit === '＋ 追加'){
+          this.$store.state.recordRecipe.materialArr.push({
+            id: this.$store.state.recordRecipe.materialArr.length,
+            material: this.materialValue,
+            quantity: this.quantityValue
+          })
+        // アイテムの編集
+        } else {
+          this.$store.state.recordRecipe.materialArr[this.editIndex].material = this.materialValue;
+          this.$store.state.recordRecipe.materialArr[this.editIndex].quantity = this.quantityValue;
+          this.chengeOverAddEdit = '＋ 追加';
+          this.onAddBtn = true;
+        }
+      // アイテム編集作業時の編集時の挙動
       } else {
-        this.$store.state.recordRecipe.materialArr[this.editIndex].material = this.materialValue;
-        this.$store.state.recordRecipe.materialArr[this.editIndex].quantity = this.quantityValue;
-        this.chengeOverAddEdit = '＋ 追加';
-        this.onAddBtn = true;
+        // アイテムの追加
+        if (this.chengeOverAddEdit === '＋ 追加'){
+          this.$store.state.editingRecipe.editingRecipeMaterial.push({
+            recipe_material_id: this.$store.state.editingRecipe.editingRecipeMaterial.length,
+            recipe_material: this.materialValue,
+            recipe_quantity: this.quantityValue
+          })
+        // アイテムの編集
+        } else {
+          this.$store.state.editingRecipe.editingRecipeMaterial[this.editIndex].recipe_material = this.materialValue;
+          this.$store.state.editingRecipe.editingRecipeMaterial[this.editIndex].recipe_quantity = this.quantityValue;
+          this.chengeOverAddEdit = '＋ 追加';
+          this.onAddBtn = true;
+        }
       }
       // ボタン押下後、入力欄を空にする
       this.materialValue = '';
@@ -99,11 +136,21 @@ export default {
     },
     // アイテム編集の準備
     editItems(items) {
-      // 入力欄にアイテムを入れる
-      this.materialValue = items.material;
-      this.quantityValue = items.quantity;
-      // テーブルのIDを取得
-      this.editIndex = items.id;
+      // アイテム登録作業時の編集時の挙動
+      if (this.$store.state.recordRecipe.switcherAddEditBtn === true){
+        // 入力欄にアイテムを入れる
+        this.materialValue = items.material;
+        this.quantityValue = items.quantity;
+        // テーブルのIDを取得
+        this.editIndex = items.id;
+      // アイテム編集作業時の編集時の挙動
+      } else {
+        // 入力欄にアイテムを入れる
+        this.materialValue = items.recipe_material;
+        this.quantityValue = items.recipe_quantity;
+        // テーブルのIDを取得
+        this.editIndex = items.recipe_material_index;
+      }
       // フォーカスを指定
       this.$refs.editor.focus();
       if (this.chengeOverAddEdit === '＋ 追加') {

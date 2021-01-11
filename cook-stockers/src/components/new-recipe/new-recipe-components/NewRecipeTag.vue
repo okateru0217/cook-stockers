@@ -6,12 +6,23 @@
           <h3>タグ追加</h3>
         </div><!-- new-recipe-tag__ttl -->
         <div class="new-recipe-tag__table">
-          <table>
+          <table
+          v-if="$store.state.recordRecipe.switcherAddEditBtn === true">
             <tbody>
               <tr
               v-for="tags in this.$store.state.recordRecipe.tagArr"
               :key="tags.id">
                 <td><p @click="chengeStatusTag(tags)">{{ tags.tag }}</p></td>
+              </tr>
+            </tbody>
+          </table>
+          <table
+          v-else>
+            <tbody>
+              <tr
+              v-for="tags in this.$store.state.editingRecipe.editingRecipeTag"
+              :key="tags.id">
+                <td><p @click="chengeStatusTag(tags)">{{ tags.recipe_tag }}</p></td>
               </tr>
             </tbody>
           </table>
@@ -51,17 +62,33 @@ export default {
   methods: {
     // タグを追加、編集を行う
     addTag() {
-      // タグの追加
-      if (this.chengeOverAddTask === '＋ 追加') {
-        this.$store.state.recordRecipe.tagArr.push({
-          id: this.$store.state.recordRecipe.tagArr.length,
-          tag: this.tagValue
-        })
-      // タグの編集
+      // タグ登録作業時の編集時の挙動
+      if (this.$store.state.recordRecipe.switcherAddEditBtn === true){
+        // タグの追加
+        if (this.chengeOverAddTask === '＋ 追加') {
+          this.$store.state.recordRecipe.tagArr.push({
+            id: this.$store.state.recordRecipe.tagArr.length,
+            tag: this.tagValue
+          })
+        // タグの編集
+        } else {
+          this.$store.state.recordRecipe.tagArr[this.editIndex].tag = this.tagValue;
+          this.chengeOverAddTask = '＋ 追加';
+          this.onAddBtn = true;
+        }
       } else {
-        this.$store.state.recordRecipe.tagArr[this.editIndex].tag = this.tagValue;
-        this.chengeOverAddTask = '＋ 追加';
-        this.onAddBtn = true;
+        // タグの追加
+        if (this.chengeOverAddTask === '＋ 追加') {
+          this.$store.state.editingRecipe.editingRecipeTag.push({
+            recipe_tag_index: this.$store.state.editingRecipe.editingRecipeTag.length,
+            recipe_tag: this.tagValue
+          })
+        // タグの編集
+        } else {
+          this.$store.state.editingRecipe.editingRecipeTag[this.editIndex].recipe_tag = this.tagValue;
+          this.chengeOverAddTask = '＋ 追加';
+          this.onAddBtn = true;
+        }
       }
       this.tagValue = '';
     },
@@ -77,10 +104,18 @@ export default {
     },
     // タグのステータスを変更するためのボタンを出現させる
     chengeStatusTag(tags) {
-      // 入力欄にタグを入れる
-      this.tagValue = tags.tag;
-      // テーブルのIDを取得
-      this.editIndex = tags.id;
+      // タグ登録作業時の編集時の挙動
+      if (this.$store.state.recordRecipe.switcherAddEditBtn === true){
+        // 入力欄にタグを入れる
+        this.tagValue = tags.tag;
+        // テーブルのIDを取得
+        this.editIndex = tags.id;
+      } else {
+        // 入力欄にタグを入れる
+        this.tagValue = tags.recipe_tag;
+        // テーブルのIDを取得
+        this.editIndex = tags.recipe_tag_index;
+      }
       // フォーカスを指定
       this.$refs.editor.focus();
       if (this.chengeOverAddTask === '＋ 追加') {
