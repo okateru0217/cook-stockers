@@ -40,6 +40,9 @@
                 <td><button 
                 @click="editItems(items)"
                 class="new-recipe-material__edit-btn"><font-awesome-icon icon='edit' /></button></td>
+                <td><button 
+                @click="deleteItems(items)"
+                class="new-recipe-material__delete-btn"><font-awesome-icon icon='trash-alt' /></button></td>
               </tr>
             </tbody>
           </table>
@@ -87,7 +90,7 @@ export default {
     // アイテムの追加、編集を行う
     setItems() {
       // アイテム登録作業時の編集時の挙動
-      if (this.$store.state.recordRecipe.switcherAddEditBtn === true){
+      if (this.$store.state.recordRecipe.switcherAddEditBtn === true) {
         // アイテムの追加
         if (this.chengeOverAddEdit === '＋ 追加'){
           this.$store.state.recordRecipe.materialArr.push({
@@ -107,7 +110,13 @@ export default {
         // アイテムの追加
         if (this.chengeOverAddEdit === '＋ 追加'){
           this.$store.state.editingRecipe.editingRecipeMaterial.push({
-            recipe_material_id: this.$store.state.editingRecipe.editingRecipeMaterial.length,
+            recipe_material_index: this.$store.state.editingRecipe.editingRecipeMaterial.length,
+            recipe_material: this.materialValue,
+            recipe_quantity: this.quantityValue
+          })
+          // DBに追加する用の配列に入れる
+          this.$store.state.editingRecipe.editingAddArr.push({
+            recipe_material_index: this.$store.state.editingRecipe.editingRecipeMaterial.length -1,
             recipe_material: this.materialValue,
             recipe_quantity: this.quantityValue
           })
@@ -115,6 +124,12 @@ export default {
         } else {
           this.$store.state.editingRecipe.editingRecipeMaterial[this.editIndex].recipe_material = this.materialValue;
           this.$store.state.editingRecipe.editingRecipeMaterial[this.editIndex].recipe_quantity = this.quantityValue;
+          // 編集後の値をDBに反映させる際に用いる配列に追加
+          this.$store.state.editingRecipe.editingEditArr.push({
+            recipe_material_id: this.$store.state.editingRecipe.editingRecipeMaterial[this.editIndex].recipe_material_id,
+            recipe_material: this.$store.state.editingRecipe.editingRecipeMaterial[this.editIndex].recipe_material,
+            recipe_quantity: this.$store.state.editingRecipe.editingRecipeMaterial[this.editIndex].recipe_quantity
+          })
           this.chengeOverAddEdit = '＋ 追加';
           this.onAddBtn = true;
         }
@@ -125,9 +140,21 @@ export default {
     },
     // アイテムを削除する
     deleteItems(items) {
-      this.$store.state.recordRecipe.materialArr.splice(items.id, 1);
-      for (let i = items.id; i < this.$store.state.recordRecipe.materialArr.length; i++) {
-        this.$store.state.recordRecipe.materialArr[i].id = i;
+      // アイテム登録作業時の削除時の挙動
+      if (this.$store.state.recordRecipe.switcherAddEditBtn === true){
+        this.$store.state.recordRecipe.materialArr.splice(items.id, 1);
+        for (let i = items.id; i < this.$store.state.recordRecipe.materialArr.length; i++) {
+          this.$store.state.recordRecipe.materialArr[i].id = i;
+        }
+      } else {
+        this.$store.state.editingRecipe.editingRecipeMaterial.splice(items.recipe_material_index, 1);
+        // DBを削除するようの配列に入れる
+        this.$store.state.editingRecipe.editingDeleteArr.push(items);
+        for (let i = items.recipe_material_index; i < this.$store.state.editingRecipe.editingRecipeMaterial.length; i++) {
+          this.$store.state.editingRecipe.editingRecipeMaterial[i].recipe_material_index = i;
+          // if (this.$store.state.editingRecipe.editingRecipeMaterial[i].)
+          // 一意の何かを見つけて、整合性を保つ
+        }
       }
       this.materialValue = '';
       this.quantityValue = '';

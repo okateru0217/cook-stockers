@@ -58,7 +58,7 @@ export default {
           .collection('material').doc();
           // 「材料」「量」入力値をcloud firestoreへ登録
           recordMaterialQuantity.set({
-            recipe_material_id: recordRecipeId.id,
+            recipe_material_id: recordMaterialQuantity.id,
             recipe_material_index: items.id,
             recipe_material: items.material,
             recipe_quantity: items.quantity,
@@ -73,7 +73,7 @@ export default {
           .collection('procedure').doc();
           // 「手順」入力値をcloud firestoreへ登録
           recordProcedure.set({
-            recipe_procedure_id: recordRecipeId.id,
+            recipe_procedure_id: recordProcedure.id,
             recipe_procedure_index: items.id, 
             recipe_procedure: items.procedure
           })
@@ -87,7 +87,7 @@ export default {
           .collection('tag').doc();
           // 「タグ」入力値をcloud firestoreへ登録
           recordTag.set({
-            recipe_tag_id: recordRecipeId.id,
+            recipe_tag_id: recordTag.id,
             recipe_tag_index: items.id,
             recipe_tag: items.tag
           })

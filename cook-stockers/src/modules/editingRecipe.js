@@ -17,7 +17,13 @@ export default {
     // レシピ手順編集用
     editingRecipeProcedure: '',
     // レシピタグ編集用
-    editingRecipeTag: ''
+    editingRecipeTag: '',
+    // レシピ追加用配列
+    editingAddArr: [],
+    // レシピ編集用配列
+    editingEditArr: [],
+    // レシピ削除用配列
+    editingDeleteArr: []
   },
   actions: {
      // 「レシピを編集(画面遷移)」ボタンを押下時の処理
@@ -40,30 +46,79 @@ export default {
         .collection('users-information').doc(this.state.signin.signInData.uid)
         .collection('recipe').doc(this.state.detailsRecipe.recipeId);
         // 編集した「レシピ名」「メモ」「Url」をDBに反映
-        // editingRecipeData.update({
-        //   recipe_name: this.state.editingRecipe.editingRecipeName,
-        //   recipe_memo: this.state.editingRecipe.editingRecipeMemo,
-        //   recipe_Url: this.state.editingRecipe.editingRecipeUrl
-        // })
+        editingRecipeData.update({
+          recipe_name: this.state.editingRecipe.editingRecipeName,
+          recipe_memo: this.state.editingRecipe.editingRecipeMemo,
+          recipe_Url: this.state.editingRecipe.editingRecipeUrl
+        })
         // 編集した「材料」「量」をDBに反映
-        this.state.editingRecipe.editingRecipeMaterial.forEach(element => {
+        this.state.editingRecipe.editingEditArr.forEach(element => {
           // 「材料」「量」のコレクションパス
           const editingRecipeMaterialData = editingRecipeData
           .collection('material').doc(element.recipe_material_id);
           editingRecipeMaterialData.get().then(snapshot => {
-            this.state.editingRecipe.editingRecipeMaterial.forEach(item => {
-              // 編集後の連想配列とDBのindex番号が同じである場合、「材料」「量」を更新する
-              if (snapshot.data().recipe_material_id === item.recipe_material_id) {
-                editingRecipeMaterialData.update({
-                  recipe_material: item.recipe_material,
-                  recipe_quantity: item.recipe_quantity
-                })
-              }
-            })
+            // 編集後の連想配列とDBのindex番号が同じである場合、「材料」「量」を更新する
+            console.log(this.state.editingRecipe.editingRecipeMaterial);
+            if (snapshot.data().recipe_material_id === element.recipe_material_id) {
+              editingRecipeMaterialData.update({
+                recipe_material: element.recipe_material,
+                recipe_quantity: element.recipe_quantity
+              })
+            }
           })
         })
-        // console.log(this.state.editingRecipe.editingRecipeProcedure);
-        // console.log(this.state.editingRecipe.editingRecipeTag);
+        // 編集後、新たに「材料」「量」が追加されていた場合、DBにそれを追加する
+        this.state.editingRecipe.editingAddArr.forEach(element => {
+          const addRecipeMaterialData = editingRecipeData
+          .collection('material').doc();
+          // DBに追加する
+          addRecipeMaterialData.set({
+            recipe_material_id: addRecipeMaterialData.id,
+            recipe_material_index: element.recipe_material_index,
+            recipe_material: element.recipe_material,
+            recipe_quantity: element.recipe_quantity,
+          })
+        })
+        // 編集後の削除連想配列とDBのindex番号が同じである場合、「材料」「量」を削除する
+        this.state.editingRecipe.editingDeleteArr.forEach(element => {
+          // 削除する「材料」「量」コレクションパス
+          const deleteRecipeMaterialData = editingRecipeData
+          .collection('material').doc(element.recipe_material_id);
+          deleteRecipeMaterialData.get().then(snapshot => {
+            if (snapshot.data().recipe_material_id === element.recipe_material_id) {
+              deleteRecipeMaterialData.delete();
+            }
+            this.state.editingRecipe.editingDeleteArr.length = 0;
+          })
+        })
+        // 編集した「手順」をDBに反映
+        this.state.editingRecipe.editingRecipeProcedure.forEach(element => {
+          // 「手順」のコレクションパス
+          const editingRecipeProcedureData = editingRecipeData
+          .collection('procedure').doc(element.recipe_procedure_id);
+          editingRecipeProcedureData.get().then(snapshot => {
+            // 編集後の連想配列とDBのindex番号が同じである場合、「手順」を更新する
+            if (snapshot.data().recipe_procedure_id === element.recipe_procedure_id) {
+              editingRecipeProcedureData.update({
+                recipe_procedure: element.recipe_procedure
+              })
+            }
+          })
+        })
+        // 編集した「タグ」をDBに反映
+        this.state.editingRecipe.editingRecipeTag.forEach(element => {
+          // 「タグ」のコレクションパス
+          const editingRecipeTagData = editingRecipeData
+          .collection('tag').doc(element.recipe_tag_id);
+          editingRecipeTagData.get().then(snapshot => {
+            // 編集後の連想配列とDBのindex番号が同じである場合、「タグ」を更新する
+            if (snapshot.data().recipe_tag_id === element.recipe_tag_id) {
+              editingRecipeTagData.update({
+                recipe_tag: element.recipe_tag
+              })
+            }
+          })
+        })
       }
     }
   }
