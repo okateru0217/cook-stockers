@@ -23,7 +23,7 @@ export default {
     // レシピ編集用配列
     editingEditArr: [],
     // レシピ削除用配列
-    editingDeleteArr: []
+    editingDeleteArr: [],
   },
   actions: {
      // 「レシピを編集(画面遷移)」ボタンを押下時の処理
@@ -65,6 +65,8 @@ export default {
                 recipe_quantity: element.recipe_quantity
               })
             }
+            // 配列を空にする
+            this.state.editingRecipe.editingEditArr.length = 0;
           })
         })
         // 編集後、新たに「材料」「量」が追加されていた場合、DBにそれを追加する
@@ -78,6 +80,8 @@ export default {
             recipe_material: element.recipe_material,
             recipe_quantity: element.recipe_quantity,
           })
+          // 配列を空にする
+          this.state.editingRecipe.editingAddArr.length = 0;
         })
         // 編集後の削除連想配列とDBのindex番号が同じである場合、「材料」「量」を削除する
         this.state.editingRecipe.editingDeleteArr.forEach(element => {
@@ -89,6 +93,20 @@ export default {
               deleteRecipeMaterialData.delete();
             }
             this.state.editingRecipe.editingDeleteArr.length = 0;
+          })
+        })
+        // 削除して変更されたindex番号をDBに反映させる
+        this.state.editingRecipe.editingRecipeMaterial.forEach(element => {
+          const chengeMaterialIndexID = editingRecipeData
+          .collection('material').doc(element.recipe_material_id);
+          chengeMaterialIndexID.get().then(snapshot => {
+            if (element.recipe_material_id !== undefined) {
+              if (snapshot.data().recipe_material_id === element.recipe_material_id) {
+                chengeMaterialIndexID.update({
+                  recipe_material_index: element.recipe_material_index
+                })
+              }
+            }
           })
         })
         // 編集した「手順」をDBに反映

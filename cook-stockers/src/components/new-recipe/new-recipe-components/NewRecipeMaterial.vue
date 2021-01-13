@@ -148,12 +148,17 @@ export default {
         }
       } else {
         this.$store.state.editingRecipe.editingRecipeMaterial.splice(items.recipe_material_index, 1);
-        // DBを削除するようの配列に入れる
+        // DBを削除する用の配列に入れる
         this.$store.state.editingRecipe.editingDeleteArr.push(items);
+        // 削除時にindexを0から並び替える
         for (let i = items.recipe_material_index; i < this.$store.state.editingRecipe.editingRecipeMaterial.length; i++) {
           this.$store.state.editingRecipe.editingRecipeMaterial[i].recipe_material_index = i;
-          // if (this.$store.state.editingRecipe.editingRecipeMaterial[i].)
-          // 一意の何かを見つけて、整合性を保つ
+          for (let materialIndex = 0; materialIndex < this.$store.state.editingRecipe.editingAddArr.length; materialIndex++) {
+            // 追加用の配列のindexと削除時の配列のindexとを合わせる
+            if (this.$store.state.editingRecipe.editingRecipeMaterial[i].recipe_material === this.$store.state.editingRecipe.editingAddArr[materialIndex].recipe_material) {
+              this.$store.state.editingRecipe.editingAddArr[materialIndex].recipe_material_index = this.$store.state.editingRecipe.editingRecipeMaterial[i].recipe_material_index
+            }
+          }
         }
       }
       this.materialValue = '';
