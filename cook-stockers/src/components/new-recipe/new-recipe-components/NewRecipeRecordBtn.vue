@@ -7,10 +7,13 @@
 </template>
 
 <script>
+import router from '../../../router'
+
 export default {
   methods: {
     recipeRecord() {
       this.$store.dispatch('recipeRecord');
+      router.push('myrecipe');
     }
   },
   computed: {
