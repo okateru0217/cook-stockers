@@ -29,6 +29,9 @@
               <td class="new-recipe-procedure__button"><button 
               @click="editProcedure(procedures)"
               class="new-recipe-procedure__edit-btn"><font-awesome-icon icon='edit' /></button></td>
+              <td class="new-recipe-procedure__button"><button 
+              @click="deleteProcedure(procedures)"
+              class="new-recipe-procedure__delete-btn"><font-awesome-icon icon='trash-alt' /></button></td>
             </tr>
           </table>
         </div><!-- new-recipe-procedure__table -->
@@ -86,12 +89,22 @@ export default {
         // 手順の追加
         if (this.chengeOverBtn === '＋ 追加'){
           this.$store.state.editingRecipe.editingRecipeProcedure.push({
-            recipe_procedure_id: this.$store.state.editingRecipe.editingRecipeProcedure.length,
+            recipe_procedure_index: this.$store.state.editingRecipe.editingRecipeProcedure.length,
+            recipe_procedure: this.procedureValue
+          })
+          // DBに追加するようの配列に入れる
+          this.$store.state.editingProcedureRecipe.editingProcedureAddArr.push({
+            recipe_procedure_index: this.$store.state.editingRecipe.editingRecipeProcedure.length -1,
             recipe_procedure: this.procedureValue
           })
         // 手順の編集
         } else {
           this.$store.state.editingRecipe.editingRecipeProcedure[this.editIndex].recipe_procedure = this.procedureValue;
+          // 編集後の値をDBに反映させる際に用いる配列に追加
+          this.$store.state.editingProcedureRecipe.editingProcedureEditArr.push({
+            recipe_procedure_index: this.$store.state.editingRecipe.editingRecipeProcedure[this.editIndex].recipe_material_index,
+            recipe_procedure: this.$store.state.editingRecipe.editingRecipeProcedure[this.editIndex].recipe_procedure
+          })
           this.chengeOverBtn = '＋ 追加';
           this.onAddBtn = true;
         }
@@ -101,9 +114,25 @@ export default {
     },
     // 手順を削除する
     deleteProcedure(procedures) {
-      this.$store.state.recordRecipe.procedureArr.splice(procedures.id, 1);
-      for(let i = procedures.id; i < this.$store.state.recordRecipe.procedureArr.length; i++) {
-        this.$store.state.recordRecipe.procedureArr[i].id = i;
+      if (this.$store.state.recordRecipe.switcherAddEditBtn === true){
+        this.$store.state.recordRecipe.procedureArr.splice(procedures.id, 1);
+        for(let i = procedures.id; i < this.$store.state.recordRecipe.procedureArr.length; i++) {
+          this.$store.state.recordRecipe.procedureArr[i].id = i;
+        }
+      } else {
+        this.$store.state.editingRecipe.editingRecipeProcedure.splice(procedures.recipe_procedure_index, 1);
+        // DBを削除するようの配列に入れる
+        this.$store.state.editingProcedureRecipe.editingProcedureDeleteArr.push(procedures);
+        // 削除時にindexを0から並び替える
+        for (let i = procedures.recipe_procedure_index; i < this.$store.state.editingRecipe.editingRecipeProcedure.length; i++) {
+          this.$store.state.editingRecipe.editingRecipeProcedure[i].recipe_procedure_index = i;
+          for (let procedureIndex = 0; procedureIndex < this.$store.state.editingProcedureRecipe.editingProcedureAddArr.length; procedureIndex++) {
+            // 追加用の配列のindexと削除時の配列のindexとを合わせる
+            if (this.$store.state.editingRecipe.editingRecipeProcedure[i].recipe_procedure === this.$store.state.editingProcedureRecipe.editingProcedureAddArr[procedureIndex].recipe_procedure) {
+              this.$store.state.editingProcedureRecipe.editingProcedureAddArr[procedureIndex].recipe_procedure_index = this.$store.state.editingRecipe.editingRecipeProcedure[i].recipe_procedure_index
+            }
+          }
+        }
       }
       this.procedureValue = '';
       this.chengeOverBtn = '＋ 追加';

@@ -40,8 +40,8 @@
 </template>
 
 <script>
-import SideMenu from '../menu/SideMenu'
-import Footer from '../menu/FooterMenu'
+import SideMenu from '../../components/menu/SideMenu'
+import Footer from '../../components/menu/FooterMenu'
 import DetailsRecipeHeader from './details-recipe-components/DetailsRecipeHeader'
 import DetailsRecipeName from './details-recipe-components/DetailsRecipeName'
 import DetailsRecipeMaterial from './details-recipe-components/DetailsRecipeMaterial'

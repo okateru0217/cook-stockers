@@ -31,9 +31,9 @@
 </template>
 
 <script>
-import HamburgerMenu from '../menu/HamburgerMenu'
-import SideMenu from '../menu/SideMenu'
-import Footer from '../menu/FooterMenu'
+import HamburgerMenu from '../../components/menu/HamburgerMenu'
+import SideMenu from '../../components/menu/SideMenu'
+import Footer from '../../components/menu/FooterMenu'
 import MyRecipeHeader from './my-recipe-components/MyRecipeHeader'
 import MyRecipeSearch from './my-recipe-components/MyRecipeSearch'
 import MyRecipeFavorite from './my-recipe-components/MyRecipeFavorite'

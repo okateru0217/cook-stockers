@@ -35,7 +35,7 @@
 </template>
 
 <script>
-import Header from './Header' 
+import Header from '../../components/first-view-header/Header' 
 
 export default {
   components: {

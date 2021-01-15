@@ -1,11 +1,11 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import Home from './components/home/Home'
-import SignIn from './components/home/SignIn'
-import SignUp from './components/home/SignUp'
-import MyRecipe from './components/recipe/MyRecipe'
-import NewRecipe from './components/new-recipe/NewRecipe'
-import DetailsRecipe from './components/details-recipe/DetailsRecipe'
+import Home from './views/first-view/Home'
+import SignIn from './views/first-view/SignIn'
+import SignUp from './views/first-view/SignUp'
+import MyRecipe from './views/recipe/MyRecipe'
+import NewRecipe from './views/new-recipe/NewRecipe'
+import DetailsRecipe from './views/details-recipe/DetailsRecipe'
 
 Vue.use(Router)
 export default new Router({

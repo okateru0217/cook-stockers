@@ -1,21 +1,21 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 
-import signin from './modules/signin'
-import signup from './modules/signup'
-import signout from './modules/signout'
+import signin from './modules/Authentication/signin'
+import signup from './modules/Authentication/signup'
+import signout from './modules/Authentication/signout'
 // レシピをDBへ登録する用
-import recordRecipe from './modules/recordRecipe'
+import recordRecipe from './modules/recordRecipe/recordRecipe'
 import recordMaterialRecipe from './modules/recordRecipe/recordMaterialRecipe'
 import recordProcedureRecipe from './modules/recordRecipe/recordProcedureRecipe'
 import recordTagRecipe from './modules/recordRecipe/recordTagRecipe'
 // レシピ詳細を見る用
-import detailsRecipe from './modules/detailsRecipe'
+import detailsRecipe from './modules/detailsRecipe/detailsRecipe'
 import detailsMaterialRecipe from './modules/detailsRecipe/detailsMaterialRecipe'
 import detailsProcedureRecipe from './modules/detailsRecipe/detailsProcedureRecipe'
 import detailsTagRecipe from './modules/detailsRecipe/detailsTagRecipe'
 // 編集したレシピをDBへ反映させる用
-import editingRecipe from './modules/editingRecipe'
+import editingRecipe from './modules/editingRecipe/editingRecipe'
 import editingMaterialRecipe from './modules/editingRecipe/editingMaterialRecipe'
 import editingProcedureRecipe from './modules/editingRecipe/editingProcedureRecipe'
 import editingTagRecipe from './modules/editingRecipe/editingTagRecipe'

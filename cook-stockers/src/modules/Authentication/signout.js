@@ -1,4 +1,4 @@
-import router from '../router'
+import router from '../../router'
 import firebase from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/firebase-firestore'
