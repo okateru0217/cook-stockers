@@ -94,12 +94,13 @@
     color: #fff;
     background-color: #FCBB0A;
     border: 1px solid #FCBB0A;
-    padding: 15px 40px;
+    padding: 15px 30px;
     font-size: 15px;
   }
 
   button:hover {
-    padding: 23px 73px;
+    padding: 16px 31px;
+    font-size: 16px;
   }
 }
 

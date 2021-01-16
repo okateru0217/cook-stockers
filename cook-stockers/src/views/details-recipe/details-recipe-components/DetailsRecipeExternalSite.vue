@@ -63,7 +63,8 @@
   }
 
   button:hover {
-    padding: 23px 73px;
+    padding: 16px 31px;
+    font-size: 16px;
   }
 }
 

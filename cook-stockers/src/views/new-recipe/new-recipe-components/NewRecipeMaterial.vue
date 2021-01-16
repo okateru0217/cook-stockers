@@ -115,7 +115,7 @@ export default {
             recipe_quantity: this.quantityValue
           })
           // DBに追加する用の配列に入れる
-          this.$store.state.editingRecipe.editingAddArr.push({
+          this.$store.state.editingMaterialRecipe.editingMaterialAddArr.push({
             recipe_material_index: this.$store.state.editingRecipe.editingRecipeMaterial.length -1,
             recipe_material: this.materialValue,
             recipe_quantity: this.quantityValue
@@ -125,7 +125,7 @@ export default {
           this.$store.state.editingRecipe.editingRecipeMaterial[this.editIndex].recipe_material = this.materialValue;
           this.$store.state.editingRecipe.editingRecipeMaterial[this.editIndex].recipe_quantity = this.quantityValue;
           // 編集後の値をDBに反映させる際に用いる配列に追加
-          this.$store.state.editingRecipe.editingEditArr.push({
+          this.$store.state.editingMaterialRecipe.editingMaterialEditArr.push({
             recipe_material_id: this.$store.state.editingRecipe.editingRecipeMaterial[this.editIndex].recipe_material_id,
             recipe_material: this.$store.state.editingRecipe.editingRecipeMaterial[this.editIndex].recipe_material,
             recipe_quantity: this.$store.state.editingRecipe.editingRecipeMaterial[this.editIndex].recipe_quantity
@@ -149,14 +149,14 @@ export default {
       } else {
         this.$store.state.editingRecipe.editingRecipeMaterial.splice(items.recipe_material_index, 1);
         // DBを削除する用の配列に入れる
-        this.$store.state.editingRecipe.editingDeleteArr.push(items);
+        this.$store.state.editingMaterialRecipe.editingMaterialDeleteArr.push(items);
         // 削除時にindexを0から並び替える
         for (let i = items.recipe_material_index; i < this.$store.state.editingRecipe.editingRecipeMaterial.length; i++) {
           this.$store.state.editingRecipe.editingRecipeMaterial[i].recipe_material_index = i;
-          for (let materialIndex = 0; materialIndex < this.$store.state.editingRecipe.editingAddArr.length; materialIndex++) {
+          for (let materialIndex = 0; materialIndex < this.$store.state.editingMaterialRecipe.editingMaterialAddArr.length; materialIndex++) {
             // 追加用の配列のindexと削除時の配列のindexとを合わせる
-            if (this.$store.state.editingRecipe.editingRecipeMaterial[i].recipe_material === this.$store.state.editingRecipe.editingAddArr[materialIndex].recipe_material) {
-              this.$store.state.editingRecipe.editingAddArr[materialIndex].recipe_material_index = this.$store.state.editingRecipe.editingRecipeMaterial[i].recipe_material_index
+            if (this.$store.state.editingRecipe.editingRecipeMaterial[i].recipe_material === this.$store.state.editingMaterialRecipe.editingMaterialAddArr[materialIndex].recipe_material) {
+              this.$store.state.editingMaterialRecipe.editingMaterialAddArr[materialIndex].recipe_material_index = this.$store.state.editingRecipe.editingRecipeMaterial[i].recipe_material_index
             }
           }
         }

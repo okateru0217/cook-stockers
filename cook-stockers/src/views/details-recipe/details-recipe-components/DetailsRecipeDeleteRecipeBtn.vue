@@ -1,7 +1,7 @@
 <template>
   <div class="details-recipe-editing-btn__container">
     <div class="details-recipe-editing-btn__wrap">
-      <button @click="editingRecipe">レシピを編集</button>
+      <a @click="detailsDeleteRecipe">レシピを削除する</a>
     </div><!-- details-recipe-editing-btn__wrap -->
   </div><!-- details-recipe-editing-btn__container -->
 </template>
@@ -9,8 +9,8 @@
 <script>
 export default {
   methods: {
-    editingRecipe() {
-      this.$store.dispatch('editingRecipe');
+    detailsDeleteRecipe() {
+      this.$store.dispatch('detailsDeleteRecipe');
     }
   }
 }
@@ -26,43 +26,37 @@ export default {
   text-align: center;
   background-color: #EDEDED;
 
-  button {
+  a {
     cursor: pointer;
     outline: none;
     text-decoration: none;
-    border-radius: 50px;
     font-weight: bold;
-    color: #fff;
-    background-color: #FCBB0A;
-    border: 1px solid #FCBB0A;
-    padding: 20px 45px;
-    font-size: 20px;
+    color: #FF0000;
   }
 
-  button:hover {
-    padding: 21px 46px;
-    font-size: 21px;
+  a:hover {
+    opacity: 0.6;
   }
 }
 
 // sp用
 @media screen and (max-width: 767px) {
   .details-recipe-editing-btn__wrap {
-    padding: 70px 0;
+    padding: 50px 0 100px 0;
   }
 }
 
 // tab用
 @media screen and (min-width: 768px) and (max-width: 1023px) {
   .details-recipe-editing-btn__wrap {
-    padding: 70px 0;
+    padding: 50px 0 100px 0;
   }
 }
 
 // pc用
 @media screen and (min-width: 1024px) {
   .details-recipe-editing-btn__wrap {
-    padding: 70px 0;
+    padding: 20px 0 70px 0;
   }
 }
 </style>

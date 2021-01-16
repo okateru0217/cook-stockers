@@ -32,6 +32,9 @@
       <div class="details-recipe__editing-recipe-btn">
         <DetailsRecipeEditingBtn></DetailsRecipeEditingBtn>
       </div><!-- details-recipe__editing-recipe-btn -->
+      <div class="details-recipe__delete-recipe-btn">
+        <DetailsRecipeDeleteRecipeBtn></DetailsRecipeDeleteRecipeBtn>
+      </div><!-- details-recipe__delete-recipe-btn -->
     </div><!-- details-recipe__wrap -->
     <div class="details-recipe__footer">
       <Footer></Footer>
@@ -50,6 +53,7 @@ import DetailsRecipeTag from './details-recipe-components/DetailsRecipeTag'
 import DetailsRecipeMemo from './details-recipe-components/DetailsRecipeMemo'
 import DetailsRecipeExternalSite from './details-recipe-components/DetailsRecipeExternalSite'
 import DetailsRecipeEditingBtn from './details-recipe-components/DetailsRecipeEditingBtn'
+import DetailsRecipeDeleteRecipeBtn from './details-recipe-components/DetailsRecipeDeleteRecipeBtn'
 
 export default {
   components: {
@@ -62,7 +66,8 @@ export default {
     DetailsRecipeTag,
     DetailsRecipeMemo,
     DetailsRecipeExternalSite,
-    DetailsRecipeEditingBtn
+    DetailsRecipeEditingBtn,
+    DetailsRecipeDeleteRecipeBtn
   }
 }
 </script>

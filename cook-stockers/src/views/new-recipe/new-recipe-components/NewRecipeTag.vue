@@ -37,7 +37,7 @@
           :class="{add: onAddBtn, edit: !onAddBtn}">{{ chengeOverAddTask }}</button>
           <button
           class="new-recipe-tag__delete-btn"
-          @click="deleteTag(tags)"
+          @click="deleteTag()"
           v-show="!onAddBtn">削除</button>
         </div><!-- new-recipe-tag__add-tag -->
       </div><!-- new-recipe-tag__item -->
@@ -103,18 +103,19 @@ export default {
       this.tagValue = '';
     },
     // タグを削除する
-    deleteTag(tags) {
+    deleteTag() {
       if (this.$store.state.recordRecipe.switcherAddEditBtn === true){
         this.$store.state.recordRecipe.tagArr.splice(this.editIndex, 1);
         for (let i = this.editIndex; i < this.$store.state.recordRecipe.tagArr.length; i++) {
           this.$store.state.recordRecipe.tagArr[i].id = i;
         }
       } else {
-        this.$store.state.editingRecipe.editingRecipeTag.splice(tags.recipe_tag_index, 1);
         // DBを削除する用の配列に入れる
-        this.$store.state.editingTagRecipe.editingTagDeleteArr.push(tags);
+        this.$store.state.editingTagRecipe.editingTagDeleteArr.push(this.$store.state.editingRecipe.editingRecipeTag[this.editIndex]);
+        // テーブル表示用の配列から削除する
+        this.$store.state.editingRecipe.editingRecipeTag.splice(this.editIndex, 1);
         // 削除時にindexを0から並び替える
-        for (let i = tags.recipe_tag_index; i < this.$store.state.editingRecipe.editingRecipeTag.length; i++) {
+        for (let i = this.editIndex; i < this.$store.state.editingRecipe.editingRecipeTag.length; i++) {
           this.$store.state.editingRecipe.editingRecipeTag[i].recipe_tag_index = i;
           for (let tagIndex = 0; tagIndex < this.$store.state.editingTagRecipe.editingTagAddArr.length; tagIndex++) {
             // 追加用の配列のindexと削除時の配列のindexとを合わせる

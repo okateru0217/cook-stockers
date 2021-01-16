@@ -19,6 +19,9 @@ import editingRecipe from './modules/editingRecipe/editingRecipe'
 import editingMaterialRecipe from './modules/editingRecipe/editingMaterialRecipe'
 import editingProcedureRecipe from './modules/editingRecipe/editingProcedureRecipe'
 import editingTagRecipe from './modules/editingRecipe/editingTagRecipe'
+// レシピ詳細画面から、レシピを丸々削除する用のボタン
+import detailsDeleteRecipeBtn from './modules/detailsRecipe/detailsDeleteRecipeBtn'
+
 
 Vue.use(Vuex);
 
@@ -41,6 +44,8 @@ export default new Vuex.Store({
     editingRecipe,
     editingMaterialRecipe,
     editingProcedureRecipe,
-    editingTagRecipe
+    editingTagRecipe,
+    // レシピ詳細画面から、レシピを丸々削除する用のボタン
+    detailsDeleteRecipeBtn
   }
 })

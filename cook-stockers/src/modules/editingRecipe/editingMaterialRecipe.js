@@ -4,6 +4,14 @@ import "firebase/storage";
 import 'firebase/firebase-firestore'
 
 export default {
+  state: {
+    // レシピ追加用配列
+    editingMaterialAddArr: [],
+    // レシピ編集用配列
+    editingMaterialEditArr: [],
+    // レシピ削除用配列
+    editingMaterialDeleteArr: [],
+  },
   actions: {
      // 「編集する(DB登録)」ボタン押下時の処理
     recipeRecord() {
@@ -13,7 +21,7 @@ export default {
         .collection('users-information').doc(this.state.signin.signInData.uid)
         .collection('recipe').doc(this.state.detailsRecipe.recipeId);
         // 編集した「材料」「量」をDBに反映
-        this.state.editingRecipe.editingEditArr.forEach(element => {
+        this.state.editingMaterialRecipe.editingMaterialEditArr.forEach(element => {
           // 「材料」「量」のコレクションパス
           const editingRecipeMaterialData = editingRecipeData
           .collection('material').doc(element.recipe_material_id);
@@ -26,11 +34,11 @@ export default {
               })
             }
             // 配列を空にする
-            this.state.editingRecipe.editingEditArr.length = 0;
+            this.state.editingMaterialRecipe.editingMaterialEditArr.length = 0;
           })
         })
         // 編集後、新たに「材料」「量」が追加されていた場合、DBにそれを追加する
-        this.state.editingRecipe.editingAddArr.forEach(element => {
+        this.state.editingMaterialRecipe.editingMaterialAddArr.forEach(element => {
           const addRecipeMaterialData = editingRecipeData
           .collection('material').doc();
           // DBに追加する
@@ -41,10 +49,10 @@ export default {
             recipe_quantity: element.recipe_quantity,
           })
           // 配列を空にする
-          this.state.editingRecipe.editingAddArr.length = 0;
+          this.state.editingMaterialRecipe.editingMaterialAddArr.length = 0;
         })
         // 編集後の削除連想配列とDBのindex番号が同じである場合、「材料」「量」を削除する
-        this.state.editingRecipe.editingDeleteArr.forEach(element => {
+        this.state.editingMaterialRecipe.editingMaterialDeleteArr.forEach(element => {
           // 削除する「材料」「量」コレクションパス
           const deleteRecipeMaterialData = editingRecipeData
           .collection('material').doc(element.recipe_material_id);
@@ -53,7 +61,7 @@ export default {
               deleteRecipeMaterialData.delete();
             }
             // 配列を空にする
-            this.state.editingRecipe.editingDeleteArr.length = 0;
+            this.state.editingMaterialRecipe.editingMaterialDeleteArr.length = 0;
           })
         })
         // 削除して変更されたindex番号をDBに反映させる

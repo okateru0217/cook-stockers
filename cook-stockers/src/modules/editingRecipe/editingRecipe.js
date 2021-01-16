@@ -18,12 +18,6 @@ export default {
     editingRecipeProcedure: '',
     // レシピタグ編集用
     editingRecipeTag: '',
-    // レシピ追加用配列
-    editingAddArr: [],
-    // レシピ編集用配列
-    editingEditArr: [],
-    // レシピ削除用配列
-    editingDeleteArr: [],
   },
   actions: {
      // 「レシピを編集(画面遷移)」ボタンを押下時の処理

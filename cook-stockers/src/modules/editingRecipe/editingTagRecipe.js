@@ -27,10 +27,52 @@ export default {
           .collection('tag').doc(element.recipe_tag_id);
           editingRecipeTagData.get().then(snapshot => {
             // 編集後の連想配列とDBのindex番号が同じである場合、「タグ」を更新する
+            if (element.recipe_tag_id !== undefined) {
+              if (snapshot.data().recipe_tag_id === element.recipe_tag_id) {
+                editingRecipeTagData.update({
+                  recipe_tag: element.recipe_tag
+                })
+              }
+            }
+          })
+        })
+        // 編集後、新たに「タグ」が追加されていた場合、DBにそれを追加する
+        this.state.editingTagRecipe.editingTagAddArr.forEach(element => {
+          const addRecipeTagData = editingRecipeData
+          .collection('tag').doc();
+          // DBに追加する
+          addRecipeTagData.set({
+            recipe_tag_id: addRecipeTagData.id,
+            recipe_tag_index: element.recipe_tag_index,
+            recipe_tag: element.recipe_tag
+          })
+          // 配列を空にする
+          this.state.editingTagRecipe.editingTagAddArr.length = 0;
+        })
+        // 編集後の削除連想配列とDBのindex番号が同じである場合、「タグ」を削除する
+        this.state.editingTagRecipe.editingTagDeleteArr.forEach(element => {
+          // 削除する「タグ」コレクションパス
+          const deleteRecipeTagData = editingRecipeData
+          .collection('tag').doc(element.recipe_tag_id);
+          deleteRecipeTagData.get().then(snapshot => {
             if (snapshot.data().recipe_tag_id === element.recipe_tag_id) {
-              editingRecipeTagData.update({
-                recipe_tag: element.recipe_tag
-              })
+              deleteRecipeTagData.delete();
+            }
+            // 配列を空にする
+            this.state.editingTagRecipe.editingTagDeleteArr.length = 0;
+          })
+        })
+        // 削除して変更されたindex番号をDBに反映させる
+        this.state.editingRecipe.editingRecipeTag.forEach(element => {
+          const chengeTagIndexId = editingRecipeData
+          .collection('tag').doc(element.recipe_tag_id);
+          chengeTagIndexId.get().then(snapshot => {
+            if (element.recipe_tag_id !== undefined) {
+              if (snapshot.data().recipe_tag_id === element.recipe_tag_id) {
+                chengeTagIndexId.update({
+                  recipe_tag_index: element.recipe_tag_index
+                })
+              }
             }
           })
         })

@@ -6,13 +6,13 @@
           <tbody v-if="$store.state.recordRecipe.CengeColorBtn === true">
             <tr v-for="displayRecipe in $store.state.recordRecipe.recipeArr"
             :key="displayRecipe.id"
-            @click="RouterDetailsRecipe(displayRecipe)"
             >
               <td><img :src="displayRecipe.recipe_img"></td>
               <td class="my-recipe-list__td"><p class="my-recipe-list__recipe-name">{{ displayRecipe.recipe_name }}</p></td>
               <td class="my-recipe-list__td"><p class="my-recipe-list__memo">{{ displayRecipe.recipe_memo }}</p></td>
               <!-- <td class="my-recipe-list__td"><p class="my-recipe-list__tag">タグ</p></td> -->
               <td class="my-recipe-list__favorite-icon"><p @click="activeFavoriteIcon(displayRecipe)">{{ displayRecipe.recipe_favorite_icon }}</p></td>
+              <td class="my-recipe-list__recipe-details-btn"><a @click="RouterDetailsRecipe(displayRecipe)">レシピ詳細 ＞</a></td>
             </tr>
           </tbody>
           <tbody v-if="$store.state.recordRecipe.CengeColorBtn === false">
@@ -23,6 +23,7 @@
               <td class="my-recipe-list__td"><p class="my-recipe-list__memo">{{ displayFavoriteRecipe.recipe_memo }}</p></td>
               <!-- <td class="my-recipe-list__td"><p class="my-recipe-list__tag">タグ</p></td> -->
               <td class="my-recipe-list__favorite-icon"><p @click="activeFavoriteIcon(displayRecipe)">{{ displayFavoriteRecipe.recipe_favorite_icon }}</p></td>
+              <td class="my-recipe-list__recipe-details-btn"><a @click="RouterDetailsRecipe(displayRecipe)">レシピ詳細 ＞</a></td>
             </tr>
           </tbody>
         </table>
@@ -119,6 +120,46 @@ export default {
   position: absolute;
   top: 5px;
   right: 0;
+  cursor: pointer;
+}
+
+.my-recipe-list__recipe-details-btn {
+  position: absolute;
+  right: 0;
+  bottom: 10px;
+
+  a {
+    cursor: pointer;
+    display: inline-block;
+    font-size: 0.7em;
+    padding: 5px;
+    color:  #000;
+    text-decoration: none;
+    border: 1px solid #000;
+  }
+
+  a:hover {
+    color: #FFF;
+  }
+
+  a::before {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    content: '';
+    z-index: -1;
+    background: #000;
+    transform-origin: left top;
+    transform: scale(0, 1);
+    transition: transform .4s;
+  }
+
+  a:hover::before {
+    transform-origin: left top;
+    transform: scale(1, 1);
+  }
 }
 
 // sp用
