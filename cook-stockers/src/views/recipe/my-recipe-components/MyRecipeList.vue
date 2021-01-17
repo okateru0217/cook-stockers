@@ -4,7 +4,7 @@
       <div class="my-recipe-list__table">
         <table>
           <tbody v-if="$store.state.recordRecipe.CengeColorBtn === true">
-            <tr v-for="displayRecipe in $store.state.recordRecipe.recipeArr"
+            <tr v-for="displayRecipe in $store.state.searchRecipe.searchResultArr"
             :key="displayRecipe.id"
             >
               <td><img :src="displayRecipe.recipe_img"></td>

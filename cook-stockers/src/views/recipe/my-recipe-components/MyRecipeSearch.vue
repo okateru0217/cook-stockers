@@ -3,11 +3,22 @@
     <div class="my-recipe-search__wrap">
       <input 
       type="text"
-      placeholder="レシピを検索">
-      <p><font-awesome-icon icon="search" /></p>
+      placeholder="レシピを検索"
+      v-model="$store.state.searchRecipe.searchValue">
+      <p @click="searchRecipe"><font-awesome-icon icon="search" /></p>
     </div><!-- my-recipe-search__wrap -->
   </div><!-- my-recipe-search__container -->
 </template>
+
+<script>
+export default {
+  methods: {
+    searchRecipe() {
+      this.$store.dispatch('searchRecipe');
+    }
+  }
+}
+</script>
 
 <style lang="scss" scoped>
 // 共通スタイル

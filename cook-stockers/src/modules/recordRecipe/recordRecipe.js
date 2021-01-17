@@ -96,6 +96,7 @@ export default {
             snapshot.forEach(docs => {
               this.state.recordRecipe.recipeArr.push(docs.data());
             })
+            this.state.searchRecipe.searchResultArr = this.state.recordRecipe.recipeArr;
           })
           // お気に入り欄にレシピを表示させる
           .then(() => {
