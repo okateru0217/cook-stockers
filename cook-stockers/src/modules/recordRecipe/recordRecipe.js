@@ -82,6 +82,7 @@ export default {
           // お気に入り欄にレシピを表示させる
           .then(() => {
             const filterFavoriteGuestRecipe = this.state.recordRecipe.recipeArr.filter(item => item.recipe_favorite_icon === '★');
+            // フィルター用の配列に追加
             this.state.recordRecipe.favoriteRecipeArr = filterFavoriteGuestRecipe;
           })
         // メールアドレスログイン時の処理
@@ -96,12 +97,13 @@ export default {
             snapshot.forEach(docs => {
               this.state.recordRecipe.recipeArr.push(docs.data());
             })
+            // フィルターをかけるための配列に入れる
             this.state.searchRecipe.searchResultArr = this.state.recordRecipe.recipeArr;
           })
           // お気に入り欄にレシピを表示させる
           .then(() => {
             const filterFavoriteRecipe = this.state.recordRecipe.recipeArr.filter(item => item.recipe_favorite_icon === '★');
-            this.state.recordRecipe.favoriteRecipeArr = filterFavoriteRecipe;
+            this.state.searchRecipe.searchResultFavoriteArr = filterFavoriteRecipe;
           })
         }
       })

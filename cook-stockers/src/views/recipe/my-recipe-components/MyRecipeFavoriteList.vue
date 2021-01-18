@@ -9,7 +9,7 @@
       <div class="my-recipe-favorite-list__table">
         <table>
           <tbody>
-            <tr v-for="displayFavoriteRecipe in $store.state.recordRecipe.favoriteRecipeArr"
+            <tr v-for="displayFavoriteRecipe in $store.state.searchRecipe.searchResultFavoriteArr"
             :key="displayFavoriteRecipe.id">
               <td><img :src="displayFavoriteRecipe.recipe_img"></td>
               <td class="my-recipe-favorite-list__td"><p class="my-recipe-favorite-list__recipe-name">{{ displayFavoriteRecipe.recipe_name }}</p></td>

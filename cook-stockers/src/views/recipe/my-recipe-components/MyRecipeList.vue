@@ -16,7 +16,7 @@
             </tr>
           </tbody>
           <tbody v-if="$store.state.recordRecipe.CengeColorBtn === false">
-            <tr v-for="displayFavoriteRecipe in $store.state.recordRecipe.favoriteRecipeArr"
+            <tr v-for="displayFavoriteRecipe in $store.state.searchRecipe.searchResultFavoriteArr"
             :key="displayFavoriteRecipe.id">
               <td><img :src="displayFavoriteRecipe.recipe_img"></td>
               <td class="my-recipe-list__td"><p class="my-recipe-list__recipe-name">{{ displayFavoriteRecipe.recipe_name }}</p></td>
@@ -48,7 +48,8 @@ export default {
       }
       // お気に入り登録したリストを、配列に格納
       const filterFavoriteRecipe = this.$store.state.recordRecipe.recipeArr.filter(item => item.recipe_favorite_icon === '★');
-      this.$store.state.recordRecipe.favoriteRecipeArr = filterFavoriteRecipe;
+      // フィルター用の配列に追加
+      this.$store.state.searchRecipe.searchResultFavoriteArr = filterFavoriteRecipe;
     },
     // レシピの詳細へ画面遷移
     RouterDetailsRecipe(displayRecipe) {
