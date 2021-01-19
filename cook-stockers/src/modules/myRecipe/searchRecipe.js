@@ -42,14 +42,14 @@ export default {
         } else {
           // 検索に引っかからない場合に使用する配列
           const noneFavoriteSearchArr = [];
-          for (let i = 0; i < this.state.searchRecipe.searchResultFavoriteArr.length; i++) {
+          for (let i = 0; i < this.state.recordRecipe.favoriteRecipeArr.length; i++) {
             // レシピ名で検索し、一部分でも一致していたら、trueを返す
-            const searchFavoritePartialMatch = this.state.searchRecipe.searchResultFavoriteArr[i].recipe_name.indexOf(this.state.searchRecipe.searchValue) > -1;
+            const searchFavoritePartialMatch = this.state.recordRecipe.favoriteRecipeArr[i].recipe_name.indexOf(this.state.searchRecipe.searchValue) > -1;
             noneFavoriteSearchArr.push(searchFavoritePartialMatch);
             // 検索した文言とレシピ名とが一部でも一致していたら、フィルターをかける
             if (searchFavoritePartialMatch === true) {
               let filterFavoritePartialMatchArr = [];
-              filterFavoritePartialMatchArr.push(this.state.searchRecipe.searchResultFavoriteArr[i]);
+              filterFavoritePartialMatchArr.push(this.state.recordRecipe.favoriteRecipeArr[i]);
               this.state.searchRecipe.searchResultFavoriteArr = filterFavoritePartialMatchArr;
             }
           }

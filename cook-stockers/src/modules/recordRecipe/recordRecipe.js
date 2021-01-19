@@ -23,7 +23,7 @@ export default {
     // myrecipeテーブルにレシピを表示させるための配列
     recipeArr: [],
     // MyRecipeFavoriteListにお気に入り登録レシピを表示させるための配列
-    favoriteRecipeArr: '',
+    favoriteRecipeArr: [],
     // お気に入りアイコン
     favoriteIcon: '☆',
     // tablet表示以下のお気に入り表示判定用
@@ -76,7 +76,7 @@ export default {
             // 一度配列を空にする
             this.state.recordRecipe.recipeArr.length = 0;
             snapshot.forEach(docs => {
-              this.state.recordRecipe.recipeArr.push(docs.data());
+              this.state.searchRecipe.searchResultArr.push(docs.data());
             })
           })
           // お気に入り欄にレシピを表示させる
@@ -84,6 +84,7 @@ export default {
             const filterFavoriteGuestRecipe = this.state.recordRecipe.recipeArr.filter(item => item.recipe_favorite_icon === '★');
             // フィルター用の配列に追加
             this.state.recordRecipe.favoriteRecipeArr = filterFavoriteGuestRecipe;
+            this.state.searchRecipe.searchResultFavoriteArr = filterFavoriteGuestRecipe;
           })
         // メールアドレスログイン時の処理
         } else {
@@ -103,6 +104,7 @@ export default {
           // お気に入り欄にレシピを表示させる
           .then(() => {
             const filterFavoriteRecipe = this.state.recordRecipe.recipeArr.filter(item => item.recipe_favorite_icon === '★');
+            this.state.recordRecipe.favoriteRecipeArr = filterFavoriteRecipe;
             this.state.searchRecipe.searchResultFavoriteArr = filterFavoriteRecipe;
           })
         }

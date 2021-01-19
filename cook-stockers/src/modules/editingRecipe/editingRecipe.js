@@ -8,6 +8,8 @@ export default {
   state: {
     // レシピ名編集用
     editingRecipeName: '',
+    // レシピ画像編集用
+    editingRecipeImg: '',
     // レシピメモ編集用
     editingRecipeMemo: '',
     // レシピ外部サイト編集用
@@ -26,6 +28,7 @@ export default {
       this.state.recordRecipe.switcherAddEditBtn = false;
       // 画面遷移時、stateにv-model用のレシピ情報を記述
       this.state.editingRecipe.editingRecipeName = this.state.detailsRecipe.recipeName;
+      this.state.editingRecipe.editingRecipeImg = this.state.detailsRecipe.recipeImg;
       this.state.editingRecipe.editingRecipeMemo = this.state.detailsRecipe.recipeMemo;
       this.state.editingRecipe.editingRecipeUrl = this.state.detailsRecipe.recipeUrl;
       this.state.editingRecipe.editingRecipeMaterial = this.state.detailsRecipe.recipeMaterialArr;
@@ -41,6 +44,7 @@ export default {
         .collection('recipe').doc(this.state.detailsRecipe.recipeId);
         // 編集した「レシピ名」「メモ」「Url」をDBに反映
         editingRecipeData.update({
+          recipe_img: this.state.editingRecipe.editingRecipeImg,
           recipe_name: this.state.editingRecipe.editingRecipeName,
           recipe_memo: this.state.editingRecipe.editingRecipeMemo,
           recipe_Url: this.state.editingRecipe.editingRecipeUrl
