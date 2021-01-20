@@ -33,6 +33,8 @@ export default {
           })
         })
       })
+      // 配列を空にする
+      this.state.recordRecipe.tagArr.length = 0;
     }
   }
 }

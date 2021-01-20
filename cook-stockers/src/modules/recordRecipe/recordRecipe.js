@@ -48,8 +48,13 @@ export default {
           recipe_Url: this.state.recordRecipe.recipeData.recipeUrl,
           recipe_favorite_icon: '☆'
         })
+        // DB登録後、入力値を空にする
+        this.state.recordRecipe.recipeData.recipeName = '';
+        this.state.recordRecipe.recipeData.recipeImg = '';
+        this.state.recordRecipe.recipeData.recipeMemo = '';
+        this.state.recordRecipe.recipeData.recipeUrl = '';
         // 「材料」「量」「手順」「タグ」を登録するために、コレクションのIDを変数に入れる
-        this.state.recordRecipe.recordRecipeId = recordRecipeId.id
+        this.state.recordRecipe.recordRecipeId = recordRecipeId.id;
       }
     },
     // レシピ画像をfirebaseのstrageにupload
@@ -75,13 +80,14 @@ export default {
           recipeDataGuestArr.get().then(snapshot => {
             // 一度配列を空にする
             this.state.recordRecipe.recipeArr.length = 0;
+            this.state.searchRecipe.searchResultArr.length = 0;
             snapshot.forEach(docs => {
               this.state.searchRecipe.searchResultArr.push(docs.data());
             })
           })
           // お気に入り欄にレシピを表示させる
           .then(() => {
-            const filterFavoriteGuestRecipe = this.state.recordRecipe.recipeArr.filter(item => item.recipe_favorite_icon === '★');
+            const filterFavoriteGuestRecipe = this.state.searchRecipe.searchResultArr.filter(item => item.recipe_favorite_icon === '★');
             // フィルター用の配列に追加
             this.state.recordRecipe.favoriteRecipeArr = filterFavoriteGuestRecipe;
             this.state.searchRecipe.searchResultFavoriteArr = filterFavoriteGuestRecipe;

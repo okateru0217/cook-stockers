@@ -22,8 +22,8 @@
               <td class="my-recipe-list__td"><p class="my-recipe-list__recipe-name">{{ displayFavoriteRecipe.recipe_name }}</p></td>
               <td class="my-recipe-list__td"><p class="my-recipe-list__memo">{{ displayFavoriteRecipe.recipe_memo }}</p></td>
               <!-- <td class="my-recipe-list__td"><p class="my-recipe-list__tag">タグ</p></td> -->
-              <td class="my-recipe-list__favorite-icon"><p @click="activeFavoriteIcon(displayRecipe)">{{ displayFavoriteRecipe.recipe_favorite_icon }}</p></td>
-              <td class="my-recipe-list__recipe-details-btn"><a @click="RouterDetailsRecipe(displayRecipe)">レシピ詳細 ＞</a></td>
+              <td class="my-recipe-list__favorite-icon"><p @click="activeFavoriteIcon(displayFavoriteRecipe)">{{ displayFavoriteRecipe.recipe_favorite_icon }}</p></td>
+              <td class="my-recipe-list__recipe-details-btn"><a @click="RouterDetailsRecipe(displayFavoriteRecipe)">レシピ詳細 ＞</a></td>
             </tr>
           </tbody>
         </table>
@@ -47,7 +47,7 @@ export default {
         this.$store.dispatch('renewFavoriteIcon', displayRecipe);
       }
       // お気に入り登録したリストを、配列に格納
-      const filterFavoriteRecipe = this.$store.state.recordRecipe.recipeArr.filter(item => item.recipe_favorite_icon === '★');
+      const filterFavoriteRecipe = this.$store.state.searchRecipe.searchResultArr.filter(item => item.recipe_favorite_icon === '★');
       // フィルター用の配列に追加
       this.$store.state.searchRecipe.searchResultFavoriteArr = filterFavoriteRecipe;
     },

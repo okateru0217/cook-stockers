@@ -9,7 +9,10 @@
           <p>{{ $store.state.detailsRecipe.recipeUrl }}</p>
         </div><!-- details-recipe-external-site__input-url -->
         <div class="details-recipe-external-site__move-site">
-          <button>レシピサイトへ</button>
+          <a 
+          :href="$store.state.detailsRecipe.recipeUrl"
+          target="_blank"
+          rel="noopener noreferrer">レシピサイトへ</a>
         </div><!-- details-recipe-external-site__move-site -->
       </div><!-- details-recipe-external-site__item -->
     </div><!-- details-recipe-external-site__wrap -->
@@ -49,7 +52,7 @@
   text-align: center;
   padding-bottom: 30px;
 
-  button {
+  a {
     cursor: pointer;
     outline: none;
     text-decoration: none;
@@ -62,7 +65,7 @@
     font-size: 15px;
   }
 
-  button:hover {
+  a:hover {
     padding: 16px 31px;
     font-size: 16px;
   }

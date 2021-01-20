@@ -22,6 +22,8 @@ export default {
           recipe_quantity: items.quantity,
         })
       })
+      // 配列を空にする
+      this.state.recordRecipe.materialArr.length = 0;
     }
   }
 }

@@ -21,6 +21,8 @@ export default {
           recipe_procedure: items.procedure
         })
       })
+      // 配列を空にする
+      this.state.recordRecipe.procedureArr.length = 0;
     }
   }
 }
