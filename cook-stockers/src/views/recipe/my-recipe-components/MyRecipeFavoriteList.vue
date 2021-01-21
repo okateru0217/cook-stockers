@@ -40,8 +40,8 @@
   position: fixed;
   top: 0;
   right: 0;
-  width: 25%;
-  height: 5.7%;
+  width: 26%;
+  height: 4.5%;
   background-color: #FFF;
   z-index: 10;
 }

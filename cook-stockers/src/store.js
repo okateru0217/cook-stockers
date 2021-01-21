@@ -23,6 +23,8 @@ import editingTagRecipe from './modules/editingRecipe/editingTagRecipe'
 import detailsDeleteRecipeBtn from './modules/detailsRecipe/detailsDeleteRecipeBtn'
 // レシピ検索用
 import searchRecipe from './modules/myRecipe/searchRecipe'
+// レシピメモ用
+import shoppingMemo from './modules/shoppingMemo/shoppingMemo'
 
 
 Vue.use(Vuex);
@@ -50,6 +52,8 @@ export default new Vuex.Store({
     // レシピ詳細画面から、レシピを丸々削除する用のボタン
     detailsDeleteRecipeBtn,
     // レシピ検索用
-    searchRecipe
+    searchRecipe,
+    // レシピ検索用
+    shoppingMemo
   }
 })
