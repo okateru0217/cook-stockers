@@ -40,6 +40,7 @@ export default {
   },
   created() {
     this.$store.dispatch('createdMemoList');
+    this.$store.dispatch('createdRecipeList');
   }
 }
 </script>

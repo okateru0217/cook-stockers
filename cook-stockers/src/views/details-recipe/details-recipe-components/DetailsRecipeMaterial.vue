@@ -21,12 +21,23 @@
           </table>
         </div><!-- details-recipe-material__table -->
         <div class="details-recipe-material__add-shopping-memo-btn">
-          <button>買い物メモへ追加</button>
+          <a @click="materialAddShoppingMemo">買い物メモへ追加</a>
         </div><!-- details-recipe-material__add-shopping-memo-btn -->
       </div><!-- details-recipe-material__item -->
     </div><!-- details-recipe-material__wrap -->
   </div><!-- details-recipe-material__container -->
 </template>
+
+<script>
+export default {
+  methods: {
+    // 買い物メモへ追加する
+    materialAddShoppingMemo() {
+      this.$store.dispatch('materialAddShoppingMemo');
+    }
+  }
+}
+</script>
 
 <style lang="scss" scoped>
 // 共通スタイル
@@ -60,11 +71,11 @@
     padding: 0;
   }
 
-  button {
+  a {
     margin: 0;
   }
 
-  button:hover {
+  a:hover {
     opacity: 0.7;
   }
 
@@ -85,7 +96,7 @@
   text-align: center;
   padding-bottom: 30px;
 
-  button {
+  a {
     cursor: pointer;
     outline: none;
     text-decoration: none;
@@ -98,7 +109,7 @@
     font-size: 15px;
   }
 
-  button:hover {
+  a:hover {
     padding: 16px 31px;
     font-size: 16px;
   }
@@ -119,7 +130,7 @@
       margin-bottom: 10px;
     }
 
-    button {
+    a {
       font-size: 0.8em;
     }
 

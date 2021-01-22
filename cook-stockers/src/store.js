@@ -24,7 +24,9 @@ import detailsDeleteRecipeBtn from './modules/detailsRecipe/detailsDeleteRecipeB
 // レシピ検索用
 import searchRecipe from './modules/myRecipe/searchRecipe'
 // レシピメモ用
-import shoppingMemo from './modules/shoppingMemo/shoppingMemo'
+import addShoppingMemo from './modules/shoppingMemo/addShoppingMemo'
+import deleteShoppingMemo from './modules/shoppingMemo/deleteShoppingMemo'
+import reloadShoppingMemo from './modules/shoppingMemo/reloadShoppingMemo'
 
 
 Vue.use(Vuex);
@@ -54,6 +56,8 @@ export default new Vuex.Store({
     // レシピ検索用
     searchRecipe,
     // レシピ検索用
-    shoppingMemo
+    addShoppingMemo,
+    deleteShoppingMemo,
+    reloadShoppingMemo
   }
 })

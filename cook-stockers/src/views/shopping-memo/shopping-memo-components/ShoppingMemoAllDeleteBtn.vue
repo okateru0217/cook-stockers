@@ -1,10 +1,21 @@
 <template>
   <div class="shopping-memo-all-delete-btn__container">
     <div class="shopping-memo-all-delete-btn__wrap">
-      <a>一括削除</a>
+      <a @click="allDeleteMemo">一括削除</a>
     </div><!-- shopping-memo-all-delete-btn__wrap -->
   </div><!-- shopping-memo-all-delete-btn__container -->
 </template>
+
+<script>
+export default {
+  methods: {
+    // メモ欄を一括削除する
+    allDeleteMemo() {
+      this.$store.dispatch('allDeleteMemo');
+    }
+  }
+}
+</script>
 
 <style lang="scss" scoped>
 // 共通スタイル

@@ -4,15 +4,15 @@
       <div class="my-recipe-list__table">
         <table>
           <tbody>
-            <tr v-for="memos in $store.state.shoppingMemo.addMemoArr"
+            <tr v-for="memos in $store.state.addShoppingMemo.displayMemoArr"
             :key="memos.memoIndex">
-              <td><p class="my-recipe-list__recipe-name">{{ memos.memo }}</p></td>
+              <td @click="deleteMemo(memos)"><p class="my-recipe-list__recipe-name">{{ memos.memo }}</p></td>
             </tr>
             <tr class="my-recipe-list__add-shopping-memo">
               <td><input 
               type="text" 
               placeholder="ここからレシピを追加できます"
-              v-model="$store.state.shoppingMemo.addMemoValue"></td>
+              v-model="$store.state.addShoppingMemo.addMemoValue"></td>
               <a @click="addMemo">追加</a>
             </tr>
           </tbody>
@@ -30,6 +30,9 @@ export default {
   methods: {
     addMemo() {
       this.$store.dispatch('addMemo');
+    },
+    deleteMemo(memos) {
+      this.$store.dispatch('deleteMemo', memos);
     }
   }
 }
@@ -52,6 +55,10 @@ export default {
     display: block;
     padding: 5px 0;
     border-bottom: 1px solid #C1C1C1;
+  }
+
+  td {
+    width: 47vw;
   }
 
   input {

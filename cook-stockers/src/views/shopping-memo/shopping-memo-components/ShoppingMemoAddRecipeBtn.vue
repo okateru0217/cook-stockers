@@ -5,10 +5,23 @@
         レシピ材料を買い物リストから<br>
         追加することができます
       </p>
-      <a>マイレシピから選ぶ</a>
+      <a @click="routerMyRecipe">マイレシピから選ぶ</a>
     </div><!-- shopping-memo-add-recipe-btn__wrap -->
   </div><!-- shopping-memo-add-recipe-btn__container -->
 </template>
+
+<script>
+import router from '../../../router';
+
+export default {
+  methods: {
+    // マイレシピへ移動させる
+    routerMyRecipe() {
+      router.push('myrecipe');
+    }
+  }
+}
+</script>
 
 <style lang="scss" scoped>
 // 共通スタイル
