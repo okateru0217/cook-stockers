@@ -64,21 +64,25 @@ export default {
     addTag() {
       // タグ登録作業時の編集時の挙動
       if (this.$store.state.recordRecipe.switcherAddEditBtn === true){
-        // タグの追加
+        // タグを追加する
         if (this.chengeOverAddTask === '＋ 追加') {
           this.$store.state.recordRecipe.tagArr.push({
             id: this.$store.state.recordRecipe.tagArr.length,
             tag: this.tagValue
           })
-        // タグの編集
-        } else {
+        } 
+        // タグを編集する
+        if (this.chengeOverAddTask === '編集') {
           this.$store.state.recordRecipe.tagArr[this.editIndex].tag = this.tagValue;
           this.chengeOverAddTask = '＋ 追加';
           this.onAddBtn = true;
         }
-      } else {
+      }
+      // タグ編集作業時の編集時の処理
+      if (!this.$store.state.recordRecipe.switcherAddEditBtn) {
         // タグの追加
         if (this.chengeOverAddTask === '＋ 追加') {
+          // 画面表示用配列へ追加する
           this.$store.state.editingRecipe.editingRecipeTag.push({
             recipe_tag_index: this.$store.state.editingRecipe.editingRecipeTag.length,
             recipe_tag: this.tagValue
@@ -88,14 +92,37 @@ export default {
             recipe_tag_index: this.$store.state.editingRecipe.editingRecipeTag.length -1,
             recipe_tag: this.tagValue
           })
+        } 
         // タグの編集
-        } else {
-          this.$store.state.editingRecipe.editingRecipeTag[this.editIndex].recipe_tag = this.tagValue;
+        if (this.chengeOverAddTask === '編集') {
+          // 表示用配列を編集する
+          const editingTagIndex = this.$store.state.editingRecipe.editingRecipeTag[this.editIndex];
+          editingTagIndex.recipe_tag = this.tagValue;
           // 編集後の値をDBに反映させる際に用いる配列に追加
           this.$store.state.editingTagRecipe.editingTagEditArr.push({
-            recipe_tag_index: this.$store.state.editingRecipe.editingRecipeTag[this.editIndex].recipe_tag_index,
-            recipe_tag: this.$store.state.editingRecipe.editingRecipeTag[this.editIndex].recipe_tag
+            recipe_tag_index: this.editIndex, 
+            recipe_tag: editingTagIndex.recipe_tag
           })
+          // 同じ箇所を編集した際、古い方を削除する
+          // 「DB更新用の一番後ろの要素」
+          const editingTagEdit = this.$store.state.editingTagRecipe.editingTagEditArr;
+          const editingTagEditLastElement = editingTagEdit[editingTagEdit.length -1];
+          // 重複したindex番号を持つ要素を格納
+          const duplicateArr = [];
+          for (let i = 0; i < editingTagEdit.length; i++) {
+            if (editingTagEdit[i].recipe_tag_index === editingTagEditLastElement.recipe_tag_index && editingTagEdit.length >= 2) {
+              // 重複した要素を配列に格納する
+              duplicateArr.push(editingTagEdit[i]);
+            }
+          }
+          // index番号が重複していた場合に限り、先に入れたindex番号を削除する
+          if (duplicateArr.length >= 2) {
+            // 先に入れた要素のindex番号を取得
+            const searchIndex = editingTagEdit.indexOf(duplicateArr[0]);
+            // 取得したindex番号を元に削除
+            editingTagEdit.splice(searchIndex, 1);
+          }
+          console.log(editingTagEdit);
           this.chengeOverAddTask = '＋ 追加';
           this.onAddBtn = true;
         }

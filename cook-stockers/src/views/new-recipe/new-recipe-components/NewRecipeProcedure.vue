@@ -71,23 +71,26 @@ export default {
     // 手順を追加、編集する
     setProcedure() {
       // 手順登録作業時の編集時の挙動
-      if (this.$store.state.recordRecipe.switcherAddEditBtn === true){
+      if (this.$store.state.recordRecipe.switcherAddEditBtn) {
         // 手順を追加する
         if (this.chengeOverBtn === '＋ 追加') {
           this.$store.state.recordRecipe.procedureArr.push({
             id: this.$store.state.recordRecipe.procedureArr.length,
             procedure: this.procedureValue
           })
+        } 
         // 手順を編集する
-        } else {
+        if (this.chengeOverAddEdit === '編集') {
           this.$store.state.recordRecipe.procedureArr[this.editIndex].procedure = this.procedureValue;
           this.chengeOverBtn = '＋ 追加';
           this.onAddBtn = true;
         }
-      // 手順編集作業時の編集時の挙動
-      } else {
+      } 
+      // 手順編集作業時の編集時の処理
+      if (!this.$store.state.recordRecipe.switcherAddEditBtn) {
         // 手順の追加
         if (this.chengeOverBtn === '＋ 追加'){
+          // 画面表示用配列へ追加する
           this.$store.state.editingRecipe.editingRecipeProcedure.push({
             recipe_procedure_index: this.$store.state.editingRecipe.editingRecipeProcedure.length,
             recipe_procedure: this.procedureValue
@@ -97,14 +100,36 @@ export default {
             recipe_procedure_index: this.$store.state.editingRecipe.editingRecipeProcedure.length -1,
             recipe_procedure: this.procedureValue
           })
+        } 
         // 手順の編集
-        } else {
-          this.$store.state.editingRecipe.editingRecipeProcedure[this.editIndex].recipe_procedure = this.procedureValue;
+        if (this.chengeOverBtn === '編集') {
+          // 表示用配列を編集する
+          const editingProcedureIndex = this.$store.state.editingRecipe.editingRecipeProcedure[this.editIndex];
+          editingProcedureIndex.recipe_procedure = this.procedureValue;
           // 編集後の値をDBに反映させる際に用いる配列に追加
           this.$store.state.editingProcedureRecipe.editingProcedureEditArr.push({
-            recipe_procedure_index: this.$store.state.editingRecipe.editingRecipeProcedure[this.editIndex].recipe_material_index,
-            recipe_procedure: this.$store.state.editingRecipe.editingRecipeProcedure[this.editIndex].recipe_procedure
+            recipe_procedure_index: this.editIndex,
+            recipe_procedure: editingProcedureIndex.recipe_procedure
           })
+          // 同じ箇所を編集した際、古い方を削除する
+          const editingProcedureEdit = this.$store.state.editingProcedureRecipe.editingProcedureEditArr;
+          const editingProcedureEditLastElement = editingProcedureEdit[editingProcedureEdit.length -1];
+          // 重複したindex番号を持つ要素を格納
+          const duplicateArr = [];
+          for (let i = 0; i < editingProcedureEdit.length; i++) {
+            if (editingProcedureEdit[i].recipe_procedure_index === editingProcedureEditLastElement.recipe_procedure_index && editingProcedureEdit.length >= 2) {
+              // 重複した要素を配列に格納する
+              duplicateArr.push(editingProcedureEdit[i]);
+            }
+          }
+          // index番号が重複していた場合に限り、先に入れたindex番号を削除する
+          if (duplicateArr.length >= 2) {
+            // 先に入れた要素のindex番号を取得
+            const searchIndex = editingProcedureEdit.indexOf(duplicateArr[0]);
+            // 取得したindex番号を元に削除
+            editingProcedureEdit.splice(searchIndex, 1);
+          }
+          console.log(editingProcedureEdit);
           this.chengeOverBtn = '＋ 追加';
           this.onAddBtn = true;
         }

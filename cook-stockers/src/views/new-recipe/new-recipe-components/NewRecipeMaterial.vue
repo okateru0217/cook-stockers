@@ -71,6 +71,7 @@
 </template>
 
 <script>
+// import { filter } from 'vue/types/umd';
 export default {
   data() {
     return {
@@ -90,25 +91,28 @@ export default {
     // アイテムの追加、編集を行う
     setItems() {
       // アイテム登録作業時の編集時の挙動
-      if (this.$store.state.recordRecipe.switcherAddEditBtn === true) {
-        // アイテムの追加
-        if (this.chengeOverAddEdit === '＋ 追加'){
+      if (this.$store.state.recordRecipe.switcherAddEditBtn) {
+        // アイテムを追加する
+        if (this.chengeOverAddEdit === '＋ 追加') {
           this.$store.state.recordRecipe.materialArr.push({
             id: this.$store.state.recordRecipe.materialArr.length,
             material: this.materialValue,
             quantity: this.quantityValue
           })
-        // アイテムの編集
-        } else {
+        } 
+        // アイテムを編集する
+        if (this.chengeOverAddEdit === '編集') {
           this.$store.state.recordRecipe.materialArr[this.editIndex].material = this.materialValue;
           this.$store.state.recordRecipe.materialArr[this.editIndex].quantity = this.quantityValue;
           this.chengeOverAddEdit = '＋ 追加';
           this.onAddBtn = true;
         }
-      // アイテム編集作業時の編集時の挙動
-      } else {
+      }
+      // アイテム編集作業時の編集時の処理
+      if (!this.$store.state.recordRecipe.switcherAddEditBtn) {
         // アイテムの追加
         if (this.chengeOverAddEdit === '＋ 追加'){
+          // 画面表示用配列へ追加する
           this.$store.state.editingRecipe.editingRecipeMaterial.push({
             recipe_material_index: this.$store.state.editingRecipe.editingRecipeMaterial.length,
             recipe_material: this.materialValue,
@@ -120,16 +124,42 @@ export default {
             recipe_material: this.materialValue,
             recipe_quantity: this.quantityValue
           })
+        } 
         // アイテムの編集
-        } else {
-          this.$store.state.editingRecipe.editingRecipeMaterial[this.editIndex].recipe_material = this.materialValue;
-          this.$store.state.editingRecipe.editingRecipeMaterial[this.editIndex].recipe_quantity = this.quantityValue;
+        if (this.chengeOverAddEdit === '編集') {
+          // ※(メモ追加)表示用配列を編集する
+          // ※(変数追加)
+          // ※(変数に変更)
+          // ※(変数に変更)
+          const editingMaterialIndex = this.$store.state.editingRecipe.editingRecipeMaterial[this.editIndex];
+          editingMaterialIndex.recipe_material = this.materialValue;
+          editingMaterialIndex.recipe_quantity = this.quantityValue;
           // 編集後の値をDBに反映させる際に用いる配列に追加
           this.$store.state.editingMaterialRecipe.editingMaterialEditArr.push({
-            recipe_material_id: this.$store.state.editingRecipe.editingRecipeMaterial[this.editIndex].recipe_material_id,
-            recipe_material: this.$store.state.editingRecipe.editingRecipeMaterial[this.editIndex].recipe_material,
-            recipe_quantity: this.$store.state.editingRecipe.editingRecipeMaterial[this.editIndex].recipe_quantity
+            // ※(recipe_material_indexへ変更, this.editIndexを追加)
+            recipe_material_index: this.editIndex,
+            recipe_material: editingMaterialIndex.recipe_material,
+            recipe_quantity: editingMaterialIndex.recipe_quantity
           })
+          // ※同じ箇所を編集した際、古い方を削除する
+          // 「DB更新用の一番後ろの要素」
+          const editingMaterialEdit = this.$store.state.editingMaterialRecipe.editingMaterialEditArr;
+          const editingMaterialEditLastElement = editingMaterialEdit[editingMaterialEdit.length -1];
+          // 重複したindex番号を持つ要素を格納
+          const duplicateArr = [];
+          for (let i = 0; i < editingMaterialEdit.length; i++) {
+            if (editingMaterialEdit[i].recipe_material_index === editingMaterialEditLastElement.recipe_material_index && editingMaterialEdit.length >= 2) {
+              // 重複した要素を配列に格納する
+              duplicateArr.push(editingMaterialEdit[i]);
+            }
+          }
+          // index番号が重複していた場合に限り、先に入れたindex番号を削除する
+          if (duplicateArr.length >= 2) {
+            // 先に入れた要素のindex番号を取得
+            const searchIndex = editingMaterialEdit.indexOf(duplicateArr[0]);
+            // 取得したindex番号を元に削除
+            editingMaterialEdit.splice(searchIndex, 1);
+          }
           this.chengeOverAddEdit = '＋ 追加';
           this.onAddBtn = true;
         }
