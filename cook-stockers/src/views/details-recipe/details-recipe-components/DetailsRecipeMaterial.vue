@@ -29,11 +29,14 @@
 </template>
 
 <script>
+import router from '../../../router';
+
 export default {
   methods: {
-    // 買い物メモへ追加する
+    // レシピ詳細画面から、材料を買い物メモへ追加する
     materialAddShoppingMemo() {
       this.$store.dispatch('materialAddShoppingMemo');
+      router.push('/shoppingmemo');
     }
   }
 }

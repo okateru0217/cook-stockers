@@ -10,7 +10,9 @@ export default {
     // メモ表示用追加用配列
     displayMemoArr: [],
     // 追加されたメモをDBに反映させる用配列
-    addDbMemoArr: []
+    addDbMemoArr: [],
+    // レシピ詳細から持ってきた材料を、一旦格納する配列
+    materialAddShoppingArr: []
   },
   actions: {
     addMemo() {
@@ -52,9 +54,16 @@ export default {
       // メモ入力欄を空にする
       this.state.addShoppingMemo.addMemoValue = '';
     },
-    // 買い物メモへ追加する
+    // レシピ詳細画面から、材料を買い物メモへ追加する
     materialAddShoppingMemo() {
-      console.log('material');
+      // レシピ詳細画面から、材料を取ってくる
+      this.state.detailsRecipe.recipeMaterialArr.forEach(recipeMaterial => {
+        // 取ってきた材料を、材料表示用配列に追加する
+        this.state.addShoppingMemo.materialAddShoppingArr.push({
+          memo_index: this.state.addShoppingMemo.displayMemoArr.length,
+          memo: recipeMaterial.recipe_material
+        })
+      })
     }
   }
 }
