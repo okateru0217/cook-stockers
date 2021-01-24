@@ -22,13 +22,14 @@ export default {
         if (this.state.recordRecipe.CengeColorBtn === true) {
           // 検索に引っかからない場合に使用する配列
           const noneSearchArr = [];
+          // 検索に引っかかった要素を格納する用の配列
+          let filterPartialMatchArr = [];
           for (let i = 0; i < this.state.recordRecipe.recipeArr.length; i++) {
             // レシピ名で検索し、一部分でも一致していたら、trueを返す
             const searchPartialMatch = this.state.recordRecipe.recipeArr[i].recipe_name.indexOf(this.state.searchRecipe.searchValue) > -1;
             noneSearchArr.push(searchPartialMatch);
             // 検索した文言とレシピ名とが一部でも一致していたら、フィルターをかける
             if (searchPartialMatch === true) {
-              let filterPartialMatchArr = [];
               filterPartialMatchArr.push(this.state.recordRecipe.recipeArr[i]);
               this.state.searchRecipe.searchResultArr = filterPartialMatchArr;
             }

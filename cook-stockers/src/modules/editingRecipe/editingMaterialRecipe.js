@@ -5,80 +5,36 @@ import 'firebase/firebase-firestore'
 
 export default {
   state: {
-    // レシピ追加用配列
-    editingMaterialAddArr: [],
-    // レシピ編集用配列
-    editingMaterialEditArr: [],
     // レシピ削除用配列
     editingMaterialDeleteArr: [],
   },
   actions: {
      // 「編集する(DB登録)」ボタン押下時の処理
     recipeRecord() {
-      if (this.state.recordRecipe.switcherAddEditBtn === false) {
+      if (!this.state.recordRecipe.switcherAddEditBtn) {
         // 大元のコレクションパス
-        const editingRecipeData = firebase.firestore()
+        const editingMaterialData = firebase.firestore()
         .collection('users-information').doc(this.state.signin.signInData.uid)
-        .collection('recipe').doc(this.state.detailsRecipe.recipeId);
-        // 編集した「材料」「量」をDBに反映
-        console.log(this.state.editingMaterialRecipe.editingMaterialEditArr);
-        this.state.editingMaterialRecipe.editingMaterialEditArr.forEach(element => {
-          // 「材料」「量」のコレクションパス
-          const editingRecipeMaterialData = editingRecipeData
-          .collection('material').doc(element.recipe_material_id);
-          console.log(editingRecipeMaterialData);
-          console.log(editingRecipeData);
-          editingRecipeMaterialData.get().then(snapshot => {
-            // 編集後の連想配列とDBのindex番号が同じである場合、「材料」「量」を更新する
-            if (snapshot.data().recipe_material_id === element.recipe_material_id) {
-              editingRecipeMaterialData.update({
-                recipe_material: element.recipe_material,
-                recipe_quantity: element.recipe_quantity
-              })
-            }
-            // 配列を空にする
-            this.state.editingMaterialRecipe.editingMaterialEditArr.length = 0;
-          })
-        })
-        // 編集後、新たに「材料」「量」が追加されていた場合、DBにそれを追加する
-        this.state.editingMaterialRecipe.editingMaterialAddArr.forEach(element => {
-          const addRecipeMaterialData = editingRecipeData
-          .collection('material').doc();
-          // DBに追加する
-          addRecipeMaterialData.set({
-            recipe_material_id: addRecipeMaterialData.id,
-            recipe_material_index: element.recipe_material_index,
-            recipe_material: element.recipe_material,
-            recipe_quantity: element.recipe_quantity,
-          })
-          // 配列を空にする
-          this.state.editingMaterialRecipe.editingMaterialAddArr.length = 0;
-        })
-        // 編集後の削除連想配列とDBのindex番号が同じである場合、「材料」「量」を削除する
-        this.state.editingMaterialRecipe.editingMaterialDeleteArr.forEach(element => {
-          // 削除する「材料」「量」コレクションパス
-          const deleteRecipeMaterialData = editingRecipeData
-          .collection('material').doc(element.recipe_material_id);
-          deleteRecipeMaterialData.get().then(snapshot => {
-            if (snapshot.data().recipe_material_id === element.recipe_material_id) {
-              deleteRecipeMaterialData.delete();
-            }
-            // 配列を空にする
-            this.state.editingMaterialRecipe.editingMaterialDeleteArr.length = 0;
-          })
-        })
-        // 削除して変更されたindex番号をDBに反映させる
-        this.state.editingRecipe.editingRecipeMaterial.forEach(element => {
-          const chengeMaterialIndexID = editingRecipeData
-          .collection('material').doc(element.recipe_material_id);
-          chengeMaterialIndexID.get().then(snapshot => {
-            if (element.recipe_material_id !== undefined) {
-              if (snapshot.data().recipe_material_id === element.recipe_material_id) {
-                chengeMaterialIndexID.update({
-                  recipe_material_index: element.recipe_material_index
-                })
-              }
-            }
+        .collection('recipe').doc(this.state.detailsRecipe.recipeId)
+        .collection('material');
+        // 一度更地にする
+        this.state.editingRecipe.editingRecipeMaterial.forEach(editingRecipeMaterial => {
+          // 一括削除用コレクションパス
+          const allDeleteMaterialData = editingMaterialData.doc(editingRecipeMaterial.recipe_material_id);
+          // 一括削除実行
+          allDeleteMaterialData.delete();
+          // 削除した要素を参照しDBから削除する
+          this.state.editingMaterialRecipe.editingMaterialDeleteArr.forEach(editingMaterialDeleteArr => {
+            const displayDeleteMaterialData = editingMaterialData.doc(editingMaterialDeleteArr.recipe_material_id);
+            displayDeleteMaterialData.delete();
+          }) 
+          // 表示用配列をDBに追加
+          const setMaterialData = editingMaterialData.doc();
+          setMaterialData.set({
+            recipe_material_id: setMaterialData.id,
+            recipe_material_index: editingRecipeMaterial.recipe_material_index,
+            recipe_material: editingRecipeMaterial.recipe_material,
+            recipe_quantity: editingRecipeMaterial.recipe_quantity
           })
         })
       }

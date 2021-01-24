@@ -118,48 +118,13 @@ export default {
             recipe_material: this.materialValue,
             recipe_quantity: this.quantityValue
           })
-          // DBに追加する用の配列に入れる
-          this.$store.state.editingMaterialRecipe.editingMaterialAddArr.push({
-            recipe_material_index: this.$store.state.editingRecipe.editingRecipeMaterial.length -1,
-            recipe_material: this.materialValue,
-            recipe_quantity: this.quantityValue
-          })
         } 
         // アイテムの編集
         if (this.chengeOverAddEdit === '編集') {
-          // ※(メモ追加)表示用配列を編集する
-          // ※(変数追加)
-          // ※(変数に変更)
-          // ※(変数に変更)
+          // 表示用配列を編集する
           const editingMaterialIndex = this.$store.state.editingRecipe.editingRecipeMaterial[this.editIndex];
           editingMaterialIndex.recipe_material = this.materialValue;
           editingMaterialIndex.recipe_quantity = this.quantityValue;
-          // 編集後の値をDBに反映させる際に用いる配列に追加
-          this.$store.state.editingMaterialRecipe.editingMaterialEditArr.push({
-            // ※(recipe_material_indexへ変更, this.editIndexを追加)
-            recipe_material_index: this.editIndex,
-            recipe_material: editingMaterialIndex.recipe_material,
-            recipe_quantity: editingMaterialIndex.recipe_quantity
-          })
-          // ※同じ箇所を編集した際、古い方を削除する
-          // 「DB更新用の一番後ろの要素」
-          const editingMaterialEdit = this.$store.state.editingMaterialRecipe.editingMaterialEditArr;
-          const editingMaterialEditLastElement = editingMaterialEdit[editingMaterialEdit.length -1];
-          // 重複したindex番号を持つ要素を格納
-          const duplicateArr = [];
-          for (let i = 0; i < editingMaterialEdit.length; i++) {
-            if (editingMaterialEdit[i].recipe_material_index === editingMaterialEditLastElement.recipe_material_index && editingMaterialEdit.length >= 2) {
-              // 重複した要素を配列に格納する
-              duplicateArr.push(editingMaterialEdit[i]);
-            }
-          }
-          // index番号が重複していた場合に限り、先に入れたindex番号を削除する
-          if (duplicateArr.length >= 2) {
-            // 先に入れた要素のindex番号を取得
-            const searchIndex = editingMaterialEdit.indexOf(duplicateArr[0]);
-            // 取得したindex番号を元に削除
-            editingMaterialEdit.splice(searchIndex, 1);
-          }
           this.chengeOverAddEdit = '＋ 追加';
           this.onAddBtn = true;
         }
@@ -171,24 +136,21 @@ export default {
     // アイテムを削除する
     deleteItems(items) {
       // アイテム登録作業時の削除時の挙動
-      if (this.$store.state.recordRecipe.switcherAddEditBtn === true){
+      // ※trueを削除
+      if (this.$store.state.recordRecipe.switcherAddEditBtn) {
         this.$store.state.recordRecipe.materialArr.splice(items.id, 1);
         for (let i = items.id; i < this.$store.state.recordRecipe.materialArr.length; i++) {
           this.$store.state.recordRecipe.materialArr[i].id = i;
         }
-      } else {
+      }
+      // ※記述方法変更
+      if (!this.$store.state.recordRecipe.switcherAddEditBtn) {
         this.$store.state.editingRecipe.editingRecipeMaterial.splice(items.recipe_material_index, 1);
         // DBを削除する用の配列に入れる
         this.$store.state.editingMaterialRecipe.editingMaterialDeleteArr.push(items);
         // 削除時にindexを0から並び替える
         for (let i = items.recipe_material_index; i < this.$store.state.editingRecipe.editingRecipeMaterial.length; i++) {
           this.$store.state.editingRecipe.editingRecipeMaterial[i].recipe_material_index = i;
-          for (let materialIndex = 0; materialIndex < this.$store.state.editingMaterialRecipe.editingMaterialAddArr.length; materialIndex++) {
-            // 追加用の配列のindexと削除時の配列のindexとを合わせる
-            if (this.$store.state.editingRecipe.editingRecipeMaterial[i].recipe_material === this.$store.state.editingMaterialRecipe.editingMaterialAddArr[materialIndex].recipe_material) {
-              this.$store.state.editingMaterialRecipe.editingMaterialAddArr[materialIndex].recipe_material_index = this.$store.state.editingRecipe.editingRecipeMaterial[i].recipe_material_index
-            }
-          }
         }
       }
       this.materialValue = '';

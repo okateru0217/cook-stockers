@@ -4,6 +4,7 @@
       <div class="new-recipe-tag__item">
         <div class="new-recipe-tag__ttl">
           <h3>タグ追加</h3>
+          <p>※タグをクリックで編集、削除ができます</p>
         </div><!-- new-recipe-tag__ttl -->
         <div class="new-recipe-tag__table">
           <table
@@ -87,42 +88,14 @@ export default {
             recipe_tag_index: this.$store.state.editingRecipe.editingRecipeTag.length,
             recipe_tag: this.tagValue
           })
-          // DBに追加するようの配列に入れる
-          this.$store.state.editingTagRecipe.editingTagAddArr.push({
-            recipe_tag_index: this.$store.state.editingRecipe.editingRecipeTag.length -1,
-            recipe_tag: this.tagValue
-          })
+          console.log(this.$store.state.editingRecipe.editingRecipeTag);
         } 
         // タグの編集
         if (this.chengeOverAddTask === '編集') {
           // 表示用配列を編集する
           const editingTagIndex = this.$store.state.editingRecipe.editingRecipeTag[this.editIndex];
           editingTagIndex.recipe_tag = this.tagValue;
-          // 編集後の値をDBに反映させる際に用いる配列に追加
-          this.$store.state.editingTagRecipe.editingTagEditArr.push({
-            recipe_tag_index: this.editIndex, 
-            recipe_tag: editingTagIndex.recipe_tag
-          })
-          // 同じ箇所を編集した際、古い方を削除する
-          // 「DB更新用の一番後ろの要素」
-          const editingTagEdit = this.$store.state.editingTagRecipe.editingTagEditArr;
-          const editingTagEditLastElement = editingTagEdit[editingTagEdit.length -1];
-          // 重複したindex番号を持つ要素を格納
-          const duplicateArr = [];
-          for (let i = 0; i < editingTagEdit.length; i++) {
-            if (editingTagEdit[i].recipe_tag_index === editingTagEditLastElement.recipe_tag_index && editingTagEdit.length >= 2) {
-              // 重複した要素を配列に格納する
-              duplicateArr.push(editingTagEdit[i]);
-            }
-          }
-          // index番号が重複していた場合に限り、先に入れたindex番号を削除する
-          if (duplicateArr.length >= 2) {
-            // 先に入れた要素のindex番号を取得
-            const searchIndex = editingTagEdit.indexOf(duplicateArr[0]);
-            // 取得したindex番号を元に削除
-            editingTagEdit.splice(searchIndex, 1);
-          }
-          console.log(editingTagEdit);
+          console.log(this.$store.state.editingRecipe.editingRecipeTag);
           this.chengeOverAddTask = '＋ 追加';
           this.onAddBtn = true;
         }
@@ -131,12 +104,13 @@ export default {
     },
     // タグを削除する
     deleteTag() {
-      if (this.$store.state.recordRecipe.switcherAddEditBtn === true){
+      if (this.$store.state.recordRecipe.switcherAddEditBtn){
         this.$store.state.recordRecipe.tagArr.splice(this.editIndex, 1);
         for (let i = this.editIndex; i < this.$store.state.recordRecipe.tagArr.length; i++) {
           this.$store.state.recordRecipe.tagArr[i].id = i;
         }
-      } else {
+      } 
+      if (!this.$store.state.recordRecipe.switcherAddEditBtn) {
         // DBを削除する用の配列に入れる
         this.$store.state.editingTagRecipe.editingTagDeleteArr.push(this.$store.state.editingRecipe.editingRecipeTag[this.editIndex]);
         // テーブル表示用の配列から削除する
@@ -144,13 +118,8 @@ export default {
         // 削除時にindexを0から並び替える
         for (let i = this.editIndex; i < this.$store.state.editingRecipe.editingRecipeTag.length; i++) {
           this.$store.state.editingRecipe.editingRecipeTag[i].recipe_tag_index = i;
-          for (let tagIndex = 0; tagIndex < this.$store.state.editingTagRecipe.editingTagAddArr.length; tagIndex++) {
-            // 追加用の配列のindexと削除時の配列のindexとを合わせる
-            if (this.$store.state.editingRecipe.editingRecipeTag[i].recipe_tag === this.$store.state.editingTagRecipe.editingTagAddArr[tagIndex].recipe_tag) {
-              this.$store.state.editingTagRecipe.editingTagAddArr[tagIndex].recipe_tag_index = this.$store.state.editingRecipe.editingRecipeTag[i].recipe_tag_index
-            }
-          }
         }
+        console.log(this.$store.state.editingRecipe.editingRecipeTag);
       }
       this.tagValue = '';
       this.chengeOverAddTask = '＋ 追加';
@@ -199,6 +168,10 @@ export default {
   h3 {
     padding: 30px 0 0 20px;
     font-weight: normal;
+  }
+
+  p {
+    margin: 0;
   }
 }
 
@@ -287,6 +260,17 @@ export default {
 
 // sp用
 @media screen and (max-width: 767px) {
+  .new-recipe-tag__ttl {
+    position: relative;
+
+    p {
+      position: absolute;
+      top: 35px;
+      left: 120px;
+      font-size: 0.7em;
+    }
+  }
+
   .new-recipe-tag__add-tag {
     padding-bottom: 30px;
 
@@ -303,6 +287,17 @@ export default {
 
 // tab用
 @media screen and (min-width: 768px) and (max-width: 1023px) {
+  .new-recipe-tag__ttl {
+    position: relative;
+
+    p {
+      position: absolute;
+      top: 34px;
+      left: 130px;
+      font-size: 0.7em;
+    }
+  }
+
   .new-recipe-tag__add-tag {
     padding-bottom: 30px;
 
@@ -327,6 +322,13 @@ export default {
 
     h3 {
       margin: 0 0 50px 0;
+    }
+
+    p {
+      position: absolute;
+      top: 55px;
+      left: 20px;
+      font-size: 0.8em;
     }
   }
 

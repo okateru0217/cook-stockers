@@ -7,8 +7,8 @@
       <div class="side-menu__nav">
         <nav>
           <ul>
-            <li><a @click="routerNewRecipe">新しいレシピ</a></li>
             <li><router-link to="/myrecipe">マイレシピ</router-link></li>
+            <li><a @click="routerNewRecipe">新しいレシピ</a></li>
             <li><router-link to="/shoppingmemo">買い物メモ</router-link></li>
             <li><a @click="signOut">ログアウト</a></li>
             <li class="side-menu__recommend-site"><p>おすすめレシピサイト</p></li>

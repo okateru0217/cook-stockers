@@ -95,41 +95,14 @@ export default {
             recipe_procedure_index: this.$store.state.editingRecipe.editingRecipeProcedure.length,
             recipe_procedure: this.procedureValue
           })
-          // DBに追加するようの配列に入れる
-          this.$store.state.editingProcedureRecipe.editingProcedureAddArr.push({
-            recipe_procedure_index: this.$store.state.editingRecipe.editingRecipeProcedure.length -1,
-            recipe_procedure: this.procedureValue
-          })
+          console.log(this.$store.state.editingRecipe.editingRecipeProcedure);
         } 
         // 手順の編集
         if (this.chengeOverBtn === '編集') {
           // 表示用配列を編集する
           const editingProcedureIndex = this.$store.state.editingRecipe.editingRecipeProcedure[this.editIndex];
           editingProcedureIndex.recipe_procedure = this.procedureValue;
-          // 編集後の値をDBに反映させる際に用いる配列に追加
-          this.$store.state.editingProcedureRecipe.editingProcedureEditArr.push({
-            recipe_procedure_index: this.editIndex,
-            recipe_procedure: editingProcedureIndex.recipe_procedure
-          })
-          // 同じ箇所を編集した際、古い方を削除する
-          const editingProcedureEdit = this.$store.state.editingProcedureRecipe.editingProcedureEditArr;
-          const editingProcedureEditLastElement = editingProcedureEdit[editingProcedureEdit.length -1];
-          // 重複したindex番号を持つ要素を格納
-          const duplicateArr = [];
-          for (let i = 0; i < editingProcedureEdit.length; i++) {
-            if (editingProcedureEdit[i].recipe_procedure_index === editingProcedureEditLastElement.recipe_procedure_index && editingProcedureEdit.length >= 2) {
-              // 重複した要素を配列に格納する
-              duplicateArr.push(editingProcedureEdit[i]);
-            }
-          }
-          // index番号が重複していた場合に限り、先に入れたindex番号を削除する
-          if (duplicateArr.length >= 2) {
-            // 先に入れた要素のindex番号を取得
-            const searchIndex = editingProcedureEdit.indexOf(duplicateArr[0]);
-            // 取得したindex番号を元に削除
-            editingProcedureEdit.splice(searchIndex, 1);
-          }
-          console.log(editingProcedureEdit);
+          console.log(this.$store.state.editingRecipe.editingRecipeProcedure)
           this.chengeOverBtn = '＋ 追加';
           this.onAddBtn = true;
         }
@@ -139,25 +112,21 @@ export default {
     },
     // 手順を削除する
     deleteProcedure(procedures) {
-      if (this.$store.state.recordRecipe.switcherAddEditBtn === true){
+      if (this.$store.state.recordRecipe.switcherAddEditBtn){
         this.$store.state.recordRecipe.procedureArr.splice(procedures.id, 1);
         for(let i = procedures.id; i < this.$store.state.recordRecipe.procedureArr.length; i++) {
           this.$store.state.recordRecipe.procedureArr[i].id = i;
         }
-      } else {
+      } 
+      if (!this.$store.state.recordRecipe.switcherAddEditBtn) {
         this.$store.state.editingRecipe.editingRecipeProcedure.splice(procedures.recipe_procedure_index, 1);
         // DBを削除するようの配列に入れる
         this.$store.state.editingProcedureRecipe.editingProcedureDeleteArr.push(procedures);
         // 削除時にindexを0から並び替える
         for (let i = procedures.recipe_procedure_index; i < this.$store.state.editingRecipe.editingRecipeProcedure.length; i++) {
           this.$store.state.editingRecipe.editingRecipeProcedure[i].recipe_procedure_index = i;
-          for (let procedureIndex = 0; procedureIndex < this.$store.state.editingProcedureRecipe.editingProcedureAddArr.length; procedureIndex++) {
-            // 追加用の配列のindexと削除時の配列のindexとを合わせる
-            if (this.$store.state.editingRecipe.editingRecipeProcedure[i].recipe_procedure === this.$store.state.editingProcedureRecipe.editingProcedureAddArr[procedureIndex].recipe_procedure) {
-              this.$store.state.editingProcedureRecipe.editingProcedureAddArr[procedureIndex].recipe_procedure_index = this.$store.state.editingRecipe.editingRecipeProcedure[i].recipe_procedure_index
-            }
-          }
         }
+        console.log(this.$store.state.editingRecipe.editingRecipeProcedure);
       }
       this.procedureValue = '';
       this.chengeOverBtn = '＋ 追加';

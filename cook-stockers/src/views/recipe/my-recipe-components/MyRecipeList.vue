@@ -182,7 +182,7 @@ export default {
     }
 
     .my-recipe-list__memo {
-      max-width: 69vw;
+      max-width: 51vw;
     }
 
     .my-recipe-list__tag {
@@ -210,7 +210,7 @@ export default {
     }
 
     .my-recipe-list__memo {
-      max-width: 80vw;
+      max-width: 70vw;
     }
 
     .my-recipe-list__tag {
@@ -233,7 +233,7 @@ export default {
     }
 
     .my-recipe-list__memo {
-      max-width: 35vw;
+      max-width: 29vw;
     }
 
     .my-recipe-list__tag {

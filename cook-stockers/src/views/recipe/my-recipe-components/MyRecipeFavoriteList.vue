@@ -14,6 +14,7 @@
               <td><img :src="displayFavoriteRecipe.recipe_img"></td>
               <td class="my-recipe-favorite-list__td"><p class="my-recipe-favorite-list__recipe-name">{{ displayFavoriteRecipe.recipe_name }}</p></td>
               <td class="my-recipe-favorite-list__td"><p class="my-recipe-favorite-list__memo">{{ displayFavoriteRecipe.recipe_memo }}</p></td>
+              <td class="my-recipe-favorite-list__recipe-details-btn"><a @click="RouterDetailsRecipe(displayFavoriteRecipe)">レシピ詳細 ＞</a></td>
             </tr>
           </tbody>
         </table>        
@@ -21,6 +22,19 @@
     </div><!-- my-recipe-favorite-list__wrap -->
   </div><!-- my-recipe-favorite-list__container -->
 </template>
+
+<script>
+import router from '../../../router';
+export default {
+  methods: {
+    // レシピの詳細へ画面遷移
+    RouterDetailsRecipe(displayFavoriteRecipe) {
+      router.push('/detailsrecipe');
+      this.$store.dispatch('displayDetailsRecipe', displayFavoriteRecipe);
+    }
+  }
+}
+</script>
 
 <style lang="scss" scoped>
 // 共通スタイル
@@ -73,6 +87,45 @@
     display: block;
   }
 
+  .my-recipe-favorite-list__recipe-details-btn {
+  position: absolute;
+  right: 0;
+  bottom: 10px;
+
+  a {
+    cursor: pointer;
+    display: inline-block;
+    font-size: 0.7em;
+    padding: 5px;
+    color:  #000;
+    text-decoration: none;
+    border: 1px solid #000;
+  }
+
+  a:hover {
+    color: #FFF;
+  }
+
+  a::before {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    content: '';
+    z-index: -1;
+    background: #000;
+    transform-origin: left top;
+    transform: scale(0, 1);
+    transition: transform .4s;
+  }
+
+  a:hover::before {
+    transform-origin: left top;
+    transform: scale(1, 1);
+  }
+}
+
   .my-recipe-favorite-list__recipe-name {
     font-weight: bold;
     width: 18vw;
@@ -82,7 +135,7 @@
   }
 
   .my-recipe-favorite-list__memo {
-    width: 18vw;
+    width: 11vw;
     padding-top: 35px;
     overflow: hidden;
     text-overflow: ellipsis;
