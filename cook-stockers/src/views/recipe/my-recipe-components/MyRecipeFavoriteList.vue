@@ -55,7 +55,11 @@ export default {
   top: 0;
   right: 0;
   width: 26%;
+<<<<<<< HEAD
   height: 34px;
+=======
+  height: 36px;
+>>>>>>> f2833c92dd8def375c4995cd91c8b1d7a6256067
   background-color: #FFF;
   z-index: 10;
 }
