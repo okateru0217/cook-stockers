@@ -34,7 +34,6 @@ export default {
 .shopping-memo-header__container {
   position: fixed;
   z-index: 10;
-  background-color: #EDEDED;
 }
 
 .shopping-memo-header__wrap {
