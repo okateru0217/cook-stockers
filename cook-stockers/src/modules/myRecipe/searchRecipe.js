@@ -25,13 +25,29 @@ export default {
           // 検索に引っかかった要素を格納する用の配列
           let filterPartialMatchArr = [];
           for (let i = 0; i < this.state.recordRecipe.recipeArr.length; i++) {
-            // レシピ名で検索し、一部分でも一致していたら、trueを返す
-            const searchPartialMatch = this.state.recordRecipe.recipeArr[i].recipe_name.indexOf(this.state.searchRecipe.searchValue) > -1;
-            noneSearchArr.push(searchPartialMatch);
-            // 検索した文言とレシピ名とが一部でも一致していたら、フィルターをかける
-            if (searchPartialMatch === true) {
-              filterPartialMatchArr.push(this.state.recordRecipe.recipeArr[i]);
-              this.state.searchRecipe.searchResultArr = filterPartialMatchArr;
+            // レシピ名で検索し、一部分でも一致していたら、trueを返す関数
+            const searchPartialMatch = (search) => {
+              const searchResult = search.indexOf(this.state.searchRecipe.searchValue) > -1;
+              noneSearchArr.push(searchResult)
+              if (searchResult === true) {
+                filterPartialMatchArr.push(this.state.recordRecipe.recipeArr[i]);
+                // 同じレシピの重複表示を避ける
+                const doubleFilter = new Set(filterPartialMatchArr);
+                this.state.searchRecipe.searchResultArr = doubleFilter;
+              }
+            }
+            // レシピ一覧
+            const recipeArr = this.state.recordRecipe.recipeArr[i];
+            searchPartialMatch(recipeArr.recipe_name);
+            searchPartialMatch(recipeArr.recipe_memo);
+            for (let subIndex = 0; subIndex < recipeArr.material.length; subIndex++) {
+              searchPartialMatch(recipeArr.material[subIndex].recipe_material);
+            }
+            for (let subIndex = 0; subIndex < recipeArr.procedure.length; subIndex++) {
+              searchPartialMatch(recipeArr.procedure[subIndex].recipe_procedure);
+            }
+            for (let subIndex = 0; subIndex < recipeArr.tag.length; subIndex++) {
+              searchPartialMatch(recipeArr.tag[subIndex].recipe_tag);
             }
           }
           // 検索に引っかからない場合、レシピに表示しない

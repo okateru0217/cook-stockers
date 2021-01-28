@@ -31,6 +31,7 @@ export default {
           // 表示用配列をDBに追加
           const setProcedureData = editingProcedureData.doc();
           setProcedureData.set({
+            recipe_id: this.state.detailsRecipe.recipeId,
             recipe_procedure_id: setProcedureData.id,
             recipe_procedure_index: editingRecipeProcedure.recipe_procedure_index,
             recipe_procedure: editingRecipeProcedure.recipe_procedure

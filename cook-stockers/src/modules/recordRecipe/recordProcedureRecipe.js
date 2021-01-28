@@ -16,6 +16,7 @@ export default {
         .collection('procedure').doc();
         // 「手順」入力値をcloud firestoreへ登録
         recordProcedure.set({
+          recipe_id: this.state.recordRecipe.recordRecipeId,
           recipe_procedure_id: recordProcedure.id,
           recipe_procedure_index: items.id, 
           recipe_procedure: items.procedure

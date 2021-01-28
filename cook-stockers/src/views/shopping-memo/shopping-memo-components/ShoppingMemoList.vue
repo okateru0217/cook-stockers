@@ -6,7 +6,11 @@
           <tbody>
             <tr v-for="memos in $store.state.addShoppingMemo.displayMemoArr"
             :key="memos.memoIndex">
-              <td @click="deleteMemo(memos)"><p class="my-recipe-list__recipe-name">{{ memos.memo }}</p></td>
+              <td
+              class="shopping-memo-list_memo"><p class="my-recipe-list__recipe-name">{{ memos.memo }}</p></td>
+              <td
+              class="shopping-memo-list__delete-btn"
+              ><a @click="deleteMemo(memos)">削除</a></td>
             </tr>
             <tr class="my-recipe-list__add-shopping-memo">
               <td><input 
@@ -17,9 +21,6 @@
             </tr>
           </tbody>
         </table>
-        <div class="my-recipe-list__delete-hint">
-          <p>リストをクリックすると削除できます</p>
-        </div>
       </div><!-- my-recipe-list__table -->
     </div><!-- my-recipe-list__wrap -->
   </div><!-- my-recipe-list__container -->
@@ -57,10 +58,6 @@ export default {
     border-bottom: 1px solid #C1C1C1;
   }
 
-  td {
-    width: 47vw;
-  }
-
   input {
     border: none;
     outline: none;
@@ -81,11 +78,27 @@ export default {
   }
 }
 
-.my-recipe-list__delete-hint {
-  margin-top: 10px;
+.shopping-memo-list_memo {
+  width: 47vw;
+}
 
-  p {
-    color: #A0A0A0;
+.shopping-memo-list__delete-btn {
+  position: absolute;
+  top: 50%;
+  right: 9px;
+  transform: translateY(-50%);
+
+  a {
+    cursor: pointer;
+    padding: 3px 10px;
+    color: #FFF;
+    background-color: #FF6200;
+    border: 1px solid #FF6200;
+    border-radius: 20px;
+  }
+
+  a:hover {
+    padding: 4px 11px;
   }
 }
 

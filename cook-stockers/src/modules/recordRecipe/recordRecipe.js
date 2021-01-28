@@ -84,6 +84,28 @@ export default {
             snapshot.forEach(docs => {
               this.state.recordRecipe.recipeArr.push(docs.data());
             })
+            const recipeArr = this.state.recordRecipe.recipeArr;
+            // サブコレクションを取得する関数
+            const subCollection = (collection) => {
+              for (let i = 0; i < recipeArr.length; i++) {
+                // サブコレクションのコレクションパス
+                const recipeSubCollectionData = recipeDataGuestArr
+                .doc(recipeArr[i].recipe_id)
+                .collection(collection);
+                // 表示補助用配列にサブコレクション用の配列を追加
+                recipeArr[i][collection] = [];
+                recipeSubCollectionData.get().then(subCollectionData => {
+                  subCollectionData.forEach(subDocs => {
+                    if (recipeArr[i].recipe_id === subDocs.data().recipe_id) {
+                      recipeArr[i][collection].push(subDocs.data());
+                    }
+                  })
+                })
+              }
+            }
+            subCollection('material');
+            subCollection('procedure');
+            subCollection('tag');
             this.state.searchRecipe.searchResultArr = this.state.recordRecipe.recipeArr;
           })
           // お気に入り欄にレシピを表示させる
@@ -102,9 +124,32 @@ export default {
           recipeDataArr.get().then(snapshot => {
             // 一度配列を空にする
             this.state.recordRecipe.recipeArr.length = 0;
+            this.state.searchRecipe.searchResultArr.length = 0;
             snapshot.forEach(docs => {
               this.state.recordRecipe.recipeArr.push(docs.data());
             })
+            const recipeArr = this.state.recordRecipe.recipeArr;
+            // サブコレクションを取得する関数
+            const subCollection = (collection) => {
+              for (let i = 0; i < recipeArr.length; i++) {
+                // サブコレクションのコレクションパス
+                const recipeSubCollectionData = recipeDataArr
+                .doc(recipeArr[i].recipe_id)
+                .collection(collection);
+                // 表示補助用配列にサブコレクション用の配列を追加
+                recipeArr[i][collection] = [];
+                recipeSubCollectionData.get().then(subCollectionData => {
+                  subCollectionData.forEach(subDocs => {
+                    if (recipeArr[i].recipe_id === subDocs.data().recipe_id) {
+                      recipeArr[i][collection].push(subDocs.data());
+                    }
+                  })
+                })
+              }
+            }
+            subCollection('material');
+            subCollection('procedure');
+            subCollection('tag');
             // フィルターをかけるための配列に入れる
             this.state.searchRecipe.searchResultArr = this.state.recordRecipe.recipeArr;
           })

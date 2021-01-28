@@ -16,6 +16,7 @@ export default {
         .collection('tag').doc();
         // 「タグ」入力値をcloud firestoreへ登録
         recordTag.set({
+          recipe_id: this.state.recordRecipe.recordRecipeId,
           recipe_tag_id: recordTag.id,
           recipe_tag_index: items.id,
           recipe_tag: items.tag

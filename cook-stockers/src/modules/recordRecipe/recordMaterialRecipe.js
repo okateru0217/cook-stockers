@@ -16,6 +16,7 @@ export default {
         .collection('material').doc();
         // 「材料」「量」入力値をcloud firestoreへ登録
         recordMaterialQuantity.set({
+          recipe_id: this.state.recordRecipe.recordRecipeId,
           recipe_material_id: recordMaterialQuantity.id,
           recipe_material_index: items.id,
           recipe_material: items.material,

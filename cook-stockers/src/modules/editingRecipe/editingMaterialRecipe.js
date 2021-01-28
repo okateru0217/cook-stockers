@@ -31,6 +31,7 @@ export default {
           // 表示用配列をDBに追加
           const setMaterialData = editingMaterialData.doc();
           setMaterialData.set({
+            recipe_id: this.state.detailsRecipe.recipeId,
             recipe_material_id: setMaterialData.id,
             recipe_material_index: editingRecipeMaterial.recipe_material_index,
             recipe_material: editingRecipeMaterial.recipe_material,

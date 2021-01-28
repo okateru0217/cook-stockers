@@ -16,6 +16,11 @@ export default {
   },
   actions: {
     addMemo() {
+      // 入力欄が空欄の場合、アラートを出す
+      if (this.state.addShoppingMemo.addMemoValue === '') {
+        alert('入力欄にメモを入力して下さい');
+        return
+      }
       // 入力値を、表示用配列へ追加する
       this.state.addShoppingMemo.displayMemoArr.push({
         memo_index: this.state.addShoppingMemo.displayMemoArr.length,

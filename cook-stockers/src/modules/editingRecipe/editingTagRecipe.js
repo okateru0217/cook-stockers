@@ -35,6 +35,7 @@ export default {
           // 表示用配列をDBに追加
           const setTagData = editingTagData.doc();
           setTagData.set({
+            recipe_id: this.state.detailsRecipe.recipeId,
             recipe_tag_id: setTagData.id,
             recipe_tag_index: editingRecipeTag.recipe_tag_index,
             recipe_tag: editingRecipeTag.recipe_tag
